@@ -43,4 +43,4 @@
 - Verified by a real race before release: codex + gemini (agy), sequential,
   both lanes green, model-manual verdict filed.
 - Test suite: 9 passed · ruff clean.
-- Reviewed by: Claude Code (opus-5), 2026-08-16
+- Reviewed by: Claude Code (fable-5), 2026-08-16 — identity corrected same day: the session ran as Fable 5, the earlier opus-5 signature came from a stale self-description
