@@ -139,6 +139,26 @@ def run_race(
     return execute()
 
 
+def _lane_log_path(identity: RunIdentity, settings: RaceSettings) -> Path | None:
+    """Raw per-lane process log (stdout+stderr via COMA ``log_file``).
+
+    Forensic requirement (2026-08-16): without a persisted lane log there is no
+    way to audit post-hoc which tools a lane used or whether it read files it
+    should not have -- the CLI agents do not persist their own transcripts when
+    spawned through COMA. The log lands next to the artefacts and is the raw
+    input for a prompt-listener style audit.
+    """
+    if not settings.races_dir:
+        return None
+    log_dir = Path(settings.races_dir) / "_lane-logs"
+    try:
+        log_dir.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        return None
+    stem = identity.filename()[:-3]  # RUN-<model>[-v-<variant>]-r<run>
+    return log_dir / f"{identity.time}--{identity.prompt}--{stem}.log"
+
+
 def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunResult:
     entry = _entry_for(settings, identity.model)
     started = utcnow()
@@ -147,7 +167,8 @@ def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunR
         spawner = _spawner(entry)
         # COMA returns a plain dict (success/output/stderr/returncode/duration_s/
         # timed_out); timeout travels as a build_spec override.
-        outcome = spawner.run(prompt, timeout=settings.timeout_seconds)
+        outcome = spawner.run(prompt, timeout=settings.timeout_seconds,
+                              log_file=_lane_log_path(identity, settings))
         ok = bool(outcome.get("success"))
         output = str(outcome.get("output", ""))
         error = str(outcome.get("stderr", "") or "")

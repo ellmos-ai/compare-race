@@ -3,6 +3,26 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.6.0] - 2026-08-16
+
+Fairness- und Forensik-Ausbau nach dem Erstlauf der Kant-Olympiade.
+
+### Hinzugefuegt
+
+- **lane_workdir** (Setting): run_race wechselt fuer die Dauer der Spawns in
+  ein neutrales Verzeichnis -- gespawnte CLI-Spuren erben das cwd, ein
+  Projekt-cwd leakte Hooks/Regeln/Judge-Dateien in eine Spur (Befund
+  2026-08-16, Naivitaets-Klausel verletzt).
+- **olympiade --timeout**: Spur-Timeout ueberschreibbar (der 300-s-Default
+  warf Reasoning-Spuren als DNF; Nachmessung: 280/290/317 s fuer die drei
+  tiefsten Antworten).
+- **Lane-Logs** (`<races_dir>/_lane-logs/`): jeder Spur-Prozess schreibt
+  stdout+stderr in eine eigene Log-Datei (COMA ``log_file``). Forensik-Basis:
+  Ohne persistiertes Spur-Log ist post-hoc NICHT pruefbar, welche Werkzeuge
+  eine Spur nutzte oder ob sie unerlaubt las -- die CLI-Agenten persistieren
+  via COMA keine eigenen Transkripte (gemessen 2026-08-16). Rohmaterial fuer
+  prompt-listener-artige Audits.
+
 ## [0.5.0] - 2026-08-16
 
 Erste mitgelieferte Olympiade + per-Disziplin-Checks.
