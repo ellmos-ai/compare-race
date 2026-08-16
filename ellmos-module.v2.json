@@ -1,0 +1,22 @@
+{
+  "schema": "ellmos.module.v2",
+  "id": "compare-race",
+  "display_name": "compare-race",
+  "category": "orchestration",
+  "kind": "workflow",
+  "status": "development",
+  "visibility": "private",
+  "provides": ["orchestration.output-arbitration", "quality.model-race"],
+  "requires": [],
+  "optional": ["agents.lifecycle", "routing.default", "swarm.patterns"],
+  "conflicts": [],
+  "surfaces": ["library", "cli", "workflow"],
+  "state": { "ownership": "external", "location": "project" },
+  "boundaries": {
+    "network": "none",
+    "data": "user-local",
+    "platforms": ["windows", "macos", "linux"]
+  },
+  "source_of_truth": { "type": "local-directory", "path": "." },
+  "adapters": []
+}

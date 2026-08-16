@@ -1,0 +1,36 @@
+# compare-race
+
+> Same prompt, several models -- stopwatch or true race; the starting model judges.
+> Last-checked: 2026-08-16 | Version: 0.1.0 | Tests: 9 passed | Lint: ruff clean
+
+## Core idea
+
+Fan one prompt out to N models (sequential = stopwatch, clean per-lane timing;
+parallel = true race), optional repeats per model, collect artefacts, and let the
+STARTING model write the verdict. Time is only ONE dimension: the judge rubric carries
+quality, correctness, completeness, instruction fidelity, latency, cost.
+
+## Identity (reused from system-auditor)
+
+Five axes per run: time, prompt (slug+hash), system, model, run. Attribute only when
+exactly one axis varies: model->race, run->variance, time->model drift. Artefact
+headers parse with system_auditor.report.parse_front_matter (hard dependency).
+
+## Execution
+
+COMA (spawn/file protocol/polling) is detected, not assumed: adapters claude/codex/
+agy/kimi, per-lane model override. Without COMA: model-manual path via
+`compare-race record`. Failed lanes are recorded (ok: false), never hidden.
+
+## Entry points
+
+- prompts/RACE-STARTER.de.md + .en.md   role prompt (starter = judge by default)
+- config/compare-race.config.example.json
+- CLI: compare-race config|plan|run|record|report
+- src/compare_race/: tokens, config, race, report, cli
+
+## Neighbours (optional)
+
+coma (execution) · clutch (model catalogue) · swarm-ai (mechanical N-repeat
+consensus) · MarbleRun (sequential chains). compare-race adds the qualitative judge
+over sibling outputs and the repeats x models cross product.

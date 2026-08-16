@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "compare-race"
+version = "0.1.0"
+description = "Same prompt, several models -- stopwatch or true race; the starting model judges (time is only one dimension)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Lukas Geiger" }]
+dependencies = [
+    "system-auditor @ git+https://github.com/ellmos-ai/system-auditor",
+]
+
+[project.optional-dependencies]
+exec = []  # COMA is detected, not assumed: install it editable from ellmos-ai/coma
+
+[project.scripts]
+compare-race = "compare_race.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]

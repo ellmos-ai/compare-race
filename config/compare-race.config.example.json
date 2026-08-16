@@ -1,0 +1,20 @@
+{
+  "_comment": "Kopieren nach compare-race.config.json. Gefunden ueber --config, COMPARE_RACE_CONFIG, ./, ./config/, ~/.compare-race/.",
+  "_comment_modes": "sequential = Stoppuhr (saubere Einzelmessung je Spur) | parallel = echtes Rennen (Latenz teilt sich die Maschine). Die Stoppuhr ist nur ein Bild: Zeit ist EINE Dimension -- das Urteil traegt Qualitaet/Korrektheit/Vollstaendigkeit/Anweisungstreue/Kosten dazu.",
+  "_comment_judge": "judge=starter: das startende Modell urteilt (Default, Nutzerentscheidung 2026-08-16). Alternativ ein fester Modellname.",
+
+  "system": "<HOSTNAME>",
+  "races_dir": "<HOME>/OneDrive/.TOPICS/.AI/.MODULES/.ORCHESTRATION/compare-race/races",
+  "mode": "sequential",
+  "repeats": 1,
+  "judge": "starter",
+  "max_parallel": 3,
+  "timeout_seconds": 600,
+
+  "models": [
+    { "name": "opus-5",  "backend": "claude", "model": "claude-opus-5" },
+    { "name": "codex",   "backend": "codex",  "model": "" },
+    { "name": "gemini",  "backend": "agy",    "model": "" }
+  ],
+  "_comment_models": "name = Identitaets-Token der Spur (landet im Dateinamen). backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override, leer = Adapter-Default. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent."
+}
