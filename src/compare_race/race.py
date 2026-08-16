@@ -64,13 +64,13 @@ def _entry_for(settings: RaceSettings, model_name: str) -> ModelEntry:
     raise KeyError(f"model {model_name!r} is not configured")
 
 
-def _spawner(entry: ModelEntry, timeout_seconds: int):
+def _spawner(entry: ModelEntry):
     from coma import Spawner
     from coma.adapters import get_adapter
 
     kwargs = {"model": entry.model} if entry.model else {}
     adapter = get_adapter(entry.backend, **kwargs)
-    return Spawner(adapter, timeout_seconds=timeout_seconds)
+    return Spawner(adapter)
 
 
 def run_race(
@@ -110,11 +110,16 @@ def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunR
     started = utcnow()
     tick = _time.perf_counter()
     try:
-        spawner = _spawner(entry, settings.timeout_seconds)
-        outcome = spawner.run(prompt)
-        ok = bool(getattr(outcome, "ok", True))
-        output = str(getattr(outcome, "output", outcome))
-        error = str(getattr(outcome, "error", "") or "")
+        spawner = _spawner(entry)
+        # COMA returns a plain dict (success/output/stderr/returncode/duration_s/
+        # timed_out); timeout travels as a build_spec override.
+        outcome = spawner.run(prompt, timeout=settings.timeout_seconds)
+        ok = bool(outcome.get("success"))
+        output = str(outcome.get("output", ""))
+        error = str(outcome.get("stderr", "") or "")
+        if outcome.get("timed_out"):
+            ok = False
+            error = f"timed out after {settings.timeout_seconds}s. {error}".strip()
     except Exception as exc:  # a crashing lane must not kill the race
         ok, output, error = False, "", f"{exc.__class__.__name__}: {exc}"
     latency = _time.perf_counter() - tick
