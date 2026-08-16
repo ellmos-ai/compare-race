@@ -164,6 +164,8 @@ def cmd_olympiade(args) -> int:
     Per-discipline checks live in ``<stem>.checks.json`` next to each task.
     """
     s = _settings(args)
+    if getattr(args, "timeout", None):
+        s.timeout_seconds = max(1, int(args.timeout))
     if not s.races_dir:
         print("ERROR: races_dir is not configured", file=sys.stderr)
         return 1
@@ -251,6 +253,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--models", default=None)
     p.add_argument("--mode", default=None, choices=["sequential", "parallel"])
     p.add_argument("--repeats", type=int, default=None)
+    p.add_argument("--timeout", type=int, default=None,
+                   help="per-lane timeout in seconds (overrides config; slow "
+                        "reasoning lanes DNF'd at the 300s default)")
     p.set_defaults(func=cmd_olympiade)
 
     p = sub.add_parser("record", help="file one lane's output model-manually (no COMA)")

@@ -118,12 +118,25 @@ def run_race(
             return variants[identity.variant]
         return prompt
 
-    if plan.mode == "sequential":
-        for identity in plan.runs:
-            race.results.append(_run_one(lane_prompt(identity), identity, settings))
-    else:
-        race.results.extend(_run_parallel_variants(plan, settings, lane_prompt))
-    return race
+    def execute() -> RaceResult:
+        if plan.mode == "sequential":
+            for identity in plan.runs:
+                race.results.append(
+                    _run_one(lane_prompt(identity), identity, settings))
+        else:
+            race.results.extend(_run_parallel_variants(plan, settings, lane_prompt))
+        return race
+
+    if settings.lane_workdir:
+        # Naivety guard: spawned CLI lanes inherit our cwd; a project cwd leaks
+        # hooks/rules/judge files into them (observed 2026-08-16). Run the
+        # spawns from a neutral directory instead.
+        import contextlib
+        workdir = Path(settings.lane_workdir)
+        workdir.mkdir(parents=True, exist_ok=True)
+        with contextlib.chdir(workdir):
+            return execute()
+    return execute()
 
 
 def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunResult:

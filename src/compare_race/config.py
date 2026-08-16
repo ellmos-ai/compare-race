@@ -46,6 +46,12 @@ class RaceSettings:
     #: judge opinion: [{"name": ..., "regex": ...}]. A check passes when
     #: re.search matches the output. Reproducible by anyone from the artefacts.
     checks: list[dict] = field(default_factory=list)
+    #: Neutral working directory for lanes (naivety!): spawned CLI agents
+    #: inherit the caller's cwd, so a repo cwd leaks hooks, project rules and
+    #: even judge files into the lanes (observed 2026-08-16: a claude lane
+    #: answered a repo hook instead of the task and read JUDGE-RUBRIK.md).
+    #: When set, run_race chdirs here for the duration of the spawns.
+    lane_workdir: str = ""
     models: list[ModelEntry] = field(default_factory=list)
     source: str = "defaults"
     notes: list[str] = field(default_factory=list)
@@ -118,6 +124,8 @@ def load(path: str | Path | None = None, home: str | None = None) -> RaceSetting
             entry for entry in data.get("checks") or []
             if isinstance(entry, dict) and entry.get("name") and entry.get("regex")
         ],
+        lane_workdir=str(data.get("lane_workdir", "")).replace(
+            HOME_PLACEHOLDER, resolved_home),
         models=models,
         source=str(found),
         notes=notes,

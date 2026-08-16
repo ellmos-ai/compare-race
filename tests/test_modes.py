@@ -17,6 +17,31 @@ def _result(identity, output="x"):
                      finished_utc="2026-08-16T00:00:01Z")
 
 
+def test_lane_workdir_isolates_spawn_cwd(monkeypatch, tmp_path):
+    """Naivety guard: with lane_workdir set, lanes run from the neutral
+    directory (spawned CLIs inherit it), and the caller's cwd is restored.
+    Regression for the 2026-08-16 contamination (repo cwd leaked hooks and
+    judge files into a claude lane)."""
+    import os
+
+    import compare_race.race as race_mod
+
+    def cwd_probe(prompt, identity, settings):
+        return _result(identity, output=os.getcwd())
+
+    monkeypatch.setattr(race_mod, "_coma_available", lambda: True)
+    monkeypatch.setattr(race_mod, "_run_one", cwd_probe)
+    lanes = tmp_path / "lanes"
+    settings = RaceSettings(system="H1", mode="sequential",
+                            models=[ModelEntry(name="m", backend="fake")],
+                            lane_workdir=str(lanes))
+    before = os.getcwd()
+    race = race_mod.run_race("task", settings, models=["m"])
+    assert race.results[0].output == str(lanes)
+    assert lanes.is_dir()
+    assert os.getcwd() == before
+
+
 def test_twin_plan_is_one_model_times_variants_times_repeats():
     plan = plan_race("task", models=["opus"], system="H1", repeats=2,
                      variants=["knapp", "mit-rolle", "mit-skill"])
