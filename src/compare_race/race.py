@@ -180,19 +180,33 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
     return "\n".join(lines) + "\n"
 
 
-def annotate_costs(race: RaceResult, prompt: str, getriebe_path: str = "") -> None:
+def annotate_costs(
+    race: RaceResult,
+    prompt: str,
+    getriebe_path: str = "",
+    settings: RaceSettings | None = None,
+) -> None:
     """Attach clutch cost rates + char-based estimates to each lane, in place.
 
     Silent no-op when the catalogue is absent (clutch is a neighbour, detected
     not assumed) or a lane's model is unknown to it.
+
+    The lane's configured **model id** is looked up first: the lane name is an
+    identity token ("opus-5") and the backend is a family ("claude") -- the
+    big race of 2026-08-16 mapped the opus lane to the first claude gear
+    (claude-fable) via the backend fallback, a wrong rate with the right sign.
     """
     from .costs import load_rates, rate_for
 
     rates = load_rates(getriebe_path or None)
     if not rates:
         return
+    model_ids = {
+        entry.name: entry.model for entry in (settings.models if settings else [])
+    }
     for result in race.results:
-        rate = rate_for(rates, result.identity.model, result.backend)
+        lane = result.identity.model
+        rate = rate_for(rates, model_ids.get(lane, ""), lane, result.backend)
         if rate is None:
             continue
         result.cost_gear = rate.gear

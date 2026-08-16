@@ -81,3 +81,24 @@ def test_unverified_lane_optin_survives_config(tmp_path):
     kimi = next(m for m in settings.models if m.name == "kimi")
     assert kimi.allow_unverified is True
     assert next(m for m in settings.models if m.name == "codex").allow_unverified is False
+
+
+def test_lane_model_id_beats_backend_fallback(tmp_path):
+    """The big race of 2026-08-16: lane 'opus-5' (backend claude, model
+    claude-opus-5) was rated as claude-fable via the backend fallback. The
+    configured model id must win."""
+    import json as _json
+
+    from compare_race.config import ModelEntry, RaceSettings
+
+    catalogue = tmp_path / "g.json"
+    catalogue.write_text(_json.dumps({"gaenge": {
+        "claude-fable": {"model_id": "claude-fable-5", "kosten_input_1k": 0.01, "kosten_output_1k": 0.05},
+        "claude-opus": {"model_id": "claude-opus-5", "kosten_input_1k": 0.015, "kosten_output_1k": 0.075},
+    }}), encoding="utf-8")
+    settings = RaceSettings(models=[ModelEntry(name="opus-5", backend="claude", model="claude-opus-5")])
+    plan = plan_race("p", models=["opus-5"], system="H1")
+    race = RaceResult(plan=plan, results=[_result(plan.runs[0])])
+    race.results[0].backend = "claude"
+    annotate_costs(race, "p", str(catalogue), settings=settings)
+    assert race.results[0].cost_gear == "claude-opus"

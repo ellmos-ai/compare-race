@@ -63,7 +63,7 @@ def cmd_run(args) -> int:
     race = run_race(prompt, s,
                     models=args.models.split(",") if args.models else None,
                     mode=args.mode or None, repeats=args.repeats or None)
-    annotate_costs(race, prompt, s.getriebe_path)
+    annotate_costs(race, prompt, s.getriebe_path, settings=s)
     base = write_artifacts(race, s.races_dir, prompt)
     target = write_scaffold(race, s.races_dir, prompt)
     failed = [r for r in race.results if not r.ok]

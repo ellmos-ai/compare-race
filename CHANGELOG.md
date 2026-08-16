@@ -3,6 +3,16 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.2.1] - 2026-08-16
+
+### Behoben
+
+- **Kosten-Lookup nahm den Backend-Fallback vor der model-id:** Im grossen
+  Rennen wurde die opus-Spur ueber das Backend "claude" auf die
+  claude-fable-Rate gemappt. Die konfigurierte model-id der Spur gewinnt jetzt
+  den Lookup (Regressionstest). Gefunden vom Judge beim Urteilen -- die
+  Kosten-Rangfolge stimmte, die Rate nicht.
+
 ## [0.2.0] - 2026-08-16
 
 ### Hinzugefuegt
