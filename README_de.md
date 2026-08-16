@@ -14,13 +14,44 @@ Artefakt ein. Das Urteil ist **modellmanuell**: Das startende Modell liest die S
 und füllt eine mehrdimensionale Rubrik (Qualität, Korrektheit, Vollständigkeit,
 Anweisungstreue, Latenz, Kosten). Die Stoppuhr ist nur ein Bild.
 
-## Identität — fünf Achsen, wiederverwendet aus system-auditor
+## Identität — sechs Achsen, wiederverwendet aus system-auditor
 
-Jeder Lauf trägt `time · prompt · system · model · run`. Zugeschrieben werden darf nur,
-wenn genau eine Achse variiert: Modelle variieren → das Rennen; Läufe variieren →
-Varianz eines Modells; Zeit variiert → Drift über Versionen. Die Artefakt-Köpfe
-sprechen den Parser von [`system-auditor`](https://github.com/ellmos-ai/system-auditor)
-— das ist die eine harte Abhängigkeit.
+Jeder Lauf trägt `time · prompt · system · model · run · variant`. Zugeschrieben werden
+darf nur, wenn genau eine Achse variiert: Modelle variieren → das Rennen; Läufe
+variieren → Varianz eines Modells; Varianten variieren (Twin-Modus) → die Wirkung von
+Prompt-Wortlaut, Skills oder Umgebung; Zeit variiert → Drift über Versionen. Die
+Artefakt-Köpfe sprechen den Parser von
+[`system-auditor`](https://github.com/ellmos-ai/system-auditor) — das ist die eine
+harte Abhängigkeit.
+
+## Rennmodi
+
+| Modus | Was variiert | Was er beantwortet |
+|---|---|---|
+| **Race** (`run`) | Modell | welches Modell diese Aufgabe am besten löst |
+| **Twin/Clone** (`run --twin`) | Variante (Prompt/Skills/Umgebung), ein Modell | was eine Prompt-Technik kausal wert ist |
+| **Olympiade** (`olympiade`) | Modell je Disziplin, Aufgabe darüber hinweg | ein deskriptiver Medaillenspiegel über ein Testbundle |
+
+Eine Olympiade ist ein **Testbundle**: je Disziplin eine Task-Datei, jede als normales
+Race gefahren und je Disziplin gejudgt; das Aggregat bleibt deskriptiv — **zählen,
+nicht schließen** (über Disziplinen hinweg variieren Aufgabe UND Modell, also darf
+keine Ursache zugeschrieben werden). Deterministische Checks je Disziplin liegen als
+`<task>.checks.json` neben der Task-Datei.
+
+### Mitgelieferte Olympiade: Kantische Vernunft
+
+[`olympiads/kantische-vernunft/`](olympiads/kantische-vernunft/) macht aus den sieben
+Dimensionen des *kantischen Tests für LLMs* — plus *Distributional Rationality* aus
+dem Erweiterungsteil — die erste ausführbare Testbatterie dieses Rahmenwerks. Das
+Disziplinen-Design, der methodische Vorbehalt (gemessen wird
+Strukturbedingungen-*Verhalten*, nie Vernunft selbst) und die Regel „zählen, nicht
+schließen" stammen aus dem zugrunde liegenden Forschungspaper, das diese Form von
+Olympiade operationalisiert:
+
+> Geiger, L. (2026). *Der Mensch in der Maschine: Sind LLMs vernünftige Wesen im
+> kantischen Sinne?* (v9.0). Zenodo.
+> [doi:10.5281/zenodo.21899816](https://doi.org/10.5281/zenodo.21899816)
+> (alle Versionen: [doi:10.5281/zenodo.18642673](https://doi.org/10.5281/zenodo.18642673))
 
 ## Installation und Nutzung
 

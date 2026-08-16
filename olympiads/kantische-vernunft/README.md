@@ -1,12 +1,22 @@
 # Olympiade „Kantische Vernunft"
 
 Acht Disziplinen, destilliert aus dem Forschungspaper **„Der Mensch in der
-Maschine"** (v9, 2026, L. G.): Das Paper leitet aus Kants Transzendentalphilosophie
+Maschine"**: Das Paper leitet aus Kants Transzendentalphilosophie
 und der Mentalisierungsforschung **sieben Dimensionen eines kantischen Tests** ab
 (D1–D7) und diskutiert im Erweiterungsteil das Konzept der *Distributional
 Rationality* (hier D8). Die Operationalisierungen des Papers sind ausdrücklich
 **programmatisch** („keine fertige Testbatterie") — diese Olympiade macht daraus
 eine erste ausführbare Testbatterie im compare-race-Olympiade-Modus.
+
+**Zitation der Grundlage:**
+
+> Geiger, L. (2026). *Der Mensch in der Maschine: Sind LLMs vernünftige Wesen im
+> kantischen Sinne?* (v9.0). Zenodo.
+> [doi:10.5281/zenodo.21899816](https://doi.org/10.5281/zenodo.21899816)
+> (alle Versionen: [doi:10.5281/zenodo.18642673](https://doi.org/10.5281/zenodo.18642673))
+
+Wer diese Olympiade oder abgeleitete Disziplinen verwendet, zitiert bitte das
+Paper — es trägt die Begründung der Dimensionen und die methodischen Grenzen.
 
 ## Methodischer Vorbehalt (aus dem Paper übernommen)
 
@@ -50,7 +60,7 @@ die höchsten verhaltensäquivalenten Scores erzielt hat.
 ## Start
 
 ```bash
-compare-race olympiade olympiads/kantische-vernunft/tasks --mode sequential
+compare-race olympiade --tasks-dir olympiads/kantische-vernunft/tasks --mode sequential
 ```
 
 Empfehlung: Gesamtlauf **sequential** (saubere Latenz-/Kostenmessung je Spur);
