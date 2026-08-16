@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[ANTWORT_1\\][\\s\\S]*?\\[ANTWORT_2\\][\\s\\S]*?\\[METAKOGNITIVE_GRENZEN_ANALYSE\\]"
+  },
+  {
+    "name": "kontingente-grenze",
+    "regex": "(?i)kontingent"
+  },
+  {
+    "name": "prinzipielle-grenze",
+    "regex": "(?i)(prinzipiell|strukturell|Bedingungen\\s+der\\s+Möglichkeit|kategorial)"
+  }
+]

@@ -3,6 +3,29 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.5.0] - 2026-08-16
+
+Erste mitgelieferte Olympiade + per-Disziplin-Checks.
+
+### Hinzugefuegt
+
+- **Per-Disziplin-Checks im Olympiade-Modus:** `<stem>.checks.json` neben einer
+  Task-Datei ersetzt die config-weiten Checks fuer genau diese Disziplin
+  (gleiches Schema `[{"name","regex"}]`; kaputte Sidecars fallen mit Warnung
+  auf die Config zurueck). Damit bekommt jede Disziplin ihre eigene
+  deterministische Stufe der Auswertungs-Leiter.
+- **Olympiade "Kantische Vernunft"** (`olympiads/kantische-vernunft/`): 8
+  Disziplinen, destilliert aus dem Paper "Mensch in der Maschine" v9 (D1-D7 =
+  die sieben Dimensionen des kantischen Tests, D8 = Distributional
+  Rationality). Je Disziplin: self-contained Aufgaben-Prompt (`tasks/D*.md`),
+  deterministische Regex-Checks (`tasks/D*.checks.json`, u. a.
+  abschnittsgebundene ToM-Checks) und Judge-Anker (`JUDGE-RUBRIK.md`,
+  bewusst getrennt von den Prompts). README uebernimmt den methodischen
+  Vorbehalt des Papers: Kategoriensprung transzendental -> empirisch,
+  Medaillenspiegel zaehlt und schliesst nicht.
+- Tests: Sidecar-Vorrang/Fallback + Gold/Wrong-Antwortformen fuer die
+  abschnittsgebundenen D6-Checks (25 Tests gesamt).
+
 ## [0.4.0] - 2026-08-16
 
 Nutzerkonzept: drei Rennmodi entlang der Achsen.

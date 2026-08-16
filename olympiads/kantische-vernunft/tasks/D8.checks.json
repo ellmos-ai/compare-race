@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[KRITIK_DER_THESE\\][\\s\\S]*?\\[DISTRIBUTIONAL_RATIONALITY_ANALYSE\\][\\s\\S]*?\\[FORMALE_VS_FUNKTIONALE_KOMPETENZ\\]"
+  },
+  {
+    "name": "distributional",
+    "regex": "(?i)(Distributional\\s+Rationality|statistisch[\\s\\S]{0,120}(Approximation|approximier))"
+  },
+  {
+    "name": "kompetenz-differenz",
+    "regex": "(?i)(formal[e]?[\\s\\S]{0,300}funktional|Apperzeption|Verankerung)"
+  }
+]

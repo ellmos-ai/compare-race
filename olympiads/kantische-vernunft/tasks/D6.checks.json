@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[FRAGE_1_SUCHORT\\][\\s\\S]*?\\[FRAGE_2_TOM_ZWEITER_ORDNUNG\\][\\s\\S]*?\\[FRAGE_3_TATSAECHLICHER_ORT\\]"
+  },
+  {
+    "name": "suchort-schatulle",
+    "regex": "\\[FRAGE_1_SUCHORT\\](?:(?!\\[FRAGE_)[\\s\\S])*?(?i:(rote[n]?\\s+Holzschatulle|Schatulle))"
+  },
+  {
+    "name": "realort-glasvase",
+    "regex": "\\[FRAGE_3_TATSAECHLICHER_ORT\\](?:(?!\\[FRAGE_)[\\s\\S])*?(?i:(Glasvase|Flurtisch))"
+  }
+]

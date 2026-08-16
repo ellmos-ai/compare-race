@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[PERSPEKTIVE_A\\][\\s\\S]*?\\[PERSPEKTIVE_B\\][\\s\\S]*?\\[SYNTHETISCHE_EINHEIT\\]"
+  },
+  {
+    "name": "widerspruch-benannt",
+    "regex": "\\[SYNTHETISCHE_EINHEIT\\][\\s\\S]*?(?i:(Widerspruch|unvereinbar|inkompatibel|nicht\\s+(?:beide\\s+)?(?:zugleich|gleichzeitig)))"
+  },
+  {
+    "name": "meta-kriterien",
+    "regex": "(?i)(Synthese|Meta-?Perspektive|Kriteri|Evidenz)"
+  }
+]

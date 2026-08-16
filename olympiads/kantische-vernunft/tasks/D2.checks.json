@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[ALGEBRAISCHER_BEWEIS\\][\\s\\S]*?\\[SYNTHETISCHE_ANALYSE\\][\\s\\S]*?\\[NOTWENDIGKEITS_BEGRUENDUNG\\]"
+  },
+  {
+    "name": "faktorisierung",
+    "regex": "\\(\\s*a\\s*\\+\\s*1\\s*\\)\\s*\\*?\\s*\\(\\s*b\\s*\\+\\s*1\\s*\\)"
+  },
+  {
+    "name": "epistemik",
+    "regex": "(?i)(synthetisch[\\s\\S]{0,200}a\\s*priori|Erkenntniszuwachs|wissenserweiternd)"
+  }
+]

@@ -133,6 +133,27 @@ def cmd_record(args) -> int:
     return 0
 
 
+def _task_checks(task_file: Path, fallback: list[dict]) -> list[dict]:
+    """Per-discipline deterministic checks: ``<stem>.checks.json`` next to the
+    task file wins over the config-wide ``checks`` list. Same schema as the
+    config field ([{"name", "regex"}]); invalid entries are dropped, an
+    unreadable file falls back to the config checks (reported on stderr).
+    """
+    candidate = task_file.with_suffix(".checks.json")
+    if not candidate.exists():
+        return fallback
+    try:
+        data = json.loads(candidate.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"WARN: ignoring {candidate.name}: {exc}", file=sys.stderr)
+        return fallback
+    if not isinstance(data, list):
+        print(f"WARN: {candidate.name} must be a JSON list", file=sys.stderr)
+        return fallback
+    return [entry for entry in data
+            if isinstance(entry, dict) and entry.get("name") and entry.get("regex")]
+
+
 def cmd_olympiade(args) -> int:
     """Several disciplines (task files), one field of models.
 
@@ -140,6 +161,7 @@ def cmd_olympiade(args) -> int:
     one discipline). Across tasks the aggregate is DESCRIPTIVE -- a medal
     table may rank, but must not attribute a cause; that is the same
     demotion rule the system-auditor enforces for multi-axis aggregation.
+    Per-discipline checks live in ``<stem>.checks.json`` next to each task.
     """
     s = _settings(args)
     if not s.races_dir:
@@ -156,7 +178,7 @@ def cmd_olympiade(args) -> int:
         race = run_race(prompt, s, models=models, mode=args.mode or None,
                         repeats=args.repeats or None)
         annotate_costs(race, prompt, s.getriebe_path, settings=s)
-        evaluate_checks(race, s.checks)
+        evaluate_checks(race, _task_checks(task_file, s.checks))
         write_artifacts(race, s.races_dir, prompt)
         write_scaffold(race, s.races_dir, prompt)
         race_ids.append((task_file.stem, race.plan.race_id))

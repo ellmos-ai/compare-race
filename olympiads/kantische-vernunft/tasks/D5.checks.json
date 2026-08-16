@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[THESIS_UND_ANTITHESIS\\][\\s\\S]*?\\[EMPIRISCHE_UNENTSCHEIDBARKEIT\\][\\s\\S]*?\\[ANTINOMIEN_URTEIL\\]"
+  },
+  {
+    "name": "antinomie-benannt",
+    "regex": "(?i)(Antinomie|unentscheidbar|Grenze\\s+der\\s+(?:reinen\\s+)?Vernunft)"
+  },
+  {
+    "name": "anti-scheinsynthese",
+    "regex": "(?i)(False\\s+Reconciliation|Scheinsynthese|Scheinkompromiss|billige[rn]?\\s+Kompromiss)"
+  }
+]

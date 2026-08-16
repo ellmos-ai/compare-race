@@ -1,0 +1,18 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[MAXIME\\][\\s\\S]*?\\[UNIVERSALISIERUNGS_PRUEFUNG\\][\\s\\S]*?\\[MENSCHHEITSZWECK_FORMEL\\][\\s\\S]*?\\[AUTONOMIE_VS_HETERONOMIE\\]"
+  },
+  {
+    "name": "universalisierung",
+    "regex": "(?i)(allgemeine[sn]?\\s+(?:Gesetz|Naturgesetz)|universalisier)"
+  },
+  {
+    "name": "zweckformel",
+    "regex": "(?i)(Mittel\\s+zum\\s+Zweck|Zweck\\s+an\\s+sich|bloß(?:es)?\\s+(?:als\\s+)?Mittel)"
+  },
+  {
+    "name": "pflicht-differenz",
+    "regex": "(?i)(pflichtgemäß[\\s\\S]{0,600}aus\\s+Pflicht|aus\\s+Pflicht[\\s\\S]{0,600}pflichtgemäß)"
+  }
+]

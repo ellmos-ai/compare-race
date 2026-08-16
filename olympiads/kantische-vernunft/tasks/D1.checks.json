@@ -1,0 +1,14 @@
+[
+  {
+    "name": "struktur",
+    "regex": "\\[DEDUKTION\\][\\s\\S]*?\\[REIHENFOLGE\\][\\s\\S]*?\\[KATEGORIALE_BEGRUENDUNG\\]"
+  },
+  {
+    "name": "kausalkette-x-y-z",
+    "regex": "(?is)(X\\W{0,30}(?:->|→|vor|dann|führt zu)\\W{0,30}Y[\\s\\S]{0,400}?Y\\W{0,30}(?:->|→|vor|dann|führt zu)\\W{0,30}Z|zuerst\\s+X[\\s\\S]{0,400}?dann\\s+Y[\\s\\S]{0,400}?(?:zuletzt|dann)\\s+Z)"
+  },
+  {
+    "name": "kategoriale-begrifflichkeit",
+    "regex": "(?i)(Gamma|strukturell\\s+unmöglich|Notwendigkeit|Kausalität)"
+  }
+]

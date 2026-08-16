@@ -29,12 +29,18 @@ Stand: 2026-08-16 · Version 0.1.0
       Join mit Judge-Urteil/Checks → Techniken-Wirkungs-Tabelle. Stärkster Fall:
       Twin-Modus (WARUM gewinnt eine Variante — nicht nur WELCHE). Transferbericht
       im Donor-Projekt: `_transfer/TRANSFERBERICHT_COMPARE_RACE_ANSCHLUSS_2026-08-16.md`.
-      **Gekoppelt (Nutzerentscheid 2026-08-16):** Der Bau dieses Adapters ist der
-      Trigger, prompt-listener als eigenes Repo auszukapseln (Rule of Three) —
-      vorher bleibt es bewusst im Lab.
-- [ ] **Kant-Olympiade** (`olympiads/kantische-vernunft/`): 7 Disziplinen aus dem
-      Paper „Mensch in der Maschine" v9 (D1–D7 des kantischen Tests) — Entwurf via
-      Codex, dann Task-Dateien + Checks; Start nur nach Nutzerfreigabe (Kontingente).
+      **Kopplung überholt (Nutzer-Revision, gleicher Tag):** prompt-listener wurde
+      als Fork-Master-Template bereits ausgekapselt (github.com/ellmos-ai/prompt-listener);
+      der Adapter zielt jetzt auf das veröffentlichte Repo.
+- [x] **Kant-Olympiade GEBAUT** (`olympiads/kantische-vernunft/`, 2026-08-16): 8
+      Disziplinen (D1–D7 = die sieben Dimensionen des kantischen Tests aus „Mensch
+      in der Maschine" v9, D8 = Distributional Rationality aus dem Erweiterungsteil).
+      Entwurf via agy (`ENTWURF-AGY.md`; Codex-Route 3× an Infrastruktur gescheitert:
+      2× CCC-Watchdog-Reap T-20260816-50, 1× defekter Codex-Sandbox-Runner
+      T-20260816-51). `tasks/D*.md` + per-discipline `D*.checks.json` (CLI-Feature
+      0.5.0) + `JUDGE-RUBRIK.md` + README mit methodischem Vorbehalt.
+      **START steht aus — nur nach Nutzerfreigabe (Kontingente):**
+      `compare-race olympiade olympiads/kantische-vernunft/tasks --mode sequential`
 
 ## Offen — vor Produktivnutzung
 
