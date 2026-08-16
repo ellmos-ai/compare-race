@@ -5,7 +5,7 @@
   },
   {
     "name": "kausalkette-x-y-z",
-    "regex": "(?is)(X\\W{0,30}(?:->|→|vor|dann|führt zu)\\W{0,30}Y[\\s\\S]{0,400}?Y\\W{0,30}(?:->|→|vor|dann|führt zu)\\W{0,30}Z|zuerst\\s+X[\\s\\S]{0,400}?dann\\s+Y[\\s\\S]{0,400}?(?:zuletzt|dann)\\s+Z)"
+    "regex": "(?is)(X(?:\\([^)]{0,12}\\))?\\W{0,30}(?:->|→|⟶|\\\\longrightarrow|vor|dann|führt zu)\\W{0,30}Y(?:\\([^)]{0,12}\\))?\\W{0,30}(?:->|→|⟶|\\\\longrightarrow|vor|dann|führt zu)\\W{0,30}Z|X(?:\\([^)]{0,12}\\))?\\W{0,30}(?:->|→|⟶|\\\\longrightarrow|vor|dann|führt zu)\\W{0,30}Y[\\s\\S]{0,400}?Y(?:\\([^)]{0,12}\\))?\\W{0,30}(?:->|→|⟶|\\\\longrightarrow|vor|dann|führt zu)\\W{0,30}Z|zuerst\\s+X[\\s\\S]{0,400}?dann\\s+Y[\\s\\S]{0,400}?(?:zuletzt|dann)\\s+Z)"
   },
   {
     "name": "kategoriale-begrifflichkeit",

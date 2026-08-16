@@ -39,8 +39,18 @@ Stand: 2026-08-16 · Version 0.1.0
       2× CCC-Watchdog-Reap T-20260816-50, 1× defekter Codex-Sandbox-Runner
       T-20260816-51). `tasks/D*.md` + per-discipline `D*.checks.json` (CLI-Feature
       0.5.0) + `JUDGE-RUBRIK.md` + README mit methodischem Vorbehalt.
-      **START steht aus — nur nach Nutzerfreigabe (Kontingente):**
-      `compare-race olympiade olympiads/kantische-vernunft/tasks --mode sequential`
+      **GELAUFEN + GEJUDGT 2026-08-16** (races/OLYMPIADE-20260816-085059.md):
+      codex 6 Gold, gemini 2 Gold + schnellste Spur durchgängig, opus-5 hors
+      concours (Umgebungskontamination). Check-Errata v2/v2.1 deterministisch
+      nachgefixt (D1 kompakte Kettennotation + Klammerzusätze, D2 LaTeX \cdot).
+- [ ] **COMA-claude-Adapter: Spur-Isolation** (Befund Kant-Olympiade 2026-08-16):
+      Die claude-Spur lief im Repo-cwd, sah Projekt-Hooks/CLAUDE.md und in D4
+      nachweislich `JUDGE-RUBRIK.md` + Checks (Selbstdeklaration der Spur) —
+      Naivitäts-Klausel verletzt, Spur musste hors concours gewertet werden.
+      Fix: Spuren in einem leeren Scratch-Arbeitsverzeichnis starten (kein
+      Projektkontext, keine Hooks, kein Zugriff auf Task-/Judge-Dateien);
+      zusätzlich Timeout je Spur konfigurierbar machen (300 s warfen 4 von 8
+      opus-Läufen und 1 codex-Lauf als DNF — Zeitbudget- statt Fähigkeitsbild).
 
 ## Offen — vor Produktivnutzung
 
