@@ -88,8 +88,14 @@ def run_race(
     models: list[str] | None = None,
     mode: str | None = None,
     repeats: int | None = None,
+    variants: dict[str, str] | None = None,
 ) -> RaceResult:
-    """Execute the plan. Requires COMA; raises with a helpful message otherwise."""
+    """Execute the plan. Requires COMA; raises with a helpful message otherwise.
+
+    ``variants`` maps variant name -> full prompt text (twin/clone mode). The
+    TASK token comes from the base ``prompt``; each lane is executed with its
+    variant's wording. Without variants every lane runs the base prompt.
+    """
     names = models or settings.model_names()
     plan = plan_race(
         prompt,
@@ -97,6 +103,7 @@ def run_race(
         system=settings.system or "unknown",
         mode=mode or settings.mode,
         repeats=repeats or settings.repeats,
+        variants=sorted(variants) if variants else None,
     )
     race = RaceResult(plan=plan)
     if not _coma_available():
@@ -106,11 +113,16 @@ def run_race(
             "with `compare-race record`."
         )
 
+    def lane_prompt(identity: RunIdentity) -> str:
+        if variants and identity.variant in variants:
+            return variants[identity.variant]
+        return prompt
+
     if plan.mode == "sequential":
         for identity in plan.runs:
-            race.results.append(_run_one(prompt, identity, settings))
+            race.results.append(_run_one(lane_prompt(identity), identity, settings))
     else:
-        race.results.extend(_run_parallel(prompt, plan, settings))
+        race.results.extend(_run_parallel_variants(plan, settings, lane_prompt))
     return race
 
 
@@ -144,14 +156,15 @@ def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunR
     )
 
 
-def _run_parallel(prompt: str, plan: RacePlan, settings: RaceSettings) -> list[RunResult]:
-    """All lanes at once via COMA process handles, capped at max_parallel."""
+def _run_parallel_variants(plan: RacePlan, settings: RaceSettings, lane_prompt) -> list[RunResult]:
+    """All lanes at once, capped at max_parallel; each lane gets its variant."""
     from concurrent.futures import ThreadPoolExecutor
 
     cap = max(1, settings.max_parallel)
     with ThreadPoolExecutor(max_workers=cap) as pool:
         futures = [
-            pool.submit(_run_one, prompt, identity, settings) for identity in plan.runs
+            pool.submit(_run_one, lane_prompt(identity), identity, settings)
+            for identity in plan.runs
         ]
         return [future.result() for future in futures]
 
@@ -170,6 +183,7 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
         f"system: {identity.system}",
         f"model: {identity.model}",
         f"run: {identity.run}",
+        f"variant: {identity.variant}",
         f"backend: {result.backend}",
         f"mode: {plan.mode}",
         f"started_utc: {result.started_utc}",

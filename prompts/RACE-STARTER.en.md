@@ -17,6 +17,18 @@ exactly one axis varies:**
 | **time** | drift of one model across versions/time |
 | several at once | describe, don't conclude |
 
+## The three race modes (axis discipline)
+
+| Mode | fixed | varies | Question | Evaluation |
+|---|---|---|---|---|
+| **Race** | task, variant | **model** | Which model runs the track best? | inferential |
+| **Twin/Clone** (`run --twin MODEL --variants-file v.json`) | model, task | **variant** (wording, role, handed-over skills, environment) | How do prompt/skills/role affect the SAME model? → derive rules for good prompts and skill hand-over | inferential |
+| **Olympiade** (`olympiade --tasks-dir …`) | field of models | model **and** task | multi-discipline contest | inferential per discipline; **medal table descriptive** — count, don't conclude |
+
+When models **and** variants vary at once, the tool demotes the run to
+descriptive (`uncontrolled` warning + note in the report) — a difference can no
+longer be attributed to a single cause.
+
 ## Fairness principles
 
 - **Exactly the same prompt for every lane.** The `prompt_token` hashes the exact

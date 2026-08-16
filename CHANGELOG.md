@@ -3,6 +3,25 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.4.0] - 2026-08-16
+
+Nutzerkonzept: drei Rennmodi entlang der Achsen.
+
+### Hinzugefuegt
+
+- **Sechste Achse `variant`** (wie die Aufgabe praesentiert wird: Wortlaut,
+  Rolle, mitgegebene Skills, Umgebung) -- Task-Token bleibt die Strecke.
+- **Twin/Clone-Modus** (`run --twin MODEL --variants-file v.json`): EIN Modell
+  gegen sich selbst, nur die Variantenachse variiert -- der Einfluss von
+  Prompt/Skills/Rolle wird kausal messbar; daraus lassen sich Regeln fuer
+  gute Prompts und Skill-Mitgabe ableiten.
+- **Olympiade** (`olympiade --tasks-dir ...`): mehrere Disziplinen (je
+  Task-Datei ein Race, dort nur Modellachse = inferenziell), darueber ein
+  DESKRIPTIVES Medaillenspiegel-Geruest (zaehlen, nicht schliessen -- dieselbe
+  Abstufung wie die system-auditor-Aggregationsleiter).
+- Achsen-Guard: Modelle UND Varianten zugleich -> uncontrolled-Warnung und
+  Deskriptiv-Hinweis im Bericht.
+
 ## [0.3.0] - 2026-08-16
 
 Nutzerklaerung eingearbeitet: Fairness braucht exakt gleiche Prompts, naive

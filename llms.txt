@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-08-16 | Version: 0.3.0 | Tests: 17 passed | Lint: ruff clean
+> Last-checked: 2026-08-16 | Version: 0.4.0 | Tests: 23 passed | Lint: ruff clean
 
 ## Core idea
 
@@ -26,7 +26,7 @@ agy/kimi, per-lane model override. Without COMA: model-manual path via
 
 - prompts/RACE-STARTER.de.md + .en.md   role prompt (starter = judge by default)
 - config/compare-race.config.example.json
-- CLI: compare-race config|plan|run|record|report
+- CLI: compare-race config|plan|run|record|report|olympiade (+ run --twin)
 - src/compare_race/: tokens, config, race, report, costs, cli
 
 ## Neighbours (optional)

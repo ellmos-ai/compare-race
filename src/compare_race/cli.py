@@ -18,6 +18,7 @@ from .race import (
     write_artifacts,
 )
 from .report import read_race_dir, write_scaffold
+from .report import write_scaffold as _ws  # noqa: F401 (re-export guard)
 from .tokens import RunIdentity, format_ts, plan_race, utcnow
 
 
@@ -61,15 +62,43 @@ def cmd_plan(args) -> int:
     return 0
 
 
+def _load_variants(args) -> dict[str, str] | None:
+    """variants-file: JSON {name: prompt-text | {file: path}}."""
+    raw_path = getattr(args, "variants_file", None)
+    if not raw_path:
+        return None
+    raw = json.loads(Path(raw_path).read_text(encoding="utf-8"))
+    variants: dict[str, str] = {}
+    for name, value in raw.items():
+        if isinstance(value, dict) and value.get("file"):
+            variants[str(name)] = Path(value["file"]).read_text(encoding="utf-8")
+        else:
+            variants[str(name)] = str(value)
+    return variants
+
+
 def cmd_run(args) -> int:
     s = _settings(args)
     if not s.races_dir:
         print("ERROR: races_dir is not configured", file=sys.stderr)
         return 1
     prompt = _read_prompt(args)
-    race = run_race(prompt, s,
-                    models=args.models.split(",") if args.models else None,
-                    mode=args.mode or None, repeats=args.repeats or None)
+    variants = _load_variants(args)
+    models = args.models.split(",") if args.models else None
+    if getattr(args, "twin", None):
+        # Twin/clone mode: ONE model against itself -- only the variant
+        # axis varies, so prompt/skills/role influence is attributable.
+        models = [args.twin]
+        if not variants or len(variants) < 2:
+            print("ERROR: twin mode needs --variants-file with >= 2 variants",
+                  file=sys.stderr)
+            return 1
+    race = run_race(prompt, s, models=models,
+                    mode=args.mode or None, repeats=args.repeats or None,
+                    variants=variants)
+    if race.plan.uncontrolled:
+        print("WARN: models AND variants vary -- results are descriptive, "
+              "no single-cause attribution", file=sys.stderr)
     evaluate_checks(race, s.checks)
     annotate_costs(race, prompt, s.getriebe_path, settings=s)
     base = write_artifacts(race, s.races_dir, prompt)
@@ -104,6 +133,58 @@ def cmd_record(args) -> int:
     return 0
 
 
+def cmd_olympiade(args) -> int:
+    """Several disciplines (task files), one field of models.
+
+    Per task a normal race (inferential: only the model axis varies inside
+    one discipline). Across tasks the aggregate is DESCRIPTIVE -- a medal
+    table may rank, but must not attribute a cause; that is the same
+    demotion rule the system-auditor enforces for multi-axis aggregation.
+    """
+    s = _settings(args)
+    if not s.races_dir:
+        print("ERROR: races_dir is not configured", file=sys.stderr)
+        return 1
+    tasks = sorted(Path(args.tasks_dir).glob("*.md"))
+    if len(tasks) < 2:
+        print("ERROR: an olympiad needs >= 2 task files (*.md)", file=sys.stderr)
+        return 1
+    models = args.models.split(",") if args.models else s.model_names()
+    race_ids, failures = [], 0
+    for task_file in tasks:
+        prompt = task_file.read_text(encoding="utf-8")
+        race = run_race(prompt, s, models=models, mode=args.mode or None,
+                        repeats=args.repeats or None)
+        annotate_costs(race, prompt, s.getriebe_path, settings=s)
+        evaluate_checks(race, s.checks)
+        write_artifacts(race, s.races_dir, prompt)
+        write_scaffold(race, s.races_dir, prompt)
+        race_ids.append((task_file.stem, race.plan.race_id))
+        failures += sum(1 for r in race.results if not r.ok)
+        print(f"discipline {task_file.stem}: {race.plan.race_id}")
+    # Descriptive aggregate scaffold -- the judge fills the medals per
+    # discipline from each RACE.md, the total row stays a count, not a cause.
+    lines = [
+        f"# OLYMPIADE {race_ids[0][1].split('--')[0]} — {len(tasks)} Disziplinen, "
+        f"{len(models)} Modelle",
+        "",
+        "> **Deskriptiv:** Über Disziplinen hinweg variieren Aufgabe UND Modell —",
+        "> der Medaillenspiegel zählt Siege je Disziplin (dort ist nur die",
+        "> Modellachse variiert), erklärt aber keine Ursache über alles.",
+        "",
+        "| Disziplin | Race | Sieger (aus RACE.md-Urteil) |",
+        "|---|---|---|",
+    ]
+    lines += [f"| {stem} | {rid} | |" for stem, rid in race_ids]
+    lines += ["", "## Medaillenspiegel (zählen, nicht schließen)", "",
+              "| Modell | Siege | Podium |", "|---|---|---|", ""]
+    target = Path(s.races_dir) / f"OLYMPIADE-{race_ids[0][1].split('--')[0]}.md"
+    target.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"olympiade scaffold: {target}")
+    print("next: judge each discipline's RACE.md, then fill the medal table")
+    return 0 if failures == 0 else 2
+
+
 def cmd_report(args) -> int:
     runs = read_race_dir(args.race_dir)
     print(json.dumps({
@@ -134,7 +215,21 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("--models", default=None, help="comma list; default: config lanes")
         p.add_argument("--mode", default=None, choices=["sequential", "parallel"])
         p.add_argument("--repeats", type=int, default=None)
+        p.add_argument("--variants-file", default=None,
+                       help="JSON {name: prompt | {file: path}} -- the variant axis")
+        p.add_argument("--twin", default=None, metavar="MODEL",
+                       help="twin/clone mode: one model against itself, "
+                       "variants required")
         p.set_defaults(func=func)
+
+    p = sub.add_parser("olympiade", help="several tasks, one field of models -- "
+                       "per-task races plus a descriptive medal scaffold")
+    p.add_argument("--tasks-dir", required=True,
+                   help="directory of *.md task prompts (one race per file)")
+    p.add_argument("--models", default=None)
+    p.add_argument("--mode", default=None, choices=["sequential", "parallel"])
+    p.add_argument("--repeats", type=int, default=None)
+    p.set_defaults(func=cmd_olympiade)
 
     p = sub.add_parser("record", help="file one lane's output model-manually (no COMA)")
     p.add_argument("--prompt", default=None)

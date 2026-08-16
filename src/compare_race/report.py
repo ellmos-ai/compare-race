@@ -75,16 +75,25 @@ def scaffold(race: RaceResult, prompt: str) -> str:
         + (" (Stoppuhr: Laufzeiten sauber je Spur)" if plan.mode == "sequential"
            else " (echtes Rennen: Laufzeiten teilen sich die Maschine)"),
         "",
-        "## Prompt",
+        "## Prompt (Task)",
         "",
         "> " + prompt.strip().replace("\n", "\n> "),
         "",
+        *([
+            "> ⚠️ **Deskriptiv:** Modelle UND Varianten variieren zugleich — ein",
+            "> Unterschied ist keiner einzelnen Ursache zuschreibbar.",
+            "",
+        ] if getattr(race.plan, "uncontrolled", False) else []),
         "## Spuren (gemessen)",
         "",
-        "| Modell | Lauf | Backend | ok | Checks | Latenz s | ~Kosten USD (Schätzung) | Output |",
-        "|---|---|---|---|---|---|---|---|",
+        ("| Modell | Variante | Lauf | Backend | ok | Checks | Latenz s "
+         "| ~Kosten USD (Schätzung) | Output |"),
+        "|---|---|---|---|---|---|---|---|---|",
     ]
-    for r in sorted(race.results, key=lambda x: (x.identity.model, x.identity.run)):
+    def _order(x):
+        return (x.identity.model, x.identity.variant, x.identity.run)
+
+    for r in sorted(race.results, key=_order):
         cost = f"~{r.est_cost_usd} ({r.cost_gear})" if getattr(r, "cost_gear", "") else "—"
         if getattr(r, "checks_passed", None) is not None:
             total = len(r.checks_passed or []) + len(r.checks_failed or [])
@@ -94,7 +103,7 @@ def scaffold(race: RaceResult, prompt: str) -> str:
         else:
             checks = "—"
         lines.append(
-            f"| {r.identity.model} | {r.identity.run} | {r.backend} | "
+            f"| {r.identity.model} | {r.identity.variant} | {r.identity.run} | {r.backend} | "
             f"{'ja' if r.ok else 'NEIN'} | {checks} | {r.latency_s} | {cost} | "
             f"{r.identity.filename()} |"
         )

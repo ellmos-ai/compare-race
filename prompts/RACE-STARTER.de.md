@@ -18,6 +18,18 @@ wenn genau eine Achse variiert:**
 | **time** | Drift eines Modells über Versionen/Zeit |
 | mehrere zugleich | beschreiben, nicht schließen |
 
+## Die drei Rennmodi (Achsen-Disziplin)
+
+| Modus | fix | variiert | Frage | Auswertung |
+|---|---|---|---|---|
+| **Race** | Aufgabe, Variante | **Modell** | Welches Modell fährt die Strecke am besten? | inferenziell |
+| **Twin/Clone** (`run --twin MODEL --variants-file v.json`) | Modell, Aufgabe | **Variante** (Wortlaut, Rolle, mitgegebene Skills, Umgebung) | Wie wirken Prompt/Skills/Rolle auf DASSELBE Modell? → daraus Regeln für gute Prompts und Skill-Mitgabe ableiten | inferenziell |
+| **Olympiade** (`olympiade --tasks-dir …`) | Teilnehmerfeld | Modell **und** Aufgabe | Mehrkampf über Disziplinen | je Disziplin inferenziell; **Medaillenspiegel deskriptiv** — zählen, nicht schließen |
+
+Variieren Modelle **und** Varianten zugleich, stuft das Werkzeug den Lauf auf
+deskriptiv herab (`uncontrolled`-Warnung + Hinweis im Bericht) — ein Unterschied
+ist dann keiner einzelnen Ursache zuschreibbar.
+
 ## Fairness-Grundsätze
 
 - **Exakt derselbe Prompt für alle Spuren.** Der `prompt_token` hasht den exakten
