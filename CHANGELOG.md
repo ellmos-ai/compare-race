@@ -3,6 +3,22 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.3.0] - 2026-08-16
+
+Nutzerklaerung eingearbeitet: Fairness braucht exakt gleiche Prompts, naive
+Starts und nachpruefbare, moeglichst deterministische Auswertung.
+
+### Hinzugefuegt
+
+- **Deterministische Format-Checks** (`checks[]` in der Config, z. B.
+  {name, regex}): mechanisch je Spur ausgewertet, BEVOR ein Judge-Urteil
+  existiert; Ergebnis wandert in Front-Matter (`checks_passed/failed`) und
+  Messtabelle. Jeder kann sie aus den Artefakten reproduzieren.
+- **Auswertungs-Leiter dokumentiert** (deterministisch > belegt > subjektiv)
+  und **Naivitaets-Klausel**: Spuren starten als frische Prozesse ohne
+  Sessionkontext (coma-Spawn) -- der Judge ist kontextbeladen; selbst ein
+  gleichnamiges Modell ist deshalb nie "derselbe" Teilnehmer.
+
 ## [0.2.1] - 2026-08-16
 
 ### Behoben

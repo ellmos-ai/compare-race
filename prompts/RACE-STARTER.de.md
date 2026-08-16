@@ -18,6 +18,25 @@ wenn genau eine Achse variiert:**
 | **time** | Drift eines Modells über Versionen/Zeit |
 | mehrere zugleich | beschreiben, nicht schließen |
 
+## Fairness-Grundsätze
+
+- **Exakt derselbe Prompt für alle Spuren.** Der `prompt_token` hasht den exakten
+  Text — ein geändertes Komma ist ein anderes Rennen. Niemals je Spur umformulieren.
+- **Naive Starts.** Jede Spur läuft als frischer Prozess ohne Sessionkontext (so
+  spawnt coma). Deshalb gilt: **Identität ≠ Zustand** — selbst ein Modell mit deinem
+  Namen ist als naiv startende Spur nie „derselbe" Teilnehmer wie du als
+  kontextbeladener Judge. Ungleiche Startzustände (eine Spur mit Vorwissen) machen
+  das Rennen unfair und sind zu nennen.
+- **Auswertungs-Leiter — deterministisch vor belegt vor subjektiv:**
+  1. **Deterministisch** (jeder kann es aus den Artefakten reproduzieren): Latenz,
+     ok/Ausfall, Output-Länge, konfigurierte Format-Checks (`checks[]` in der
+     Config — Regex je Kriterium, mechanisch je Spur ausgewertet).
+  2. **Belegt:** Jede Rubrik-Wertung des Judges braucht ein nachprüfbares Zitat
+     oder Kriterium aus der RUN-Datei — keine Wertung ohne Fundstelle.
+  3. **Subjektiv:** bleibt erlaubt, wird aber als Geschmacksurteil gekennzeichnet.
+  Wo ein Kriterium mechanisch prüfbar ist (z. B. „genau 3 Stichpunkte"), gehört es
+  als Check in die Config, nicht in die Judge-Meinung.
+
 ## Ablauf
 
 1. **Config prüfen:** `compare-race config` — Spuren (models), Modus, `races_dir`.

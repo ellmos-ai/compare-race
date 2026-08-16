@@ -34,5 +34,12 @@
   ],
   "_comment_models": "Beliebig viele Spuren (mehr als zwei ausdruecklich vorgesehen). name = Identitaets-Token der Spur. backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override. allow_unverified: kimi ist in coma ein ungeprueftes Geruest -- bewusster Opt-in je Spur. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent.",
   "getriebe_path": "",
-  "_comment_getriebe": "Optional: Pfad zu clutchs getriebe.json fuer Kostenraten. Leer = Konventionspfade/ENV CLUTCH_GETRIEBE probieren; fehlt der Katalog, bleiben die Kostenzellen leer (kein Raten). est_cost_usd ist IMMER eine Schaetzung (Zeichen/4 als Token-Naeherung), nie eine Messung."
+  "_comment_getriebe": "Optional: Pfad zu clutchs getriebe.json fuer Kostenraten. Leer = Konventionspfade/ENV CLUTCH_GETRIEBE probieren; fehlt der Katalog, bleiben die Kostenzellen leer (kein Raten). est_cost_usd ist IMMER eine Schaetzung (Zeichen/4 als Token-Naeherung), nie eine Messung.",
+  "checks": [
+    {
+      "name": "drei-stichpunkte",
+      "regex": "^- .+\n- .+\n- .+$"
+    }
+  ],
+  "_comment_checks": "Deterministische Format-Checks (Regex je Kriterium), mechanisch je Spur ausgewertet BEVOR ein Judge-Urteil existiert -- Stufe 1 der Auswertungs-Leiter (deterministisch > belegt > subjektiv). Aus den Artefakten von jedem reproduzierbar. Was mechanisch pruefbar ist, gehoert hierher, nicht in die Judge-Meinung."
 }

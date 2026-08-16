@@ -42,6 +42,10 @@ class RaceSettings:
     timeout_seconds: int = 600
     #: clutch gear catalogue for cost rates -- detected, never assumed.
     getriebe_path: str = ""
+    #: Deterministic format checks, evaluated mechanically per lane BEFORE any
+    #: judge opinion: [{"name": ..., "regex": ...}]. A check passes when
+    #: re.search matches the output. Reproducible by anyone from the artefacts.
+    checks: list[dict] = field(default_factory=list)
     models: list[ModelEntry] = field(default_factory=list)
     source: str = "defaults"
     notes: list[str] = field(default_factory=list)
@@ -110,6 +114,10 @@ def load(path: str | Path | None = None, home: str | None = None) -> RaceSetting
         max_parallel=max(1, int(data.get("max_parallel", 3) or 3)),
         timeout_seconds=max(1, int(data.get("timeout_seconds", 600) or 600)),
         getriebe_path=str(data.get("getriebe_path", "")).replace(HOME_PLACEHOLDER, resolved_home),
+        checks=[
+            entry for entry in data.get("checks") or []
+            if isinstance(entry, dict) and entry.get("name") and entry.get("regex")
+        ],
         models=models,
         source=str(found),
         notes=notes,

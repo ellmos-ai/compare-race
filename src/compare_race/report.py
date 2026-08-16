@@ -81,14 +81,22 @@ def scaffold(race: RaceResult, prompt: str) -> str:
         "",
         "## Spuren (gemessen)",
         "",
-        "| Modell | Lauf | Backend | ok | Latenz s | ~Kosten USD (Schätzung) | Output |",
-        "|---|---|---|---|---|---|---|",
+        "| Modell | Lauf | Backend | ok | Checks | Latenz s | ~Kosten USD (Schätzung) | Output |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for r in sorted(race.results, key=lambda x: (x.identity.model, x.identity.run)):
         cost = f"~{r.est_cost_usd} ({r.cost_gear})" if getattr(r, "cost_gear", "") else "—"
+        if getattr(r, "checks_passed", None) is not None:
+            total = len(r.checks_passed or []) + len(r.checks_failed or [])
+            checks = f"{len(r.checks_passed or [])}/{total}"
+            if r.checks_failed:
+                checks += " (-" + ", ".join(r.checks_failed) + ")"
+        else:
+            checks = "—"
         lines.append(
             f"| {r.identity.model} | {r.identity.run} | {r.backend} | "
-            f"{'ja' if r.ok else 'NEIN'} | {r.latency_s} | {cost} | {r.identity.filename()} |"
+            f"{'ja' if r.ok else 'NEIN'} | {checks} | {r.latency_s} | {cost} | "
+            f"{r.identity.filename()} |"
         )
 
     # Variance block: only when repetitions exist -- with n=1 a spread would

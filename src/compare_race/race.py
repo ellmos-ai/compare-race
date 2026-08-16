@@ -44,6 +44,10 @@ class RunResult:
     #: chars/4, an estimate by construction -- never a measurement.
     cost_gear: str = ""
     est_cost_usd: float | None = None
+    #: Deterministic check results -- mechanical, reproducible from the
+    #: artefacts, evaluated before any judge opinion exists.
+    checks_passed: list[str] = None  # type: ignore[assignment]
+    checks_failed: list[str] = None  # type: ignore[assignment]
 
 
 @dataclass
@@ -176,6 +180,9 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
     if result.cost_gear:
         lines.append(f"cost_gear: {result.cost_gear}")
         lines.append(f"est_cost_usd: {result.est_cost_usd}")
+    if result.checks_passed is not None or result.checks_failed is not None:
+        lines.append(f"checks_passed: [{', '.join(result.checks_passed or [])}]")
+        lines.append(f"checks_failed: [{', '.join(result.checks_failed or [])}]")
     lines.append("---")
     return "\n".join(lines) + "\n"
 
@@ -211,6 +218,30 @@ def annotate_costs(
             continue
         result.cost_gear = rate.gear
         result.est_cost_usd = rate.estimate_usd(len(prompt), len(result.output))
+
+
+def evaluate_checks(race: RaceResult, checks: list[dict]) -> None:
+    """Deterministic format checks, in place -- the mechanical tier of the
+    evaluation ladder (deterministic > evidenced > subjective). A check passes
+    when its regex matches the lane output; anyone can re-run this from the
+    artefacts and get the same result. Failed lanes fail every check.
+    """
+    import re
+
+    if not checks:
+        return
+    for result in race.results:
+        passed, failed = [], []
+        for check in checks:
+            name = str(check.get("name"))
+            try:
+                hit = result.ok and re.search(str(check.get("regex")), result.output,
+                                              re.MULTILINE) is not None
+            except re.error:
+                failed.append(f"{name}(regex-invalid)")
+                continue
+            (passed if hit else failed).append(name)
+        result.checks_passed, result.checks_failed = passed, failed
 
 
 def write_artifacts(race: RaceResult, races_dir: str | Path, prompt: str) -> Path:
