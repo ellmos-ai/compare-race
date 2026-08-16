@@ -43,6 +43,48 @@ Stand: 2026-08-16 · Version 0.1.0
       codex 6 Gold, gemini 2 Gold + schnellste Spur durchgängig, opus-5 hors
       concours (Umgebungskontamination). Check-Errata v2/v2.1 deterministisch
       nachgefixt (D1 kompakte Kettennotation + Klammerzusätze, D2 LaTeX \cdot).
+## Retest-Plan aus der Methodenprüfung (2026-08-16)
+
+Abgeleitet aus Vokabel-Scan, Schummel-/Testsituations-Analyse und
+Forensik-Lücke (Methodenanalyse: um-bruch.org, `analysen/kant-olympiade-methodenpruefung`).
+
+**Werkzeug (compare-race):**
+
+- [ ] **Bare-Mode-Spuren:** Option, Spuren ohne Datei-/Netz-Werkzeuge zu fahren
+      (API-direkt bzw. CLI mit deaktivierten Tools). Der einzig wasserdichte
+      Zustand gegen Mitlesen; lane_workdir + Lane-Logs sind nur
+      Gelegenheitsreduktion + Nachweisbarkeit.
+- [ ] **prompt-listener-Audit-Adapter:** `_lane-logs/*.log` → AgentEvent v2
+      (Tools je Disziplin, gelesene Pfade, Abstinenz-Beleg); erweitert den
+      bestehenden Export-Adapter-Punkt oben um den Forensik-Zweck.
+- [ ] **Evaluation-Awareness-Kontrolle:** Twin-Lauf „mit expliziter
+      Test-Rahmung" vs. „kontextloser Direktauftrag" — misst das
+      Verhaltensdelta; Judge-Rubrik um Marker „Spur thematisiert
+      Testcharakter?" ergänzen.
+- [ ] **`--timeout` auch für `run`** (bisher nur `olympiade`).
+- [ ] **Judge-Härtung:** Option Doppel-Judge (zweites Modell, unabhängig) mit
+      Abgleich; Judge ≠ Autor der Checks als empfohlene Konstellation
+      dokumentieren.
+
+**Kant-Olympiade (Disziplinen, für Retests):**
+
+- [ ] **Deconfound v2 für D1/D3/D4:** entkantisierte Zweitfassungen (neutrale
+      Abschnittsmarker wie [HERLEITUNG]/[GESAMTURTEIL]/[GRENZANALYSE], keine
+      Modalkategorien-Vokabeln, kein „Bedingungen der Möglichkeit") — dann
+      **Twin-Läufe geprimt vs. neutral**: erst die Differenz trennt
+      Vokabel-Echo von Eigenleistung.
+- [ ] **D6-Familie ausbauen:** weitere adversarielle ToM-Perturbationen — die
+      unkonfundierte Disziplin ist der stärkste saubere Messkern.
+- [ ] **Checks v3:** D5 `anti-scheinsynthese` ist semantisch zu schwach
+      (wörtliche Begriffs-Erwähnung genügt) → verfeinern oder als Judge-only
+      markieren; D1-Ketten-Check gegen weitere Notationen testen.
+- [ ] **Konfund-Metadaten je Task:** `tasks/D*.meta.json` mit
+      `confounded: true/false` + Vokabelliste, damit Berichte den Status
+      automatisch ausweisen.
+- [ ] **Retest-Protokoll:** alle 3 Spuren, `--timeout 600`, Lane-Logs aktiv,
+      `--repeats 2` (Varianz), lane_workdir gesetzt; nach Verfügbarkeit
+      Bare-Mode zusätzlich API-direkte Spuren als Agent-vs-roh-Vergleich.
+
 - [ ] **COMA-claude-Adapter: Spur-Isolation** (Befund Kant-Olympiade 2026-08-16):
       Die claude-Spur lief im Repo-cwd, sah Projekt-Hooks/CLAUDE.md und in D4
       nachweislich `JUDGE-RUBRIK.md` + Checks (Selbstdeklaration der Spur) —
