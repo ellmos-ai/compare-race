@@ -98,7 +98,9 @@ def test_lane_model_id_beats_backend_fallback(tmp_path):
         "claude-opus": {"model_id": "claude-opus-5",
                         "kosten_input_1k": 0.015, "kosten_output_1k": 0.075},
     }}), encoding="utf-8")
-    settings = RaceSettings(models=[ModelEntry(name="opus-5", backend="claude", model="claude-opus-5")])
+    settings = RaceSettings(
+        models=[ModelEntry(name="opus-5", backend="claude", model="claude-opus-5")]
+    )
     plan = plan_race("p", models=["opus-5"], system="H1")
     race = RaceResult(plan=plan, results=[_result(plan.runs[0])])
     race.results[0].backend = "claude"
