@@ -81,14 +81,48 @@ def scaffold(race: RaceResult, prompt: str) -> str:
         "",
         "## Spuren (gemessen)",
         "",
-        "| Modell | Lauf | Backend | ok | Latenz s | Output |",
-        "|---|---|---|---|---|---|",
+        "| Modell | Lauf | Backend | ok | Latenz s | ~Kosten USD (Schätzung) | Output |",
+        "|---|---|---|---|---|---|---|",
     ]
     for r in sorted(race.results, key=lambda x: (x.identity.model, x.identity.run)):
+        cost = f"~{r.est_cost_usd} ({r.cost_gear})" if getattr(r, "cost_gear", "") else "—"
         lines.append(
             f"| {r.identity.model} | {r.identity.run} | {r.backend} | "
-            f"{'ja' if r.ok else 'NEIN'} | {r.latency_s} | {r.identity.filename()} |"
+            f"{'ja' if r.ok else 'NEIN'} | {r.latency_s} | {cost} | {r.identity.filename()} |"
         )
+
+    # Variance block: only when repetitions exist -- with n=1 a spread would
+    # feign precision. Latency spread is measured; output-length spread is a
+    # cheap proxy the judge refines qualitatively.
+    per_model: dict[str, list] = {}
+    for r in race.results:
+        per_model.setdefault(r.identity.model, []).append(r)
+    if any(len(v) > 1 for v in per_model.values()):
+        lines += [
+            "",
+            "## Varianz je Modell (Wiederholungsachse)",
+            "",
+            "| Modell | n | ok | Latenz min/Ø/max s | Output-Länge min/Ø/max |",
+            "|---|---|---|---|---|",
+        ]
+        for model, runs in sorted(per_model.items()):
+            lat = [x.latency_s for x in runs]
+            length = [len(x.output) for x in runs if x.ok]
+            ok_n = sum(1 for x in runs if x.ok)
+            lat_cell = f"{min(lat)}/{round(sum(lat) / len(lat), 1)}/{max(lat)}"
+            len_cell = (
+                f"{min(length)}/{round(sum(length) / len(length))}/{max(length)}"
+                if length else "—"
+            )
+            lines.append(
+                f"| {model} | {len(runs)} | {ok_n}/{len(runs)} | {lat_cell} | {len_cell} |"
+            )
+        lines += [
+            "",
+            "> Nur die **run**-Achse variiert innerhalb einer Zeile — Streuung hier ist",
+            "> Modell-Varianz, kein Modellvergleich. Der Vergleich zwischen den Zeilen",
+            "> gehört dem Judge.",
+        ]
     tally = mechanical_tally([r.output for r in ok_results])
     lines += [
         "",

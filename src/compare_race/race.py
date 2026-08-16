@@ -40,6 +40,10 @@ class RunResult:
     started_utc: str
     finished_utc: str
     error: str = ""
+    #: clutch rate lookup, when the catalogue is present. est_ = derived from
+    #: chars/4, an estimate by construction -- never a measurement.
+    cost_gear: str = ""
+    est_cost_usd: float | None = None
 
 
 @dataclass
@@ -70,7 +74,8 @@ def _spawner(entry: ModelEntry):
 
     kwargs = {"model": entry.model} if entry.model else {}
     adapter = get_adapter(entry.backend, **kwargs)
-    return Spawner(adapter)
+    # kimi is a scaffold adapter: COMA refuses it without the per-lane opt-in.
+    return Spawner(adapter, allow_unverified=entry.allow_unverified)
 
 
 def run_race(
@@ -167,9 +172,31 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
         f"finished_utc: {result.finished_utc}",
         f"latency_s: {result.latency_s}",
         f"ok: {'true' if result.ok else 'false'}",
-        "---",
     ]
+    if result.cost_gear:
+        lines.append(f"cost_gear: {result.cost_gear}")
+        lines.append(f"est_cost_usd: {result.est_cost_usd}")
+    lines.append("---")
     return "\n".join(lines) + "\n"
+
+
+def annotate_costs(race: RaceResult, prompt: str, getriebe_path: str = "") -> None:
+    """Attach clutch cost rates + char-based estimates to each lane, in place.
+
+    Silent no-op when the catalogue is absent (clutch is a neighbour, detected
+    not assumed) or a lane's model is unknown to it.
+    """
+    from .costs import load_rates, rate_for
+
+    rates = load_rates(getriebe_path or None)
+    if not rates:
+        return
+    for result in race.results:
+        rate = rate_for(rates, result.identity.model, result.backend)
+        if rate is None:
+            continue
+        result.cost_gear = rate.gear
+        result.est_cost_usd = rate.estimate_usd(len(prompt), len(result.output))
 
 
 def write_artifacts(race: RaceResult, races_dir: str | Path, prompt: str) -> Path:
@@ -187,4 +214,7 @@ def write_artifacts(race: RaceResult, races_dir: str | Path, prompt: str) -> Pat
     return base
 
 
-__all__ = ["RaceResult", "RunResult", "run_front_matter", "run_race", "write_artifacts"]
+__all__ = [
+    "RaceResult", "RunResult", "annotate_costs",
+    "run_front_matter", "run_race", "write_artifacts",
+]

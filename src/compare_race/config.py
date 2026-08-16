@@ -26,6 +26,9 @@ class ModelEntry:
     name: str  # identity token, e.g. "opus-5", "codex", "gemini-3.7-flash"
     backend: str  # coma adapter: claude | codex | agy | kimi
     model: str = ""  # per-call model override for the adapter, "" = adapter default
+    #: COMA refuses unverified adapters (today: kimi) unless told otherwise --
+    #: a per-lane, deliberate opt-in, never a global default.
+    allow_unverified: bool = False
 
 
 @dataclass
@@ -37,6 +40,8 @@ class RaceSettings:
     judge: str = JUDGE_STARTER
     max_parallel: int = 3
     timeout_seconds: int = 600
+    #: clutch gear catalogue for cost rates -- detected, never assumed.
+    getriebe_path: str = ""
     models: list[ModelEntry] = field(default_factory=list)
     source: str = "defaults"
     notes: list[str] = field(default_factory=list)
@@ -88,6 +93,7 @@ def load(path: str | Path | None = None, home: str | None = None) -> RaceSetting
             name=str(entry.get("name", "")),
             backend=str(entry.get("backend", "")),
             model=str(entry.get("model", "")),
+            allow_unverified=bool(entry.get("allow_unverified", False)),
         )
         for entry in data.get("models") or []
         if isinstance(entry, dict) and entry.get("name") and entry.get("backend")
@@ -103,6 +109,7 @@ def load(path: str | Path | None = None, home: str | None = None) -> RaceSetting
         judge=str(data.get("judge", JUDGE_STARTER)) or JUDGE_STARTER,
         max_parallel=max(1, int(data.get("max_parallel", 3) or 3)),
         timeout_seconds=max(1, int(data.get("timeout_seconds", 600) or 600)),
+        getriebe_path=str(data.get("getriebe_path", "")).replace(HOME_PLACEHOLDER, resolved_home),
         models=models,
         source=str(found),
         notes=notes,

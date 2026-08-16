@@ -9,7 +9,7 @@ from pathlib import Path
 
 from . import __version__
 from .config import load as load_config
-from .race import RaceResult, RunResult, run_race, write_artifacts
+from .race import RaceResult, RunResult, annotate_costs, run_race, write_artifacts
 from .report import read_race_dir, write_scaffold
 from .tokens import RunIdentity, format_ts, plan_race, utcnow
 
@@ -63,6 +63,7 @@ def cmd_run(args) -> int:
     race = run_race(prompt, s,
                     models=args.models.split(",") if args.models else None,
                     mode=args.mode or None, repeats=args.repeats or None)
+    annotate_costs(race, prompt, s.getriebe_path)
     base = write_artifacts(race, s.races_dir, prompt)
     target = write_scaffold(race, s.races_dir, prompt)
     failed = [r for r in race.results if not r.ok]

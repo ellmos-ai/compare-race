@@ -2,7 +2,6 @@
   "_comment": "Kopieren nach compare-race.config.json. Gefunden ueber --config, COMPARE_RACE_CONFIG, ./, ./config/, ~/.compare-race/.",
   "_comment_modes": "sequential = Stoppuhr (saubere Einzelmessung je Spur) | parallel = echtes Rennen (Latenz teilt sich die Maschine). Die Stoppuhr ist nur ein Bild: Zeit ist EINE Dimension -- das Urteil traegt Qualitaet/Korrektheit/Vollstaendigkeit/Anweisungstreue/Kosten dazu.",
   "_comment_judge": "judge=starter: das startende Modell urteilt (Default, Nutzerentscheidung 2026-08-16). Alternativ ein fester Modellname.",
-
   "system": "<HOSTNAME>",
   "races_dir": "<HOME>/OneDrive/.TOPICS/.AI/.MODULES/.ORCHESTRATION/compare-race/races",
   "mode": "sequential",
@@ -10,11 +9,30 @@
   "judge": "starter",
   "max_parallel": 3,
   "timeout_seconds": 600,
-
   "models": [
-    { "name": "opus-5",  "backend": "claude", "model": "claude-opus-5" },
-    { "name": "codex",   "backend": "codex",  "model": "" },
-    { "name": "gemini",  "backend": "agy",    "model": "" }
+    {
+      "name": "opus-5",
+      "backend": "claude",
+      "model": "claude-opus-5"
+    },
+    {
+      "name": "codex",
+      "backend": "codex",
+      "model": ""
+    },
+    {
+      "name": "gemini",
+      "backend": "agy",
+      "model": ""
+    },
+    {
+      "name": "kimi",
+      "backend": "kimi",
+      "model": "",
+      "allow_unverified": true
+    }
   ],
-  "_comment_models": "name = Identitaets-Token der Spur (landet im Dateinamen). backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override, leer = Adapter-Default. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent."
+  "_comment_models": "Beliebig viele Spuren (mehr als zwei ausdruecklich vorgesehen). name = Identitaets-Token der Spur. backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override. allow_unverified: kimi ist in coma ein ungeprueftes Geruest -- bewusster Opt-in je Spur. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent.",
+  "getriebe_path": "",
+  "_comment_getriebe": "Optional: Pfad zu clutchs getriebe.json fuer Kostenraten. Leer = Konventionspfade/ENV CLUTCH_GETRIEBE probieren; fehlt der Katalog, bleiben die Kostenzellen leer (kein Raten). est_cost_usd ist IMMER eine Schaetzung (Zeichen/4 als Token-Naeherung), nie eine Messung."
 }
