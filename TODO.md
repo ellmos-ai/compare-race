@@ -54,6 +54,12 @@ Forensik-Lücke (Methodenanalyse: um-bruch.org, `analysen/kant-olympiade-methode
       (API-direkt bzw. CLI mit deaktivierten Tools). Der einzig wasserdichte
       Zustand gegen Mitlesen; lane_workdir + Lane-Logs sind nur
       Gelegenheitsreduktion + Nachweisbarkeit.
+- [ ] **Hook-Systeme je Spur deaktivieren** (User-Einwand 2026-08-16, belegt):
+      Die claude-Laufzeitumgebung hat 6 memoryhooker- + 4 workflowhooker-Hooks
+      eingehängt (Memory-Injektion bei SessionStart u. a.) — sie liefen auch in
+      der isolierten Nachmessung mit. Für neutrale Läufe: Hooks je Spur
+      abschalten (z. B. Settings-Override/Env beim Spawn) oder Bare-Mode/reine
+      API; Hook-Status je Spur im RUN-Front-Matter dokumentieren.
 - [ ] **prompt-listener-Audit-Adapter:** `_lane-logs/*.log` → AgentEvent v2
       (Tools je Disziplin, gelesene Pfade, Abstinenz-Beleg); erweitert den
       bestehenden Export-Adapter-Punkt oben um den Forensik-Zweck.
