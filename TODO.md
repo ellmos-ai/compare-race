@@ -11,15 +11,20 @@
 
 Stand: 2026-08-16 · Version 0.1.0
 
+## Erledigt beim Fertigbau (2026-08-16)
+
+- [x] **Smoke-Race** codex (82.7s) + gemini/agy (76.1s), sequential, beide grün;
+      Judge-Urteil modellmanuell gefällt — fand sofort den COMA-API-Fehler (Fix 00e11f1).
+- [x] Bundle-Anmeldung im agent-orchestration-bundle (optional, declared-component)
+      + Registry-Binding; Quell-Commit 0baeb7f, Projektion byte-verifiziert.
+- [x] Pointer-Skill DE+EN in der Skill-Bibliothek (Quality 4.8/5), deployed.
+- [x] OneDrive-Spiegel + Katalog (55 Module) + Remote/Publish: Final Gate 10/10,
+      https://github.com/ellmos-ai/compare-race (public, Tag v0.1.0).
+
 ## Offen — vor Produktivnutzung
 
-- [ ] **Smoke-Race** mit echten Spuren (codex+agy) — Praxistest des COMA-Pfads.
 - [ ] Kosten je Spur erfassen (clutch getriebe.json anbinden) — bislang nur Latenz.
-- [ ] Bundle-Rolle `output-arbitration` im agent-orchestration-bundle anmelden
-      (Quell-Repo bundle-recipes-v1, Hash-Kaskade, Projektion — Verfahren geübt).
-- [ ] Pointer-Skill `compare-race` in der Skill-Bibliothek (type: pointer).
-- [ ] OneDrive-Spiegel (.MODULES/.ORCHESTRATION/compare-race) + Katalog + Remote/Publish
-      (Final Gate wie system-auditor).
+- [ ] Größeres Rennen mit repeats > 1 (Varianzachse) — auf Nutzerfreigabe (Kontingente).
 
 ## Offen — Ausbau
 
