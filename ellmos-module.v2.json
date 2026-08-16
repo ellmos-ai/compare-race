@@ -5,18 +5,40 @@
   "category": "orchestration",
   "kind": "workflow",
   "status": "development",
-  "visibility": "private",
-  "provides": ["orchestration.output-arbitration", "quality.model-race"],
+  "visibility": "public",
+  "provides": [
+    "orchestration.output-arbitration",
+    "quality.model-race"
+  ],
   "requires": [],
-  "optional": ["agents.lifecycle", "routing.default", "swarm.patterns"],
+  "optional": [
+    "agents.lifecycle",
+    "routing.default",
+    "swarm.patterns"
+  ],
   "conflicts": [],
-  "surfaces": ["library", "cli", "workflow"],
-  "state": { "ownership": "external", "location": "project" },
+  "surfaces": [
+    "library",
+    "cli",
+    "workflow"
+  ],
+  "state": {
+    "ownership": "external",
+    "location": "project"
+  },
   "boundaries": {
     "network": "none",
     "data": "user-local",
-    "platforms": ["windows", "macos", "linux"]
+    "platforms": [
+      "windows",
+      "macos",
+      "linux"
+    ]
   },
-  "source_of_truth": { "type": "local-directory", "path": "." },
+  "source_of_truth": {
+    "type": "local-directory",
+    "path": ".",
+    "repository": "https://github.com/ellmos-ai/compare-race"
+  },
   "adapters": []
 }
