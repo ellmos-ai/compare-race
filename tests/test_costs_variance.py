@@ -93,8 +93,10 @@ def test_lane_model_id_beats_backend_fallback(tmp_path):
 
     catalogue = tmp_path / "g.json"
     catalogue.write_text(_json.dumps({"gaenge": {
-        "claude-fable": {"model_id": "claude-fable-5", "kosten_input_1k": 0.01, "kosten_output_1k": 0.05},
-        "claude-opus": {"model_id": "claude-opus-5", "kosten_input_1k": 0.015, "kosten_output_1k": 0.075},
+        "claude-fable": {"model_id": "claude-fable-5",
+                         "kosten_input_1k": 0.01, "kosten_output_1k": 0.05},
+        "claude-opus": {"model_id": "claude-opus-5",
+                        "kosten_input_1k": 0.015, "kosten_output_1k": 0.075},
     }}), encoding="utf-8")
     settings = RaceSettings(models=[ModelEntry(name="opus-5", backend="claude", model="claude-opus-5")])
     plan = plan_race("p", models=["opus-5"], system="H1")
