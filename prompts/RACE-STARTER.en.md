@@ -33,8 +33,11 @@ exactly one axis varies:**
    and fill the judge rubric: per model quality, correctness, completeness, instruction
    fidelity, latency — then reasoning per model, winner and caveats. With repetitions:
    look at per-model variance first, compare second.
-5. **Name your bias:** if your own model runs a lane, say so in the verdict and argue
-   more strictly. Alternatively set a fixed third-party judge in the config.
+5. **Name your bias — under your TRUE identity:** first check which model you
+   actually are (runtime indicator, not self-description — the user can switch
+   models mid-session; it really happened on 2026-08-16). If your own model runs a
+   lane, say so in the verdict and argue more strictly; same model family is family
+   bias and gets named too. Alternatively set a fixed third-party judge in the config.
 
 ## Fail-safes
 

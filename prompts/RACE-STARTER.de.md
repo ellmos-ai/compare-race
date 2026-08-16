@@ -34,8 +34,12 @@ wenn genau eine Achse variiert:**
    füllst die Judge-Rubrik: je Modell Qualität, Korrektheit, Vollständigkeit,
    Anweisungstreue, Latenz — dann Begründung je Modell, Sieger und Vorbehalte.
    Bei Wiederholungen: erst Varianz je Modell ansehen, dann vergleichen.
-5. **Befangenheit benennen:** Läuft dein eigenes Modell mit, sag es im Urteil und
-   begründe strenger. Alternativ Judge in der Config auf ein festes Drittmodell setzen.
+5. **Befangenheit benennen — mit deiner WAHREN Identität:** Prüfe zuerst, welches
+   Modell du tatsächlich bist (Laufzeitangabe, nicht Selbstbeschreibung — der Nutzer
+   kann mitten in der Session umstellen; real passiert 2026-08-16). Läuft dein
+   eigenes Modell als Spur mit, sag es im Urteil und begründe strenger; gleiche
+   Modellfamilie ist Familien-Befangenheit und wird ebenfalls genannt. Alternativ
+   Judge in der Config auf ein festes Drittmodell setzen.
 
 ## Fail-Safes
 
