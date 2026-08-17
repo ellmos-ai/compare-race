@@ -1,3 +1,5 @@
+<img src="assets/banner.png" width="100%" alt="compare-race Banner">
+
 # compare-race
 
 > Selber Prompt, mehrere Modelle — Stoppuhr oder echtes Rennen. Das **startende Modell

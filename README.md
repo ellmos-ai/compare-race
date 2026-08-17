@@ -1,3 +1,5 @@
+<img src="assets/banner.png" width="100%" alt="compare-race banner">
+
 # compare-race
 
 > Same prompt, several models — stopwatch or true race. The **starting model judges**;
