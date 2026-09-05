@@ -42,6 +42,34 @@ def test_lane_workdir_isolates_spawn_cwd(monkeypatch, tmp_path):
     assert os.getcwd() == before
 
 
+def test_lane_workdir_restores_cwd_when_execution_raises(monkeypatch, tmp_path):
+    import os
+
+    import pytest
+
+    import compare_race.race as race_mod
+
+    lanes = tmp_path / "lanes"
+    seen = []
+
+    def fail_in_lane(prompt, identity, settings):
+        seen.append(os.getcwd())
+        raise RuntimeError("lane exploded")
+
+    monkeypatch.setattr(race_mod, "_coma_available", lambda: True)
+    monkeypatch.setattr(race_mod, "_run_one", fail_in_lane)
+    settings = RaceSettings(system="H1", mode="sequential",
+                            models=[ModelEntry(name="m", backend="fake")],
+                            lane_workdir=str(lanes))
+    before = os.getcwd()
+
+    with pytest.raises(RuntimeError, match="lane exploded"):
+        race_mod.run_race("task", settings, models=["m"])
+
+    assert seen == [str(lanes)]
+    assert os.getcwd() == before
+
+
 def test_twin_plan_is_one_model_times_variants_times_repeats():
     plan = plan_race("task", models=["opus"], system="H1", repeats=2,
                      variants=["knapp", "mit-rolle", "mit-skill"])
