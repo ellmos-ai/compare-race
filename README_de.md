@@ -2,6 +2,14 @@
 
 # compare-race
 
+[![Version](https://img.shields.io/badge/version-0.6.1-blue.svg)](pyproject.toml)
+[![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-33%20passed-brightgreen.svg)](tests/)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](pyproject.toml)
+[![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
+[![Code-Stil: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Sicherheits-SLA](https://img.shields.io/badge/security-48h%20SLA-blue.svg)](SECURITY.md)
+
 > Selber Prompt, mehrere Modelle — Stoppuhr oder echtes Rennen. Das **startende Modell
 > urteilt**; Zeit ist nur eine Dimension des Urteils.
 
@@ -79,6 +87,10 @@ clutch Modellkatalog · swarm-ai N-Wiederholungs-Konsens (mechanisch) ·
 MarbleRun sequenzielle Ketten. compare-race ergänzt, was keiner hat: den
 **qualitativen Judge über Geschwister-Ausgaben** und das Kreuzprodukt
 Wiederholungen×Modelle.
+
+## Sicherheit
+
+Informationen zur Meldung von Sicherheitslücken, zu unseren Prozessisolations-Garantien und zum 48-Stunden-SLA finden Sie in [SECURITY.md](SECURITY.md).
 
 ## Lizenz
 

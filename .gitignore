@@ -1,18 +1,66 @@
+# Python & bytecode
 __pycache__/
 *.py[cod]
+*$py.class
+*.pyc
 *.egg-info/
+.installed.cfg
+*.egg
 build/
 dist/
+wheelhouse/
+.wheel-smoke/
+
+# Virtual environments
 .venv/
 venv/
+ENV/
+env/
+
+# Testing & linting caches
 .pytest_cache/
 .ruff_cache/
+.coverage
+.coverage.*
+coverage/
+htmlcov/
+.tox/
+.nox/
+
+# Environment, secrets & databases
 .env
+.env.*
 *.db
+*.sqlite
+*.sqlite3
+
+# IDEs & editors
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+
+# Multi-host sync & OneDrive conflicts
+*-conflict-*
+*.sync-conflict-*
+*.conflict
+*-CONFLIT-*
+*.sync-temp-*
+*.sync-journal*
+
+# Multi-agent coordination locks
+LOCK
+LOCK.*
+LOCK*.txt
+*.lock
+
+# Local project runtime data
 data/
 races/
 compare-race.config.json
-*.pyc
 _paper-input.tex
+*.log
+_lane-logs/

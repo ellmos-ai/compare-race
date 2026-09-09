@@ -4,18 +4,47 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "compare-race"
-version = "0.6.0"
+version = "0.6.1"
 description = "Same prompt, several models -- stopwatch or true race; the starting model judges (time is only one dimension)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Lukas Geiger" }]
+keywords = [
+    "benchmark",
+    "evaluation",
+    "llm",
+    "model-comparison",
+    "multi-agent",
+    "race",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = [
     "system-auditor @ git+https://github.com/ellmos-ai/system-auditor",
 ]
 
 [project.optional-dependencies]
 exec = []  # COMA is detected, not assumed: install it editable from ellmos-ai/coma
+test = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ellmos-ai/compare-race"
+Repository = "https://github.com/ellmos-ai/compare-race"
+Issues = "https://github.com/ellmos-ai/compare-race/issues"
+Changelog = "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
 
 [project.scripts]
 compare-race = "compare_race.cli:main"
@@ -26,6 +55,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+addopts = "-v"
 
 [tool.ruff]
 line-length = 100

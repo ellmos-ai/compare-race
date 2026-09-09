@@ -3,6 +3,34 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.6.1] - 2026-09-10
+
+Repository-Hygiene, CI-Matrix-Härtung, PEP 621 Metadaten und Vertragstest-Erweiterung (Pfad A).
+
+### Hinzugefuegt
+
+- **GitHub Actions CI Matrix Workflow** (`.github/workflows/ci.yml`): Automatisierte
+  Tests über Python 3.10, 3.11 und 3.12 mit Bytecode-Kompilierung (`compileall`),
+  Ruff-Linting und Pytest-Matrix.
+- **Stale Workflow** (`.github/workflows/stale.yml`): Automatische Issue- und PR-Verwaltung
+  nach Ökosystem-Standard.
+- **Bilinguale Sicherheitsrichtlinie** (`SECURITY.md`): Definierte Grundsätze zur
+  Prozessisolation (`lane_workdir`), Geheimnisschutz, 48h-Reaktions-SLA und 5-Tage-Triage.
+- **Vertragstest-Suite** (`tests/test_metadata.py`): 6 automatisierte Contract-Tests für
+  `.gitignore`-Hygiene, PEP 621 Struktur & URLs, CI-Matrix-Gültigkeit, README-Parität,
+  SECURITY.md SLA sowie vollständiges Front-Matter-Roundtrip durch `system-auditor`.
+
+### Geaendert
+
+- **PEP 621 Paketmetadaten in `pyproject.toml`**: Umfassende Metadaten (`classifiers`,
+  `keywords`, `urls` für Repository, Issues, Changelog und optionale `test`-Dependencies)
+  sowie `addopts = "-v"` für Pytest ergänzt.
+- **.gitignore-Härtung**: Schutzmuster gegen Multi-Host-Synchronisationskonflikte
+  (`*-conflict-*`, `*.sync-temp-*`), Agent-Locks (`LOCK.*`, `*.lock`), temporäre Caches
+  und Wheel-Smoke-Dateien.
+- **Dokumentations-Synchronisation**: `README.md`, `README_de.md` und `llms.txt` auf Version
+  0.6.1, 33 bestandene Tests und Sicherheitsrichtlinie aktualisiert.
+
 ## [0.6.0] - 2026-08-16
 
 Fairness- und Forensik-Ausbau nach dem Erstlauf der Kant-Olympiade.
