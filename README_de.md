@@ -12,9 +12,10 @@
 `compare-race` schickt einen Prompt an mehrere LLMs — **nacheinander** (die Stoppuhr:
 eine Spur nach der anderen, saubere Einzelmessung) oder **gleichzeitig** (das echte
 Rennen) — mit optionalen Wiederholungen je Modell, und sammelt jede Antwort als
-Artefakt ein. Das Urteil ist **modellmanuell**: Das startende Modell liest die Spuren
-und füllt eine mehrdimensionale Rubrik (Qualität, Korrektheit, Vollständigkeit,
-Anweisungstreue, Latenz, Kosten). Die Stoppuhr ist nur ein Bild.
+Artefakt ein. Das Urteil ist **modellmanuell** oder ein ausdrücklicher `--judge`-Aufruf:
+Das startende Modell liest die Spuren und füllt eine mehrdimensionale Rubrik (Qualität,
+Korrektheit, Vollständigkeit, Anweisungstreue, Latenz, Kosten). Die Stoppuhr ist nur
+ein Bild.
 
 ## Identität — sechs Achsen, wiederverwendet aus system-auditor
 
@@ -65,9 +66,17 @@ git clone https://github.com/ellmos-ai/coma && pip install -e coma
 cp config/compare-race.config.example.json compare-race.config.json
 compare-race config
 compare-race run --prompt-file frage.md --mode sequential --repeats 2
+# optionaler zusätzlicher Modellaufruf; schreibt ein separates JUDGE.md
+compare-race run --prompt-file frage.md --mode parallel --judge
 # ohne COMA: Spuren selbst ausführen, dann
 compare-race record --model codex --output-file out.md --race-id <id>
 ```
+
+Jedes Laufartefakt trägt eine global stabile `lane_id` und eine ausdrückliche
+`evidence_kind`. Der automatische Judge lässt nur echte Live- oder modellmanuell
+erfasste Evidenz zu. Simulierte, blockierte oder provenienzunklare Spuren werden nicht
+bewertet; stattdessen entsteht eine belegte Verweigerung. Die wiederverwendbaren
+Aufnahme-, Prompt- und Artefaktfunktionen liegen in `compare_race.judge`.
 
 Rollen-Prompt: [`prompts/RACE-STARTER.de.md`](prompts/RACE-STARTER.de.md)
 (englisch: [`RACE-STARTER.en.md`](prompts/RACE-STARTER.en.md)).
@@ -79,6 +88,10 @@ clutch Modellkatalog · swarm-ai N-Wiederholungs-Konsens (mechanisch) ·
 MarbleRun sequenzielle Ketten. compare-race ergänzt, was keiner hat: den
 **qualitativen Judge über Geschwister-Ausgaben** und das Kreuzprodukt
 Wiederholungen×Modelle.
+
+Der evidenzbewusste Judge wurde anhand beobachteter SentinelFleet-Konzepte eigenständig
+implementiert; AGPL-Quellcode wurde nicht kopiert. Siehe
+[`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
 
 ## Lizenz
 

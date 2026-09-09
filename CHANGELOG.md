@@ -3,6 +3,27 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.7.0] - 2026-09-09
+
+Eigenständige, gekapselte Rückführung der portablen SentinelFleet-Race-Judge-
+Konzepte; keine Übernahme von AGPL-Quellcode.
+
+### Hinzugefügt
+
+- Global stabile `lane_id` je Modell × Variante × Wiederholung; doppelte
+  Modellnamen werden zugunsten von `repeats` abgewiesen.
+- Explizite Evidenzklassen in jedem RUN-Artefakt (`live`, `manual`, `simulated`,
+  `blocked`, `failed`, `unknown`).
+- `compare_race.judge`: fail-closed Aufnahmeprüfung, injektionsbewusster Judge-
+  Prompt, optionaler echter Judge-Aufruf und separates `JUDGE.md`-Artefakt.
+- CLI-Opt-in `compare-race run --judge [--judge-model NAME]`; der zusätzliche
+  Modellaufruf ist nie implizit.
+
+### Sicherheit
+
+- Simulierte, blockierte oder provenienzunklare Spuren werden nicht bewertet.
+  Der Judge protokolliert stattdessen eine nicht ausgewertete Verweigerung.
+
 ## [0.6.0] - 2026-08-16
 
 Fairness- und Forensik-Ausbau nach dem Erstlauf der Kant-Olympiade.

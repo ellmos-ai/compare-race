@@ -63,7 +63,9 @@ longer be attributed to a single cause.
    for free text it honestly says "not usable"). **You read every RUN file yourself**
    and fill the judge rubric: per model quality, correctness, completeness, instruction
    fidelity, latency — then reasoning per model, winner and caveats. With repetitions:
-   look at per-model variance first, compare second.
+   look at per-model variance first, compare second. Alternatively, explicitly opt into
+   `run --judge`: it spends one additional model call and writes a separate `JUDGE.md`;
+   simulated, blocked or provenance-unknown lanes are refused fail-closed.
 5. **Name your bias — under your TRUE identity:** first check which model you
    actually are (runtime indicator, not self-description — the user can switch
    models mid-session; it really happened on 2026-08-16). If your own model runs a
@@ -74,6 +76,8 @@ longer be attributed to a single cause.
 
 - A crashed lane does not kill the race — it stands as `ok: false` in the table and is
   reported as a failure in the verdict, never hidden.
+- An automatic judge scores only `live` or `manual` evidence. For `simulated`, `blocked`
+  or `unknown`, it writes a refusal instead of invented ratings.
 - Budget/quota: races cost on EVERY participating quota. Ask the user before large
   races (many lanes × repetitions).
 - Never compare across prompts: a different `prompt_token` is a different question.

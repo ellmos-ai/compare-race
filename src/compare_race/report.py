@@ -1,11 +1,11 @@
 """The race report scaffold -- mechanics by the tool, verdict by the judge.
 
 The tool writes what is measurable (lane table, latencies, failures, a
-mechanical answer tally for short categorical answers). The **verdict is
-model-manual**: the starting model fills the judge rubric in RACE.md -- time is
-only one dimension there, beside quality, correctness, completeness,
-instruction fidelity and cost. This mirrors the system-auditor meta-audit
-pattern: the library prepares and cross-checks, the model judges.
+mechanical answer tally for short categorical answers). The verdict remains a
+separate layer: either the starting model fills the rubric in RACE.md manually,
+or the caller explicitly opts into the evidence-aware model call in ``judge``.
+Time is only one dimension there, beside quality, correctness, completeness,
+instruction fidelity and cost.
 """
 
 from __future__ import annotations
@@ -86,9 +86,9 @@ def scaffold(race: RaceResult, prompt: str) -> str:
         ] if getattr(race.plan, "uncontrolled", False) else []),
         "## Spuren (gemessen)",
         "",
-        ("| Modell | Variante | Lauf | Backend | ok | Checks | Latenz s "
+        ("| Modell | Variante | Lauf | Backend | Evidenz | ok | Checks | Latenz s "
          "| ~Kosten USD (Schätzung) | Output |"),
-        "|---|---|---|---|---|---|---|---|---|",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
     def _order(x):
         return (x.identity.model, x.identity.variant, x.identity.run)
@@ -104,7 +104,8 @@ def scaffold(race: RaceResult, prompt: str) -> str:
             checks = "—"
         lines.append(
             f"| {r.identity.model} | {r.identity.variant} | {r.identity.run} | {r.backend} | "
-            f"{'ja' if r.ok else 'NEIN'} | {checks} | {r.latency_s} | {cost} | "
+            f"{r.evidence_kind} | {'ja' if r.ok else 'NEIN'} | {checks} | "
+            f"{r.latency_s} | {cost} | "
             f"{r.identity.filename()} |"
         )
 

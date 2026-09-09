@@ -1,7 +1,7 @@
 {
   "_comment": "Kopieren nach compare-race.config.json. Gefunden ueber --config, COMPARE_RACE_CONFIG, ./, ./config/, ~/.compare-race/.",
   "_comment_modes": "sequential = Stoppuhr (saubere Einzelmessung je Spur) | parallel = echtes Rennen (Latenz teilt sich die Maschine). Die Stoppuhr ist nur ein Bild: Zeit ist EINE Dimension -- das Urteil traegt Qualitaet/Korrektheit/Vollstaendigkeit/Anweisungstreue/Kosten dazu.",
-  "_comment_judge": "judge=starter: das startende Modell urteilt (Default, Nutzerentscheidung 2026-08-16). Alternativ ein fester Modellname.",
+  "_comment_judge": "judge=starter: bei explizitem run --judge urteilt das startende Modell (Default, Nutzerentscheidung 2026-08-16). Alternativ ein in models[] konfigurierter fester Modellname. Ohne --judge entsteht kein zusätzlicher Modellaufruf.",
   "system": "<HOSTNAME>",
   "races_dir": "<HOME>/OneDrive/.TOPICS/.AI/.MODULES/.ORCHESTRATION/compare-race/races",
   "mode": "sequential",

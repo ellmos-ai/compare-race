@@ -29,6 +29,8 @@ from pathlib import Path
 from .config import ModelEntry, RaceSettings
 from .tokens import RacePlan, RunIdentity, format_ts, plan_race, utcnow
 
+EVIDENCE_KINDS = frozenset({"live", "manual", "simulated", "blocked", "failed", "unknown"})
+
 
 @dataclass
 class RunResult:
@@ -40,6 +42,10 @@ class RunResult:
     started_utc: str
     finished_utc: str
     error: str = ""
+    #: Provenance class used by the optional judge. ``live`` and ``manual``
+    #: are judgeable model evidence; synthetic/demo and unknown outputs are
+    #: retained but never silently scored as real answers.
+    evidence_kind: str = "live"
     #: clutch rate lookup, when the catalogue is present. est_ = derived from
     #: chars/4, an estimate by construction -- never a measurement.
     cost_gear: str = ""
@@ -175,8 +181,12 @@ def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunR
         if outcome.get("timed_out"):
             ok = False
             error = f"timed out after {settings.timeout_seconds}s. {error}".strip()
+        evidence_kind = str(outcome.get("evidence_kind") or ("live" if ok else "failed"))
+        if evidence_kind not in EVIDENCE_KINDS:
+            evidence_kind = "unknown"
     except Exception as exc:  # a crashing lane must not kill the race
         ok, output, error = False, "", f"{exc.__class__.__name__}: {exc}"
+        evidence_kind = "failed"
     latency = _time.perf_counter() - tick
     return RunResult(
         identity=identity,
@@ -187,6 +197,7 @@ def _run_one(prompt: str, identity: RunIdentity, settings: RaceSettings) -> RunR
         started_utc=format_ts(started),
         finished_utc=format_ts(utcnow()),
         error=error,
+        evidence_kind=evidence_kind,
     )
 
 
@@ -212,6 +223,7 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
     lines = [
         "---",
         f"race_id: {plan.race_id}",
+        f"lane_id: {identity.lane_id()}",
         f"time_token: {identity.time}",
         f"prompt_token: {identity.prompt}",
         f"system: {identity.system}",
@@ -224,6 +236,7 @@ def run_front_matter(result: RunResult, plan: RacePlan) -> str:
         f"finished_utc: {result.finished_utc}",
         f"latency_s: {result.latency_s}",
         f"ok: {'true' if result.ok else 'false'}",
+        f"evidence_kind: {result.evidence_kind}",
     ]
     if result.cost_gear:
         lines.append(f"cost_gear: {result.cost_gear}")
