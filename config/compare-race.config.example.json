@@ -1,6 +1,6 @@
 {
-  "_comment": "Kopieren nach compare-race.config.json. Gefunden ueber --config, COMPARE_RACE_CONFIG, ./, ./config/, ~/.compare-race/.",
-  "_comment_modes": "sequential = Stoppuhr (saubere Einzelmessung je Spur) | parallel = echtes Rennen (Latenz teilt sich die Maschine). Die Stoppuhr ist nur ein Bild: Zeit ist EINE Dimension -- das Urteil traegt Qualitaet/Korrektheit/Vollstaendigkeit/Anweisungstreue/Kosten dazu.",
+  "_comment": "Kopieren nach compare-race.config.json. Gefunden über --config, COMPARE_RACE_CONFIG, ./, ./config/, ~/.compare-race/.",
+  "_comment_modes": "sequential = Stoppuhr (saubere Einzelmessung je Spur) | parallel = echtes Rennen (Latenz teilt sich die Maschine). Die Stoppuhr ist nur ein Bild: Zeit ist EINE Dimension -- das Urteil trägt Qualität/Korrektheit/Vollständigkeit/Anweisungstreue/Kosten dazu.",
   "_comment_judge": "judge=starter: bei explizitem run --judge urteilt das startende Modell (Default, Nutzerentscheidung 2026-08-16). Alternativ ein in models[] konfigurierter fester Modellname. Ohne --judge entsteht kein zusätzlicher Modellaufruf.",
   "system": "<HOSTNAME>",
   "races_dir": "<HOME>/OneDrive/.TOPICS/.AI/.MODULES/.ORCHESTRATION/compare-race/races",
@@ -32,14 +32,14 @@
       "allow_unverified": true
     }
   ],
-  "_comment_models": "Beliebig viele Spuren (mehr als zwei ausdruecklich vorgesehen). name = Identitaets-Token der Spur. backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override. allow_unverified: kimi ist in coma ein ungeprueftes Geruest -- bewusster Opt-in je Spur. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent.",
+  "_comment_models": "Beliebig viele Spuren (mehr als zwei ausdrücklich vorgesehen). name = Identitäts-Token der Spur. backend = coma-Adapter (claude|codex|agy|kimi). model = per-Call-Override. allow_unverified: kimi ist in coma ein ungeprüftes Gerüst -- bewusster Opt-in je Spur. ACHTUNG: Rennen kosten auf JEDEM beteiligten Kontingent.",
   "getriebe_path": "",
-  "_comment_getriebe": "Optional: Pfad zu clutchs getriebe.json fuer Kostenraten. Leer = Konventionspfade/ENV CLUTCH_GETRIEBE probieren; fehlt der Katalog, bleiben die Kostenzellen leer (kein Raten). est_cost_usd ist IMMER eine Schaetzung (Zeichen/4 als Token-Naeherung), nie eine Messung.",
+  "_comment_getriebe": "Optional: Pfad zu clutchs getriebe.json für Kostenraten. Leer = Konventionspfade/ENV CLUTCH_GETRIEBE probieren; fehlt der Katalog, bleiben die Kostenzellen leer (kein Raten). est_cost_usd ist IMMER eine Schätzung (Zeichen/4 als Token-Näherung), nie eine Messung.",
   "checks": [
     {
       "name": "drei-stichpunkte",
       "regex": "^- .+\n- .+\n- .+$"
     }
   ],
-  "_comment_checks": "Deterministische Format-Checks (Regex je Kriterium), mechanisch je Spur ausgewertet BEVOR ein Judge-Urteil existiert -- Stufe 1 der Auswertungs-Leiter (deterministisch > belegt > subjektiv). Aus den Artefakten von jedem reproduzierbar. Was mechanisch pruefbar ist, gehoert hierher, nicht in die Judge-Meinung."
+  "_comment_checks": "Deterministische Format-Checks (Regex je Kriterium), mechanisch je Spur ausgewertet BEVOR ein Judge-Urteil existiert -- Stufe 1 der Auswertungs-Leiter (deterministisch > belegt > subjektiv). Aus den Artefakten von jedem reproduzierbar. Was mechanisch prüfbar ist, gehört hierher, nicht in die Judge-Meinung."
 }

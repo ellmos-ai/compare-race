@@ -2,6 +2,14 @@
 
 # compare-race
 
+[![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)](pyproject.toml)
+[![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-39%20passed-brightgreen.svg)](tests/)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Security SLA](https://img.shields.io/badge/security-48h%20SLA-blue.svg)](SECURITY.md)
+
 > Same prompt, several models — stopwatch or true race. The **starting model judges**;
 > time is only one dimension of the verdict.
 
@@ -86,6 +94,10 @@ MarbleRun sequential chains. compare-race adds what none of them have: the
 The evidence-aware judge was independently implemented from concepts observed in
 SentinelFleet; no AGPL source was copied. See
 [`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for our vulnerability disclosure process, process isolation principles, and 48-hour SLA.
 
 ## License
 

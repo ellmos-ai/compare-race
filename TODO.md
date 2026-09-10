@@ -4,12 +4,12 @@
 
 | Category | Status |
 |---|---|
-| Tests / Lint | pytest + ruff sauber (siehe aktueller PR-Readback) |
+| Tests / Lint | pytest + ruff + compileall sauber; CI-Matrix & Vertragstests aktiv |
 | Sprachstufe (P-006) | Core: README + Rollen-Prompt je DE/EN; Judge-Rubrik im generierten Bericht DE |
 | Abhängigkeiten | system-auditor (hart, via GitHub) · coma (erkannt, optional) |
 | Bewusste Entscheidung | Judge-Default = Starter-Modell (User 2026-08-16); CHANGELOG/TODO deutsch (internes Arbeitsjournal) |
 
-Stand: 2026-09-09 · Version 0.7.0
+Stand: 2026-09-10 · Version 0.7.0
 
 ## Erledigt beim Fertigbau (2026-08-16)
 
@@ -120,3 +120,61 @@ Forensik-Lücke (Methodenanalyse: um-bruch.org, `analysen/kant-olympiade-methode
   die mechanische Vorstufe sagt ehrlich, wann sie nichts taugt (Freitext).
 - **Eigener Fanout-Unterbau** — COMA macht Spawn/Polling/Dateiprotokoll.
 - **Eigener Front-Matter-Parser** — system-auditor wird importiert, nicht kopiert.
+
+## TASKWRITER-Review 2026-09-05
+
+Presentation `6167744b-355f-4557-9852-203d8a08f712`; geprüft wurden die
+Projektwurzel (README.md, README_de.md, TODO.md, llms.txt, CHANGELOG.md,
+RELEASE_GATE.md, LICENSE, pyproject.toml, Konfigurationsbeispiel), beide
+RACE-STARTER-Prompts, der Olympiade-Aufbau, Quellmodule und Testmodule sowie
+der aktuelle öffentliche GitHub-Stand. Der Arbeitsbaum war sauber und
+`master` stand exakt auf `origin/master` (`4a75fef`). `pytest -q` meldete
+26 passed, `ruff check src tests` und `compileall` liefen ohne Fehler.
+
+### Neue, formalisierte Aufgaben
+
+- [ ] **TASKPLAN 196 — Race-ID-Kollisionen und Artefaktüberschreiben verhindern**
+      (high, medium, local). `tokens.py` erzeugt Zeit-Tokens nur auf
+      Sekundenebene; ein identischer `moment` führte reproduzierbar zur selben
+      `race_id`, und ein zweiter `write_artifacts`-Aufruf überschreibt den
+      ersten RUN-Inhalt. Abnahme und Verifikation stehen vollständig im
+      TASKPLAN-Datensatz.
+- [x] **TASKPLAN 197 — Python-3.10-Kompatibilität für `lane_workdir` hergestellt**
+      (high, easy, local). `pyproject.toml` verspricht Python >=3.10, während
+      `race.py` zuvor `contextlib.chdir` verwendete. Eine kompatible lokale
+      Kontextverwaltung sichert jetzt Verzeichniswechsel, Cwd-Rückkehr und
+      Exception-Pfad auf der Mindestversion ab.
+- [ ] **TASKPLAN 198 — Konfigurationsparser für ungültige Werte fail-closed
+      machen** (high, medium, local). Die dokumentierte Defaults-Garantie gilt
+      derzeit nicht für eine JSON-Liste als Wurzel (`AttributeError`) oder
+      ungültige numerische Werte (`ValueError`).
+- [ ] **TASKPLAN 199 — Fehler- und Timeout-Artefakte um Exitstatus und Ursache
+      ergänzen** (medium, medium, local). `returncode` wird aus dem COMA-Ergebnis
+      nicht in `RunResult`/Front-Matter übernommen, obwohl fehlgeschlagene Spuren
+      nachträglich prüfbar bleiben sollen.
+- [x] **TASKPLAN 200 — Versions-, Teststatus- und deutsche UTF-8-Dokumentation
+      synchronisiert** (medium, easy, local). `llms.txt`, `RELEASE_GATE.md`
+      und `TODO.md` weisen nun Version 0.6.0 und den aktuellen Prüfstand aus;
+      aktive deutsche Konfigurationskommentare verwenden echte ä/ö/ü.
+
+### Offene Entscheidungen
+
+- Für TASKPLAN 196 ist vor der Umsetzung festzulegen, ob eine höhere
+  Zeitauflösung/Nonce oder ein expliziter, nicht-destruktiver Abbruch bei
+  Kollisionen die Race-ID-Semantik bilden soll.
+- Historische Changelog-Einträge und externe Zitate bleiben bei der
+  Dokumentationsbereinigung unverändert; nur aktive Status- und End-User-Texte
+  werden synchronisiert.
+
+### Review-Log
+
+- Keine Aufgaben ausgeführt, kein Release/Upload/Commit/Push autorisiert.
+- Taskplan-Register synchronisiert: IDs 196–200; alle mit Ergebnis, Quelle,
+  Herleitung, Abnahme, Verifikation, Abhängigkeiten/Blocker, Aufwand, Scope und
+  Prioritätsbegründung.
+
+### TASKSOLVER-Abschluss 2026-09-05
+
+- TASKPLAN 197 und 200 lokal umgesetzt; kein Race, Release, Upload oder Push.
+- Verifiziert: 27 Tests unter Python 3.12, gezielte `lane_workdir`-Tests unter
+  Python 3.10.20, Ruff, `compileall`, CLI-Version und UTF-8-Prüfung.

@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-08-16 | Version: 0.4.0 | Tests: 23 passed | Lint: ruff clean
+> Last-checked: 2026-09-10 | Version: 0.6.1 | Tests: 33 passed | Lint: ruff clean
 
 ## Core idea
 
@@ -12,15 +12,18 @@ quality, correctness, completeness, instruction fidelity, latency, cost.
 
 ## Identity (reused from system-auditor)
 
-Five axes per run: time, prompt (slug+hash), system, model, run. Attribute only when
-exactly one axis varies: model->race, run->variance, time->model drift. Artefact
-headers parse with system_auditor.report.parse_front_matter (hard dependency).
+Six axes per run: time, prompt (slug+hash), system, model, run, variant. Attribute
+only when exactly one axis varies: model->race, run->variance, time->model drift,
+variant->twin/clone comparison. Artefact headers parse with
+system_auditor.report.parse_front_matter (hard dependency).
 
 ## Execution
 
 COMA (spawn/file protocol/polling) is detected, not assumed: adapters claude/codex/
 agy/kimi, per-lane model override. Without COMA: model-manual path via
-`compare-race record`. Failed lanes are recorded (ok: false), never hidden.
+`compare-race record`. Failed lanes are recorded (ok: false), never hidden. Optional
+`lane_workdir` isolates inherited working directories on Python 3.10+, while raw
+per-lane process logs are persisted below `_lane-logs` when `races_dir` is set.
 
 ## Entry points
 

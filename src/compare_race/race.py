@@ -22,7 +22,9 @@ manually and drop the outputs next to the plan (the model-manual fallback).
 
 from __future__ import annotations
 
+import os
 import time as _time
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -88,6 +90,17 @@ def _spawner(entry: ModelEntry):
     return Spawner(adapter, allow_unverified=entry.allow_unverified)
 
 
+@contextmanager
+def _working_directory(path: Path):
+    """Temporarily change cwd, including on Python 3.10."""
+    previous = Path.cwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(previous)
+
+
 def run_race(
     prompt: str,
     settings: RaceSettings,
@@ -137,10 +150,9 @@ def run_race(
         # Naivety guard: spawned CLI lanes inherit our cwd; a project cwd leaks
         # hooks/rules/judge files into them (observed 2026-08-16). Run the
         # spawns from a neutral directory instead.
-        import contextlib
         workdir = Path(settings.lane_workdir)
         workdir.mkdir(parents=True, exist_ok=True)
-        with contextlib.chdir(workdir):
+        with _working_directory(workdir):
             return execute()
     return execute()
 

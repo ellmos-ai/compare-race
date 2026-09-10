@@ -2,6 +2,14 @@
 
 # compare-race
 
+[![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)](pyproject.toml)
+[![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-39%20passed-brightgreen.svg)](tests/)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](pyproject.toml)
+[![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
+[![Code-Stil: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Sicherheits-SLA](https://img.shields.io/badge/security-48h%20SLA-blue.svg)](SECURITY.md)
+
 > Selber Prompt, mehrere Modelle — Stoppuhr oder echtes Rennen. Das **startende Modell
 > urteilt**; Zeit ist nur eine Dimension des Urteils.
 
@@ -92,6 +100,10 @@ Wiederholungen×Modelle.
 Der evidenzbewusste Judge wurde anhand beobachteter SentinelFleet-Konzepte eigenständig
 implementiert; AGPL-Quellcode wurde nicht kopiert. Siehe
 [`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
+
+## Sicherheit
+
+Informationen zur Meldung von Sicherheitslücken, zu unseren Prozessisolations-Garantien und zum 48-Stunden-SLA finden Sie in [SECURITY.md](SECURITY.md).
 
 ## Lizenz
 

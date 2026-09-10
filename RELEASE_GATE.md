@@ -15,6 +15,17 @@
 
 ---
 
+## Current local verification — 2026-09-05
+
+- Package and CLI version: **0.6.0**.
+- Test suite: **27 passed**; Ruff and `compileall` clean.
+- The `lane_workdir` compatibility path and cwd restoration were verified with
+  **Python 3.10.20**, including restoration after an exception.
+- Version 0.6 includes twin/clone variants and persisted raw lane logs. This
+  verification updates the repository record; it is not a new release or publication.
+
+---
+
 ## Gate run 2026-08-16
 
 `final_gate_check.py --repo-path .` → **10 PASS, 0 FAIL, 0 WARN — exit 0**
@@ -42,5 +53,5 @@
   COMA is detected, never assumed.
 - Verified by a real race before release: codex + gemini (agy), sequential,
   both lanes green, model-manual verdict filed.
-- Test suite: 9 passed · ruff clean.
+- Historical test suite at gate time: 9 passed · ruff clean.
 - Reviewed by: Claude Code (fable-5), 2026-08-16 — identity corrected same day: the session ran as Fable 5, the earlier opus-5 signature came from a stale self-description
