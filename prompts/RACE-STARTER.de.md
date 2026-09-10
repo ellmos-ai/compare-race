@@ -64,7 +64,10 @@ ist dann keiner einzelnen Ursache zuschreibbar.
    Freitext ist sie ehrlich „nicht verwertbar"). **Du liest jede RUN-Datei selbst** und
    füllst die Judge-Rubrik: je Modell Qualität, Korrektheit, Vollständigkeit,
    Anweisungstreue, Latenz — dann Begründung je Modell, Sieger und Vorbehalte.
-   Bei Wiederholungen: erst Varianz je Modell ansehen, dann vergleichen.
+   Bei Wiederholungen: erst Varianz je Modell ansehen, dann vergleichen. Alternativ
+   `run --judge` ausdrücklich wählen: Das erzeugt einen zusätzlichen Modellaufruf und
+   ein separates `JUDGE.md`; simulierte, blockierte oder provenienzunklare Spuren
+   werden fail-closed nicht bewertet.
 5. **Befangenheit benennen — mit deiner WAHREN Identität:** Prüfe zuerst, welches
    Modell du tatsächlich bist (Laufzeitangabe, nicht Selbstbeschreibung — der Nutzer
    kann mitten in der Session umstellen; real passiert 2026-08-16). Läuft dein
@@ -76,6 +79,8 @@ ist dann keiner einzelnen Ursache zuschreibbar.
 
 - Eine abgestürzte Spur kippt das Rennen nicht — sie steht als `ok: false` in der
   Tabelle und wird im Urteil als Ausfall geführt, nicht verschwiegen.
+- Ein automatischer Judge bewertet nur `live`- oder `manual`-Evidenz. Bei `simulated`,
+  `blocked` oder `unknown` schreibt er eine Verweigerung statt erfundener Wertungen.
 - Budget/Kontingente: Rennen kosten auf JEDEM beteiligten Kontingent. Vor großen
   Rennen (viele Spuren × Wiederholungen) den Nutzer fragen.
 - Kein Rennen über Prompts hinweg vergleichen: anderer `prompt_token` = andere Frage.

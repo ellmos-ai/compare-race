@@ -88,6 +88,18 @@ class RunIdentity:
         middle = "" if self.variant == "base" else f"-v-{_slug(self.variant)}"
         return f"RUN-{_slug(self.model)}{middle}-r{self.run}.md"
 
+    def lane_id(self) -> str:
+        """Globally stable identity for one independently executed lane.
+
+        Backends may use their own process or agent handles, but artefacts and
+        integrations need a provider-neutral key that never collapses two
+        repetitions or variants onto the same identity.
+        """
+        return (
+            f"{self.time}--{self.prompt}--{_slug(self.model)}--"
+            f"{_slug(self.variant)}--r{self.run}"
+        )
+
 
 @dataclass
 class RacePlan:
@@ -129,6 +141,8 @@ def plan_race(
         raise ValueError("repeats must be >= 1")
     if not models:
         raise ValueError("a race needs at least one model")
+    if len(set(models)) != len(models):
+        raise ValueError("model names must be unique; use repeats for repeated lanes")
     names = variants or ["base"]
     if len(set(names)) != len(names):
         raise ValueError("variant names must be unique")

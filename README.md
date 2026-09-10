@@ -2,9 +2,9 @@
 
 # compare-race
 
-[![Version](https://img.shields.io/badge/version-0.6.1-blue.svg)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)](pyproject.toml)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-33%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-39%20passed-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -20,9 +20,9 @@
 `compare-race` fans one prompt out to several LLMs — **sequentially** (the stopwatch:
 one lane at a time, clean per-lane timing) or **in parallel** (the true race) — with
 optional repetitions per model, and collects every answer as an artefact. The verdict
-is **model-manual**: the starting model reads the lanes and fills a multi-dimensional
-rubric (quality, correctness, completeness, instruction fidelity, latency, cost).
-The stopwatch is only a picture.
+is either **model-manual** or an explicit `--judge` call: the starting model reads the
+lanes and fills a multi-dimensional rubric (quality, correctness, completeness,
+instruction fidelity, latency, cost). The stopwatch is only a picture.
 
 ## Identity — six axes, reused from system-auditor
 
@@ -70,9 +70,16 @@ git clone https://github.com/ellmos-ai/coma && pip install -e coma
 cp config/compare-race.config.example.json compare-race.config.json
 compare-race config
 compare-race run --prompt-file question.md --mode sequential --repeats 2
+# optional extra model call; writes a separate JUDGE.md
+compare-race run --prompt-file question.md --mode parallel --judge
 # without COMA: run lanes yourself, then
 compare-race record --model codex --output-file out.md --race-id <id>
 ```
+
+Every run artefact has a globally stable `lane_id` and an explicit `evidence_kind`.
+The automatic judge admits only real live or model-manually recorded evidence. It
+records a refusal instead of scoring simulated, blocked or provenance-unknown lanes.
+The reusable admission, prompt and artefact functions live in `compare_race.judge`.
 
 Role prompt for agents: [`prompts/RACE-STARTER.en.md`](prompts/RACE-STARTER.en.md)
 (German: [`RACE-STARTER.de.md`](prompts/RACE-STARTER.de.md)).
@@ -83,6 +90,10 @@ Role prompt for agents: [`prompts/RACE-STARTER.en.md`](prompts/RACE-STARTER.en.m
 clutch model catalogue · swarm-ai N-repeat consensus (mechanical) ·
 MarbleRun sequential chains. compare-race adds what none of them have: the
 **qualitative judge over sibling outputs** and the repetition×model cross product.
+
+The evidence-aware judge was independently implemented from concepts observed in
+SentinelFleet; no AGPL source was copied. See
+[`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
 
 ## Security
 

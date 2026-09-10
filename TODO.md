@@ -4,12 +4,12 @@
 
 | Category | Status |
 |---|---|
-| Tests / Lint | 27 passed, Ruff und `compileall` sauber; Python 3.10.20 für `lane_workdir` geprüft |
+| Tests / Lint | pytest + ruff + compileall sauber; CI-Matrix & Vertragstests aktiv |
 | Sprachstufe (P-006) | Core: README + Rollen-Prompt je DE/EN; Judge-Rubrik im generierten Bericht DE |
 | Abhängigkeiten | system-auditor (hart, via GitHub) · coma (erkannt, optional) |
 | Bewusste Entscheidung | Judge-Default = Starter-Modell (User 2026-08-16); CHANGELOG/TODO deutsch (internes Arbeitsjournal) |
 
-Stand: 2026-09-05 · Version 0.6.0
+Stand: 2026-09-10 · Version 0.7.0
 
 ## Erledigt beim Fertigbau (2026-08-16)
 
@@ -68,9 +68,11 @@ Forensik-Lücke (Methodenanalyse: um-bruch.org, `analysen/kant-olympiade-methode
       Verhaltensdelta; Judge-Rubrik um Marker „Spur thematisiert
       Testcharakter?" ergänzen.
 - [ ] **`--timeout` auch für `run`** (bisher nur `olympiade`).
-- [ ] **Judge-Härtung:** Option Doppel-Judge (zweites Modell, unabhängig) mit
-      Abgleich; Judge ≠ Autor der Checks als empfohlene Konstellation
-      dokumentieren.
+- [x] **Ausführbarer evidenzbewusster Judge:** explizites `--judge`, eigener
+      Lane-Identitätsvertrag, separates JUDGE-Artefakt und fail-closed
+      Verweigerung bei simulierten/blockierten/unklaren Spuren (0.7.0).
+- [ ] **Doppel-Judge:** zweites Modell, unabhängig, mit Abgleich; Judge ≠ Autor
+      der Checks als empfohlene Konstellation dokumentieren.
 
 **Kant-Olympiade (Disziplinen, für Retests):**
 

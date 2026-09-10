@@ -2,9 +2,9 @@
 
 # compare-race
 
-[![Version](https://img.shields.io/badge/version-0.6.1-blue.svg)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-0.7.0-blue.svg)](pyproject.toml)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-33%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-39%20passed-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](pyproject.toml)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-green.svg)](LICENSE)
 [![Code-Stil: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -20,9 +20,10 @@
 `compare-race` schickt einen Prompt an mehrere LLMs — **nacheinander** (die Stoppuhr:
 eine Spur nach der anderen, saubere Einzelmessung) oder **gleichzeitig** (das echte
 Rennen) — mit optionalen Wiederholungen je Modell, und sammelt jede Antwort als
-Artefakt ein. Das Urteil ist **modellmanuell**: Das startende Modell liest die Spuren
-und füllt eine mehrdimensionale Rubrik (Qualität, Korrektheit, Vollständigkeit,
-Anweisungstreue, Latenz, Kosten). Die Stoppuhr ist nur ein Bild.
+Artefakt ein. Das Urteil ist **modellmanuell** oder ein ausdrücklicher `--judge`-Aufruf:
+Das startende Modell liest die Spuren und füllt eine mehrdimensionale Rubrik (Qualität,
+Korrektheit, Vollständigkeit, Anweisungstreue, Latenz, Kosten). Die Stoppuhr ist nur
+ein Bild.
 
 ## Identität — sechs Achsen, wiederverwendet aus system-auditor
 
@@ -73,9 +74,17 @@ git clone https://github.com/ellmos-ai/coma && pip install -e coma
 cp config/compare-race.config.example.json compare-race.config.json
 compare-race config
 compare-race run --prompt-file frage.md --mode sequential --repeats 2
+# optionaler zusätzlicher Modellaufruf; schreibt ein separates JUDGE.md
+compare-race run --prompt-file frage.md --mode parallel --judge
 # ohne COMA: Spuren selbst ausführen, dann
 compare-race record --model codex --output-file out.md --race-id <id>
 ```
+
+Jedes Laufartefakt trägt eine global stabile `lane_id` und eine ausdrückliche
+`evidence_kind`. Der automatische Judge lässt nur echte Live- oder modellmanuell
+erfasste Evidenz zu. Simulierte, blockierte oder provenienzunklare Spuren werden nicht
+bewertet; stattdessen entsteht eine belegte Verweigerung. Die wiederverwendbaren
+Aufnahme-, Prompt- und Artefaktfunktionen liegen in `compare_race.judge`.
 
 Rollen-Prompt: [`prompts/RACE-STARTER.de.md`](prompts/RACE-STARTER.de.md)
 (englisch: [`RACE-STARTER.en.md`](prompts/RACE-STARTER.en.md)).
@@ -87,6 +96,10 @@ clutch Modellkatalog · swarm-ai N-Wiederholungs-Konsens (mechanisch) ·
 MarbleRun sequenzielle Ketten. compare-race ergänzt, was keiner hat: den
 **qualitativen Judge über Geschwister-Ausgaben** und das Kreuzprodukt
 Wiederholungen×Modelle.
+
+Der evidenzbewusste Judge wurde anhand beobachteter SentinelFleet-Konzepte eigenständig
+implementiert; AGPL-Quellcode wurde nicht kopiert. Siehe
+[`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
 
 ## Sicherheit
 

@@ -9,6 +9,7 @@ from pathlib import Path
 
 from . import __version__
 from .config import load as load_config
+from .judge import judge_race, write_judge_artifact
 from .race import (
     RaceResult,
     RunResult,
@@ -103,11 +104,23 @@ def cmd_run(args) -> int:
     annotate_costs(race, prompt, s.getriebe_path, settings=s)
     base = write_artifacts(race, s.races_dir, prompt)
     target = write_scaffold(race, s.races_dir, prompt)
+    judge_target = None
+    verdict = None
+    if args.judge:
+        verdict = judge_race(race, s, prompt, judge_model=args.judge_model)
+        judge_target = write_judge_artifact(verdict, base)
     failed = [r for r in race.results if not r.ok]
     print(f"race: {race.plan.race_id}\nartefacts: {base}\nscaffold: {target}\n"
           f"lanes: {len(race.results)} ok: {len(race.results) - len(failed)} failed: {len(failed)}")
-    print("next: the STARTING model fills the judge rubric in RACE.md")
-    return 0 if not failed else 2
+    if judge_target is not None and verdict is not None:
+        print(f"judge: {judge_target} evaluated: {str(verdict.evaluated).lower()}")
+        if verdict.reason:
+            print(f"judge refusal: {verdict.reason}", file=sys.stderr)
+    else:
+        print("next: fill the rubric in RACE.md or rerun with --judge")
+    if failed:
+        return 2
+    return 0 if verdict is None or verdict.evaluated else 3
 
 
 def cmd_record(args) -> int:
@@ -126,7 +139,8 @@ def cmd_record(args) -> int:
     output = Path(args.output_file).read_text(encoding="utf-8")
     result = RunResult(identity=identity, backend=args.backend or "manual", ok=True,
                        output=output, latency_s=args.latency or 0.0,
-                       started_utc=format_ts(utcnow()), finished_utc=format_ts(utcnow()))
+                       started_utc=format_ts(utcnow()), finished_utc=format_ts(utcnow()),
+                       evidence_kind=args.evidence_kind)
     race = RaceResult(plan=plan, results=[result])
     base = write_artifacts(race, s.races_dir, prompt)
     print(f"recorded: {base / identity.filename()}")
@@ -214,6 +228,7 @@ def cmd_report(args) -> int:
     print(json.dumps({
         "runs": len(runs),
         "lanes": [f"{r.get('model')} r{r.get('run')} ok={r.get('ok')} "
+                  f"evidence={r.get('evidence_kind', 'unknown')} "
                   f"latency={r.get('latency_s')}s" for r in runs],
     }, ensure_ascii=False, indent=2))
     return 0
@@ -244,6 +259,11 @@ def main(argv: list[str] | None = None) -> int:
         p.add_argument("--twin", default=None, metavar="MODEL",
                        help="twin/clone mode: one model against itself, "
                        "variants required")
+        if name == "run":
+            p.add_argument("--judge", action="store_true",
+                           help="run an explicit evidence-aware judge call after the lanes")
+            p.add_argument("--judge-model", default=None,
+                           help="configured judge lane; default resolves config judge/starter")
         p.set_defaults(func=func)
 
     p = sub.add_parser("olympiade", help="several tasks, one field of models -- "
@@ -266,6 +286,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--run", type=int, default=1)
     p.add_argument("--race-id", default=None, help="join an existing race")
     p.add_argument("--latency", type=float, default=None)
+    p.add_argument("--evidence-kind", choices=["manual", "simulated", "blocked", "unknown"],
+                   default="manual", help="provenance of the recorded output")
     p.add_argument("--output-file", required=True)
     p.set_defaults(func=cmd_record)
 

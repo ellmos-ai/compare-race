@@ -63,7 +63,8 @@ def test_pyproject_pep621_metadata():
 
     project = data.get("project", {})
     assert project.get("name") == "compare-race"
-    assert project.get("version") == "0.6.1"
+    import compare_race
+    assert project.get("version") == compare_race.__version__
     assert "description" in project
     assert project.get("requires-python") == ">=3.10"
     assert project.get("license") == {"text": "MIT"}
