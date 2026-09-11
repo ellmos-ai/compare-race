@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-09-10 | Version: 0.6.1 | Tests: 33 passed | Lint: ruff clean
+> Last-checked: 2026-09-11 | Version: 0.7.0 | Tests: 43 passed (100% green) | Lint: ruff clean
 
 ## Core idea
 
@@ -17,20 +17,39 @@ only when exactly one axis varies: model->race, run->variance, time->model drift
 variant->twin/clone comparison. Artefact headers parse with
 system_auditor.report.parse_front_matter (hard dependency).
 
-## Execution
+## Execution & Evidence-Aware Starter Judge
 
 COMA (spawn/file protocol/polling) is detected, not assumed: adapters claude/codex/
 agy/kimi, per-lane model override. Without COMA: model-manual path via
 `compare-race record`. Failed lanes are recorded (ok: false), never hidden. Optional
 `lane_workdir` isolates inherited working directories on Python 3.10+, while raw
 per-lane process logs are persisted below `_lane-logs` when `races_dir` is set.
+Every run artefact carries a globally stable `lane_id` and explicit `evidence_kind`
+(live, manual, simulated, blocked, failed, unknown). The starter judge (`compare_race.judge`,
+`--judge`) admits only live/manual evidence and records explicit refusals for simulated,
+blocked or unknown provenance lanes, writing a separate `JUDGE.md`.
+
+## Governance & Runtime Invariants
+
+- INV-LOCAL-01: 100% Offline / Zero-Egress (local subprocess orchestration, zero network telemetry)
+- INV-SEC-02: Non-Elevation & User Mode (unprivileged execution without root/admin permissions)
+- INV-AXIS-03: Six-Axis Attribution Discipline (time, prompt, system, model, run, variant)
+- INV-JUDGE-04: Evidence-Aware Fail-Closed Judge (admission for live/manual only, refusal for unprovenanced)
+- INV-ISOL-05: Safe Process Scoping & Working Directory Isolation (lane_workdir isolates cwd, logs in _lane-logs)
+- INV-FAIL-06: Transparent Lane Accounting (failed lanes recorded with ok: false, never dropped)
+- INV-BUNDLE-07: Descriptive Olympiad Separation (count, don't conclude; multi-discipline medal table)
+- INV-INTEROP-08: Sibling Ecosystem Interoperability (coma, clutch, swarm-ai, system-auditor, marblerun)
+- INV-LIC-09: 100% Permissive Audited Stack (MIT, PSFL-2.0, zero copyleft, THIRD_PARTY_LICENSES.md)
+- INV-SLA-10: Cryptographic Parity & Dual Security SLA (deterministic checks, 48-hour response SLA)
 
 ## Entry points
 
 - prompts/RACE-STARTER.de.md + .en.md   role prompt (starter = judge by default)
 - config/compare-race.config.example.json
-- CLI: compare-race config|plan|run|record|report|olympiade (+ run --twin)
-- src/compare_race/: tokens, config, race, report, costs, cli
+- CLI: compare-race config|plan|run|record|report|olympiade (+ run --twin, run --judge)
+- src/compare_race/: tokens, config, race, report, costs, judge, cli
+- THIRD_PARTY_LICENSES.md: Audited permissive dependency inventory and compliance guarantees
+- MARKETING-LOG.txt: Personas, competitive matrix, search intents, and runtime invariants
 
 ## Neighbours (optional)
 

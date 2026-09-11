@@ -88,6 +88,13 @@ def test_pyproject_pep621_metadata():
     assert urls.get("Homepage") == "https://github.com/ellmos-ai/compare-race"
     assert urls.get("Repository") == "https://github.com/ellmos-ai/compare-race"
     assert urls.get("Issues") == "https://github.com/ellmos-ai/compare-race/issues"
+    assert urls.get("Changelog") == "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
+    assert urls.get("Documentation") == "https://github.com/ellmos-ai/compare-race#readme"
+    assert urls.get("Security") == "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
+    assert urls.get("Third-Party Licenses") == "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.md"
+    assert urls.get("Marketing Log") == "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
+    assert urls.get("Parent Organization") == "https://github.com/ellmos-ai"
+    assert urls.get("Umbrella Ecosystem") == "https://github.com/open-bricks"
 
     # Optional test dependencies
     opt_deps = project.get("optional-dependencies", {})
@@ -129,6 +136,75 @@ def test_readme_bilingual_parity():
     # Both must display the header banner
     assert "assets/banner.png" in en_content
     assert "assets/banner.png" in de_content
+
+
+def test_readme_navigation_anchor_parity():
+    """Verify 15-point quick navigation and identical anchor links in both READMEs."""
+    import re
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+
+    en_links = re.findall(r"^\d+\.\s+\[.+?\]\((#.+?)\)", en_content, re.MULTILINE)
+    de_links = re.findall(r"^\d+\.\s+\[.+?\]\((#.+?)\)", de_content, re.MULTILINE)
+
+    assert len(en_links) == 15, f"Expected 15 navigation links in README.md, got {len(en_links)}"
+    assert len(de_links) == 15, f"Expected 15 navigation links in README_de.md, got {len(de_links)}"
+
+    # Check Mermaid diagrams present in both
+    for content, lang in [(en_content, "EN"), (de_content, "DE")]:
+        assert "```mermaid\nflowchart TD" in content, f"Missing flowchart TD in {lang}"
+        assert "```mermaid\nsequenceDiagram" in content, f"Missing sequenceDiagram in {lang}"
+
+
+def test_governance_invariants_table():
+    """Verify all 10 canonical runtime invariants (INV-LOCAL-01 to INV-SLA-10) are documented."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    llms_content = _read_text("llms.txt")
+    licenses_content = _read_text("THIRD_PARTY_LICENSES.md")
+    marketing_content = _read_text("MARKETING-LOG.txt")
+
+    invariants = [
+        "INV-LOCAL-01", "INV-SEC-02", "INV-AXIS-03", "INV-JUDGE-04",
+        "INV-ISOL-05", "INV-FAIL-06", "INV-BUNDLE-07", "INV-INTEROP-08",
+        "INV-LIC-09", "INV-SLA-10",
+    ]
+    licenses_invariants = {
+        "INV-LOCAL-01", "INV-SEC-02", "INV-AXIS-03", "INV-JUDGE-04",
+        "INV-ISOL-05", "INV-FAIL-06", "INV-BUNDLE-07",
+    }
+    for inv_key in invariants:
+        assert inv_key in en_content, f"Missing {inv_key} in README.md"
+        assert inv_key in de_content, f"Missing {inv_key} in README_de.md"
+        assert inv_key in llms_content, f"Missing {inv_key} in llms.txt"
+        assert inv_key in marketing_content, f"Missing {inv_key} in MARKETING-LOG.txt"
+        if inv_key in licenses_invariants:
+            assert inv_key in licenses_content, f"Missing {inv_key} in THIRD_PARTY_LICENSES.md"
+
+
+def test_third_party_licenses_audit():
+    """Verify THIRD_PARTY_LICENSES.md audits dependencies and guarantees permissive licensing."""
+    content = _read_text("THIRD_PARTY_LICENSES.md")
+    assert "Zero-Egress" in content
+    assert "RunAsInvoker" in content
+    assert "system-auditor" in content
+    assert "coma" in content
+    assert "pytest" in content
+    assert "ruff" in content
+    assert "PSFL-2.0" in content
+    assert "MIT License" in content
+
+
+def test_marketing_log_contract():
+    """Verify MARKETING-LOG.txt exists with personas, keywords, and competitive matrix."""
+    content = _read_text("MARKETING-LOG.txt")
+    assert "1. REPOSITORY AUDIT & DISCOVERABILITY BASELINE" in content
+    assert "2. TARGET PERSONAS & USER JOURNEYS" in content
+    assert "3. HIGH-INTENT SEARCH QUERIES" in content
+    assert "4. COMPETITIVE DIFFERENTIATION MATRIX" in content
+    assert "5. GOVERNANCE & RUNTIME INVARIANTS" in content
+    assert "Benchmarking Engineers" in content
+    assert "Enterprise Tooling" in content
 
 
 def test_front_matter_contract_roundtrip_all_fields():

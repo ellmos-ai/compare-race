@@ -3,13 +3,21 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
-## [0.7.0] - 2026-09-09
+## [0.7.0] - 2026-09-11
 
 Eigenständige, gekapselte Rückführung der portablen SentinelFleet-Race-Judge-
-Konzepte; keine Übernahme von AGPL-Quellcode.
+Konzepte (keine Übernahme von AGPL-Quellcode) sowie vollständige Pfad B
+Discoverability-, Visual-Architecture- und Compliance-Erweiterung.
 
 ### Hinzugefügt
 
+- **Visual Architecture & Dual Mermaid**: Umfassende Mermaid-Diagramme (`flowchart TD` für Systemarchitektur und `sequenceDiagram` für den End-to-End Renn- & Judge-Lebenszyklus) in `README.md` und `README_de.md`.
+- **15-Punkte-Schnellnavigation**: Strukturierte Schnellnavigation mit 100% mutualer Ankerparität zwischen englischer und deutscher Dokumentation.
+- **Governance- & Laufzeit-Invarianten (INV-LOCAL-01 bis INV-SLA-10)**: Verbindliche Architektur- und Sicherheitsregeln (Local-First, Zero-Egress, User-Mode, 6-Achsen-Attribution, Fail-Closed Judge, Prozessisolation, transparente Spur-Abrechnung, deskriptive Olympiaden-Trennung, permissive Lizenzen, 48h SLA).
+- **Drittanbieter-Transparenz** (`THIRD_PARTY_LICENSES.md`): Vollständiges Lizenz-Audit aller Laufzeit- (`system-auditor` MIT, Python stdlib PSFL-2.0), optionalen (`coma` MIT) und Entwicklungs-Abhängigkeiten (`pytest` MIT, `ruff` MIT/Apache-2.0, `setuptools` MIT) mit 100% permissiver Garantie und Ausschluss von Copyleft/AGPL.
+- **Marketing- & Discoverability-Register** (`MARKETING-LOG.txt`): Dokumentation von 4 Ziel-Personas, zweisprachigen Suchbegriffen, Wettbewerbsdifferenzierungs-Matrix und Governance-Zielen.
+- **Geschwister-Ökosystem-Matrix**: Übersicht der Integration mit `ellmos-ai`, `dev-bricks`, `file-bricks`, `doc-bricks` und `open-bricks`.
+- **Erweiterte Vertragstest-Suite** (`tests/test_metadata.py`): Neue Contract-Tests für Navigationsanker-Parität, kanonische Invarianten-IDs, Drittanbieter-Lizenzinventar und Personas im Marketing-Log.
 - Global stabile `lane_id` je Modell × Variante × Wiederholung; doppelte
   Modellnamen werden zugunsten von `repeats` abgewiesen.
 - Explizite Evidenzklassen in jedem RUN-Artefakt (`live`, `manual`, `simulated`,
@@ -19,10 +27,16 @@ Konzepte; keine Übernahme von AGPL-Quellcode.
 - CLI-Opt-in `compare-race run --judge [--judge-model NAME]`; der zusätzliche
   Modellaufruf ist nie implizit.
 
+### Geändert
+
+- **PEP 621 Metadaten in `pyproject.toml`**: Zusätzliche URLs für Third-Party Licenses, Marketing Log, Documentation, Security, Parent Organization und Umbrella Ecosystem.
+- **LLM-Kontextdatei (`llms.txt`)**: Vollständige Synchronisation auf Version 0.7.0, 39 bestandene Tests, Laufzeit-Invarianten und Evidenz-Judge-Dokumentation.
+
 ### Sicherheit
 
 - Simulierte, blockierte oder provenienzunklare Spuren werden nicht bewertet.
   Der Judge protokolliert stattdessen eine nicht ausgewertete Verweigerung.
+- 100% Offline / Zero-Egress und unprivilegierte User-Mode-Ausführung (`RunAsInvoker`).
 
 ## [0.6.1] - 2026-09-10
 

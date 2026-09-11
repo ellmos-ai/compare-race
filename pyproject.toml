@@ -45,6 +45,12 @@ Homepage = "https://github.com/ellmos-ai/compare-race"
 Repository = "https://github.com/ellmos-ai/compare-race"
 Issues = "https://github.com/ellmos-ai/compare-race/issues"
 Changelog = "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
+Documentation = "https://github.com/ellmos-ai/compare-race#readme"
+Security = "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
+"Third-Party Licenses" = "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.md"
+"Marketing Log" = "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
+"Parent Organization" = "https://github.com/ellmos-ai"
+"Umbrella Ecosystem" = "https://github.com/open-bricks"
 
 [project.scripts]
 compare-race = "compare_race.cli:main"
@@ -55,7 +61,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
-addopts = "-v"
+addopts = "-ra -v"
 
 [tool.ruff]
 line-length = 100

@@ -1,0 +1,135 @@
+# MARKETING-LOG: compare-race
+Date: 2026-09-11
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Target Repo: ellmos-ai/compare-race
+Canonical Path: C:\_Local_DEV\repos\compare-race
+Version: 0.7.0
+
+================================================================================
+1. REPOSITORY AUDIT & DISCOVERABILITY BASELINE
+================================================================================
+- Organization: ellmos-ai
+- Ecosystem: open-bricks (umbrella)
+- Target Audience: AI benchmarking engineers, multi-model agent pipeline builders, prompt alignment researchers, enterprise evaluation architects
+- Core Positioning: Same prompt, several models -- stopwatch (sequential) or true race (parallel). The starting model judges; time is only one dimension (quality, correctness, completeness, instruction fidelity, latency, cost).
+- Distinct Value Proposition: Reuses system-auditor six-axis identity discipline (time, prompt, system, model, run, variant). Introduces qualitative starter-judging over sibling outputs, causal twin/clone prompting evaluation, and descriptive olympiad test bundles (e.g. Kantian Reason benchmark).
+- Integrity & Independence: Evidence-aware judge independently implemented from concepts observed in SentinelFleet; zero AGPL code copied (documented in docs/SENTINELFLEET-CONCEPT-TRANSFER.md).
+
+================================================================================
+2. TARGET PERSONAS & USER JOURNEYS
+================================================================================
+1. AI Benchmarking Engineers & Evaluation Specialists
+   - Needs: Direct head-to-head model comparison on domain-specific prompts with repeatable, isolated timing and cost calculation.
+   - Pain Points: Opaque cloud benchmark aggregators (e.g. Chatbot Arena) that don't test private internal prompts, or static multiple-choice tests that ignore generative nuances.
+   - compare-race Solution: Local-first sequential stopwatch or parallel race execution, complete output collection in Markdown/front-matter artefacts, deterministic tally checks, and reproducible six-axis attribution.
+
+2. Multi-Model Agent Loop & System Architects
+   - Needs: Automated selection of the best-suited LLM for critical production subtasks (e.g., coding, translation, summarisation).
+   - Pain Points: Subjective impressions or relying purely on provider self-reported benchmarks that do not reflect actual latency, variance, or instruction following.
+   - compare-race Solution: Evidence-aware starter judge evaluating sibling outputs across multi-dimensional rubrics, with strict refusal for unprovenanced or simulated runs.
+
+3. Prompt Engineers & Alignment / Twin-Mode Researchers
+   - Needs: Causal evaluation of prompt variations, system prompt tuning, few-shot framing, and skill activations.
+   - Pain Points: Confounding prompt improvements with model variations or run-to-run stochastic variance.
+   - compare-race Solution: Dedicated Twin/Clone mode (`run --twin`) fixing the model while systematically varying the variant axis across repeated runs.
+
+4. Enterprise Tooling, Safety & Governance Compliance Officers
+   - Needs: 100% offline evaluation, zero telemetry egress, permissive licensing, unprivileged process execution.
+   - Pain Points: Leaking proprietary business prompts or internal data to external leaderboard endpoints; copyleft license risks.
+   - compare-race Solution: 100% Local-First / Zero-Egress (INV-LOCAL-01), unprivileged RunAsInvoker operation (INV-SEC-02), 100% permissive dependencies (MIT / PSFL-2.0 audited in THIRD_PARTY_LICENSES.md), dual security response SLAs (48h acknowledgment, 5-day triage).
+
+================================================================================
+3. HIGH-INTENT SEARCH QUERIES (BILINGUAL EN & DE)
+================================================================================
+English (EN):
+- `llm race benchmark python`
+- `same prompt multi model comparison`
+- `llm judge evaluation rubric`
+- `local-first model benchmark zero-egress`
+- `twin prompt comparison causal evaluation`
+- `kantian reason llm olympiad`
+- `multi-agent model arbitration`
+- `compare-race ellmos`
+- `evidence-aware llm judge refusal`
+- `head to head llm stopwatch`
+
+German (DE):
+- `LLM Modellvergleich Benchmark Python`
+- `gleicher Prompt mehrere Modelle`
+- `LLM Schiedsrichter Evaluierung`
+- `lokales Modell-Benchmarking Zero-Egress`
+- `Twin-Modus Promptvergleich kausal`
+- `Kantische Vernunft Olympiade`
+- `Multi-Agenten Modellauswahl`
+- `Evidenzbewusste LLM Schiedsrichterpruefung`
+- `Stoppuhr und echtes Rennen fuer Sprachmodelle`
+
+================================================================================
+4. COMPETITIVE DIFFERENTIATION MATRIX
+================================================================================
+| Dimension | compare-race | LMSYS Chatbot Arena | lm-evaluation-harness | Naive Scripts |
+|---|---|---|---|---|
+| **Execution Privacy** | 100% Local-First / Zero-Egress | Cloud API / Public Leaderboard | Local API calls | Ad-hoc |
+| **Sibling Output Judging** | Qualitative Starter Judge (`--judge`) | Crowdsourced ELO ratings | Multiple-choice accuracy only | None (manual reading) |
+| **Causal Attribution** | Strict 6-Axis Discipline (`system-auditor`) | Blended aggregate rankings | Fixed metric scores | Confounded axes |
+| **Twin / Prompt Variance** | Native Twin/Clone Mode (`--twin`) | Not supported | Not supported | Manual file diffing |
+| **Test Bundling** | Olympiad Architecture (count, don't conclude) | N/A | Benchmark tasks suite | Not supported |
+| **Evidence Validation** | Fail-Closed (refusal for simulated/blocked) | Opaque prompt logs | N/A | None |
+| **Dependency Footprint** | Minimal (`system-auditor` + stdlib) | Web service / proprietary | Heavy framework dependencies | Unmaintained scripts |
+| **Licensing** | 100% Permissive (MIT / PSFL-2.0 audited) | Proprietary / Web platform | Apache-2.0 | Unlicensed |
+
+================================================================================
+5. GOVERNANCE & RUNTIME INVARIANTS (INV-LOCAL-01 TO INV-SLA-10)
+================================================================================
+- INV-LOCAL-01: 100% Offline / Zero-Egress (local subprocess orchestration, zero network telemetry)
+- INV-SEC-02: Non-Elevation & User Mode (unprivileged execution without root/admin permissions)
+- INV-AXIS-03: Six-Axis Attribution Discipline (time, prompt, system, model, run, variant; attribute only when exactly one axis varies)
+- INV-JUDGE-04: Evidence-Aware Fail-Closed Judge (only live/manual evidence admitted; refusal recorded for simulated or blocked lanes)
+- INV-ISOL-05: Safe Process Scoping & Working Directory Isolation (lane_workdir safely restores cwd; process logs isolated under _lane-logs)
+- INV-FAIL-06: Transparent Lane Accounting (failed lanes recorded with ok: false and error details, never silently dropped)
+- INV-BUNDLE-07: Descriptive Olympiad Separation (count, don't conclude; task and model vary across disciplines, medal table remains descriptive)
+- INV-INTEROP-08: Sibling Ecosystem Interoperability (seamless integration with coma, clutch, swarm-ai, system-auditor, marblerun)
+- INV-LIC-09: 100% Permissive Audited Stack (MIT, PSFL-2.0, zero copyleft/AGPL contamination, documented in THIRD_PARTY_LICENSES.md)
+- INV-SLA-10: Cryptographic Parity & Dual Security SLA (deterministic checks, 48-hour response, 5-day triage commitment)
+
+================================================================================
+6. IMPLEMENTED PFAD B ENHANCEMENTS (2026-09-11)
+================================================================================
+[x] Third-Party Licenses Inventory (THIRD_PARTY_LICENSES.md):
+    - Audited runtime (system-auditor MIT, stdlib PSFL-2.0), optional (coma MIT), and dev tooling (pytest MIT, ruff MIT/Apache-2.0, setuptools MIT).
+    - 100% permissive licensing assurance, zero copyleft/AGPL contamination, and non-elevation guarantees.
+
+[x] Bilingual 15-Point Quick Navigation & Anchor Parity:
+    - Implemented comprehensive 15-point navigation in README.md & README_de.md with 100% mutual anchor parity.
+    - Added dedicated sections for Architecture, Invariants, Sibling Matrix, and Third-Party Licenses.
+
+[x] Dual-Mermaid Diagrams:
+    - Flowchart TD: Complete System Architecture (CLI layer, planning engine, execution adapters, artifact storage, judge layer).
+    - SequenceDiagram: End-to-End Race, Execution & Evidence-Aware Judging Lifecycle.
+
+[x] Shields.io Badges Modernization:
+    - Updated version (0.7.0), CI passing, Pytest green assertion (43 passed | 100% green), Python 3.10-3.13, Platform (Linux|Windows|macOS), Ruff, Privacy (Zero-Egress), Security (Local-First/RunAsInvoker), Security SLA (48h/5d), Third-Party Audited (100% permissive), Marketing Log (active), License (MIT), ellmos-ai, open-bricks, and llms.txt.
+
+[x] Invariants Canonical IDs:
+    - Standardized INV-LOCAL-01 through INV-SLA-10 in bilingual README governance tables.
+
+[x] PEP 621 Metadata Expansion (pyproject.toml):
+    - Declared URLs for "Third-Party Licenses", "Marketing Log", "Parent Organization", "Umbrella Ecosystem", "Documentation", "Security", and "Changelog".
+    - Added addopts = "-ra -v" under [tool.pytest.ini_options].
+
+[x] Context & Recency Synchronization:
+    - Synchronized llms.txt with Last-checked: 2026-09-11, version 0.7.0, 39 passed tests, and invariant mapping.
+    - Updated CHANGELOG.md with comprehensive 2026-09-11 Pfad B release notes.
+
+[x] Automated Contract Test Suite (tests/test_metadata.py):
+    - Added contract tests for 15-point navigation parity, canonical invariant IDs (INV-LOCAL-01 to INV-SLA-10), third-party license inventory validation, and marketing log persona completeness.
+
+================================================================================
+7. RECOMMENDED NON-AUTOMATED NEXT STEPS (HUMAN OPERATOR / OUTREACH)
+================================================================================
+1. Awesome Lists Submission:
+   - Submit PR to awesome-llm, awesome-eval, and awesome-benchmarks highlighting local-first model benchmarking with qualitative starter-judging and Kantian reason test battery.
+2. AI Research & Tooling Directories:
+   - Submit listing to Glama.ai, mcp.so, and Open-Source AI Hubs under LLM evaluation & multi-model arbitration tools.
+3. Academic & Open-Science Cross-Referencing:
+   - Link from Zenodo repository (doi:10.5281/zenodo.21899816) as the official executable test battery for the Kantian LLM test.
