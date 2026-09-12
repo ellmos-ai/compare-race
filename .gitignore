@@ -44,6 +44,10 @@ htmlcov/
 *.tmp
 
 # Multi-host sync & OneDrive conflicts
+*conflicted copy*
+*(kopie)*
+*-WORKSTATION-*
+*-ASUS-*
 *-conflict-*
 *.sync-conflict-*
 *.conflict

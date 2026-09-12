@@ -133,3 +133,14 @@ German (DE):
    - Submit listing to Glama.ai, mcp.so, and Open-Source AI Hubs under LLM evaluation & multi-model arbitration tools.
 3. Academic & Open-Science Cross-Referencing:
    - Link from Zenodo repository (doi:10.5281/zenodo.21899816) as the official executable test battery for the Kantian LLM test.
+
+================================================================================
+8. MAINTENANCE AUDIT & HYGIENE VERIFICATION (PFAD A)
+================================================================================
+Date: 2026-09-13
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Version: 0.7.1
+- Verified CI hardening: Added timeout-minutes: 15 and Python 3.13 matrix execution.
+- Verified multi-host sync defense: Added OneDrive & host conflict patterns to .gitignore.
+- Verified PEP 621 metadata: Added Python 3.13 classifier and "LLM Context" link.
+- Verified contract testing: Expanded test_metadata.py with CI timeout, Python 3.13, sync patterns, and llms.txt assertions (45 passed, 100% green).

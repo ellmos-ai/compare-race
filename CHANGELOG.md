@@ -3,6 +3,21 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.7.1] - 2026-09-13
+
+Pfad A Technische Hygiene, CI-Härtung (Timeout Guardrail & Python 3.13 Matrix), Multi-Host-Synchronisationsabwehr und Vertragstest-Erweiterung.
+
+### Hinzugefügt
+
+- **CI-Timeout-Guardrail & Python 3.13 Matrix** (`.github/workflows/ci.yml`): `timeout-minutes: 15` Schutz vor hängenden Runnern und Erweiterung der Test-Matrix um Python 3.13.
+- **Multi-Host-Sync-Härtung** (`.gitignore`): Ergänzung kanonischer Ausschlussmuster gegen OneDrive- und Rechner-Konfliktdateien (`*conflicted copy*`, `*(kopie)*`, `*-WORKSTATION-*`, `*-ASUS-*`).
+- **PEP 621 Metadaten-Erweiterung** (`pyproject.toml`): Python 3.13 Classifier und "LLM Context" URL für maschinenlesbare Auffindbarkeit via `llms.txt`.
+- **Vertragstest-Erweiterung** (`tests/test_metadata.py`): Neue Contract-Tests für CI-Timeout, Python 3.13 Classifier, Multi-Host Sync-Muster, PEP 621 URLs, CHANGELOG [0.7.1] und llms.txt Konsistenz (45 Tests, 100% grün).
+
+### Geändert
+
+- **Versions- und Status-Harmonisierung**: Anhebung auf Version 0.7.1 über `src/compare_race/__init__.py`, `pyproject.toml`, `README.md`, `README_de.md`, `llms.txt` und `MARKETING-LOG.txt`.
+
 ## [0.7.0] - 2026-09-11
 
 Eigenständige, gekapselte Rückführung der portablen SentinelFleet-Race-Judge-

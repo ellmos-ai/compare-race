@@ -35,6 +35,10 @@ def test_gitignore_hygiene():
         ".coverage",
         ".env",
         "*.db",
+        "*conflicted copy*",
+        "*(kopie)*",
+        "*-WORKSTATION-*",
+        "*-ASUS-*",
         "*-conflict-*",
         "*.sync-conflict-*",
         "*.sync-temp-*",
@@ -82,6 +86,7 @@ def test_pyproject_pep621_metadata():
     assert "Programming Language :: Python :: 3.10" in classifiers
     assert "Programming Language :: Python :: 3.11" in classifiers
     assert "Programming Language :: Python :: 3.12" in classifiers
+    assert "Programming Language :: Python :: 3.13" in classifiers
 
     # URLs
     urls = project.get("urls", {})
@@ -95,6 +100,7 @@ def test_pyproject_pep621_metadata():
     assert urls.get("Marketing Log") == "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
     assert urls.get("Parent Organization") == "https://github.com/ellmos-ai"
     assert urls.get("Umbrella Ecosystem") == "https://github.com/open-bricks"
+    assert urls.get("LLM Context") == "https://github.com/ellmos-ai/compare-race/blob/master/llms.txt"
 
     # Optional test dependencies
     opt_deps = project.get("optional-dependencies", {})
@@ -104,13 +110,15 @@ def test_pyproject_pep621_metadata():
 
 
 def test_ci_matrix_workflow_definition():
-    """Verify GitHub Actions CI matrix tests Python 3.10, 3.11, and 3.12."""
+    """Verify GitHub Actions CI matrix tests Python 3.10, 3.11, 3.12, 3.13 and has timeout."""
     content = _read_text(".github/workflows/ci.yml")
     assert "name: CI" in content
+    assert "timeout-minutes: 15" in content
     assert 'matrix:' in content
     assert '"3.10"' in content
     assert '"3.11"' in content
     assert '"3.12"' in content
+    assert '"3.13"' in content
     assert "compileall" in content
     assert "ruff check ." in content
     assert "pytest" in content
@@ -244,3 +252,20 @@ def test_front_matter_contract_roundtrip_all_fields():
     assert float(parsed["est_cost_usd"]) == 0.0012
     assert "format-ok" in str(parsed["checks_passed"])
     assert "result-correct" in str(parsed["checks_passed"])
+
+
+def test_changelog_recent_pfad_a_071_entry():
+    """Contract test: Ensure CHANGELOG.md documents [0.7.1] with Pfad A hygiene items."""
+    content = _read_text("CHANGELOG.md")
+    assert "## [0.7.1] - 2026-09-13" in content
+    assert "CI-Timeout-Guardrail" in content
+    assert "Multi-Host-Sync-Härtung" in content
+    assert "PEP 621" in content
+
+
+def test_llms_txt_version_and_recency():
+    """Contract test: Ensure llms.txt reflects v0.7.1 and 2026-09-13 audit stamp."""
+    content = _read_text("llms.txt")
+    assert "Version: 0.7.1" in content
+    assert "Last-checked: 2026-09-13" in content
+    assert "Tests: 45 passed (100% green)" in content

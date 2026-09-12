@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "compare-race"
-version = "0.7.0"
+version = "0.7.1"
 description = "Same prompt, several models -- stopwatch or true race; the starting model judges (time is only one dimension)"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -26,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Testing",
 ]
@@ -51,6 +52,7 @@ Security = "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
 "Marketing Log" = "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
 "Parent Organization" = "https://github.com/ellmos-ai"
 "Umbrella Ecosystem" = "https://github.com/open-bricks"
+"LLM Context" = "https://github.com/ellmos-ai/compare-race/blob/master/llms.txt"
 
 [project.scripts]
 compare-race = "compare_race.cli:main"
