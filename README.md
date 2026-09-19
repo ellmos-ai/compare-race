@@ -1,4 +1,5 @@
 <img src="assets/banner.png" width="100%" alt="compare-race banner">
+<!-- alternate banner: assets/banner-b.png (swap on occasion) -->
 
 # compare-race
 
