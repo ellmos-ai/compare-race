@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-09-13 | Version: 0.7.1 | Tests: 45 passed (100% green) | Lint: ruff clean
+> Last-checked: 2026-09-20 | Version: 0.7.2 | Tests: 52 passed (100% green) | Lint: ruff clean
 
 ## Core idea
 
@@ -48,8 +48,10 @@ blocked or unknown provenance lanes, writing a separate `JUDGE.md`.
 - config/compare-race.config.example.json
 - CLI: compare-race config|plan|run|record|report|olympiade (+ run --twin, run --judge)
 - src/compare_race/: tokens, config, race, report, costs, judge, cli
-- THIRD_PARTY_LICENSES.md: Audited permissive dependency inventory and compliance guarantees
+- NOTICE: Formal root project and copyright attribution notice
+- THIRD_PARTY_LICENSES.md: Audited Level 1 SBOM, Invariant Cross-Reference Matrix, and permissive inventory
 - MARKETING-LOG.txt: Personas, competitive matrix, search intents, and runtime invariants
+- README.md / README_de.md: 18-point bilingual documentation with reciprocal dual HTML anchors and § 521 BGB disclaimer
 
 ## Neighbours (optional)
 

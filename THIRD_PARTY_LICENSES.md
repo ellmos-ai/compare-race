@@ -1,9 +1,10 @@
-# Third-Party Licenses & Transparency Notice
+# Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
-> **Project:** `ellmos-ai/compare-race`  
-> **Audited:** 2026-09-11  
-> **Repository License:** [MIT License](LICENSE)  
-> **Architecture & Privacy:** 100% Local-First, Zero-Egress, Unprivileged User-Mode (`RunAsInvoker`)
+> **Project:** `ellmos-ai/compare-race`<br>
+> **Audited:** 2026-09-20<br>
+> **Repository License:** [MIT License](LICENSE)<br>
+> **Repository Attribution Notice:** [NOTICE](NOTICE)<br>
+> **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
 ---
 
@@ -13,14 +14,28 @@
 
 All direct, optional, and development dependencies utilized across `compare-race` are distributed under strictly **permissive open-source licenses** (MIT, Apache-2.0, PSFL). There are **zero copyleft, GPL, or AGPL dependencies**, ensuring maximum portability for local development, academic research, and automated CI/CD pipelines. The evidence-aware judge was independently implemented from concepts observed in SentinelFleet; no AGPL source was copied (see [`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md)).
 
-Furthermore, `compare-race` guarantees:
-1. **100% Local-First & Zero Egress (INV-LOCAL-01):** Model benchmarking, artefact persistence, and judging occur entirely locally. Zero telemetry, zero external tracking, and zero remote data transmission.
-2. **Unprivileged User-Mode (`RunAsInvoker` / INV-SEC-02):** Executes safely in standard user space without requiring root or administrator elevation.
-3. **Six-Axis Identity Discipline (INV-AXIS-03):** Every run carries `time · prompt · system · model · run · variant`. Attributions are only permitted when exactly one axis varies.
-4. **Evidence-Aware Fail-Closed Judge (INV-JUDGE-04):** Only real live-executed or model-manually recorded evidence is admitted. Simulated, blocked, or unknown provenance lanes are recorded as refusals, never scored.
-5. **Safe Process Scoping & Working Directory Isolation (INV-ISOL-05):** `lane_workdir` safely isolates child execution directories and restores `cwd` on exceptions; process logs are isolated under `_lane-logs`.
-6. **Transparent Lane Accounting (INV-FAIL-06):** Failed lanes are explicitly recorded (`ok: false`) with error details, never silently dropped or filtered out.
-7. **Descriptive Olympiad Separation (INV-BUNDLE-07):** Across bundled disciplines, medal tables count results without drawing causal conclusions across multi-variable changes.
+### Invariant Cross-Reference Matrix
+
+| Invariant ID | Security & Operational Mandate | Technical Enforcement Mechanism | License & Isolation Scope |
+|:---|:---|:---|:---|
+| `INV-LOCAL-01` | **100% Offline / Zero-Egress** | Pure local subprocess benchmarking, zero outbound telemetry, zero tracking | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-SEC-02` | **Non-Elevation (`RunAsInvoker`)** | Unprivileged execution without requiring root or administrator elevation | [MIT](LICENSE) |
+| `INV-AXIS-03` | **Six-Axis Attribution Discipline** | Strict identity tuple: `time · prompt · system · model · run · variant` | [MIT](https://github.com/ellmos-ai/system-auditor) |
+| `INV-JUDGE-04` | **Evidence-Aware Fail-Closed Judge** | Only real live-executed or model-manually recorded evidence admitted | [MIT](LICENSE) |
+| `INV-ISOL-05` | **Safe Process & Workspace Isolation** | `lane_workdir` sandboxing isolates child cwd and safely restores context | [PSFL-2.0](https://docs.python.org/3/license.html) |
+| `INV-FAIL-06` | **Transparent Lane Accounting** | Failed lanes explicitly recorded (`ok: false`) with error details, never dropped | [MIT](LICENSE) |
+| `INV-BUNDLE-07` | **Descriptive Olympiad Separation** | Across bundled disciplines, medal table stays descriptive: count, don't conclude | [MIT](LICENSE) |
+| `INV-INTEROP-08` | **Sibling Ecosystem Interoperability** | Native compatibility with `ellmos-ai` and `open-bricks` ecosystem | [MIT](https://github.com/ellmos-ai) |
+| `INV-LIC-09` | **100% Permissive Audited Stack** | Audited dependency stack, zero copyleft/AGPL contamination | [MIT / PSFL-2.0 / Apache-2.0](THIRD_PARTY_LICENSES.md) |
+| `INV-SLA-10` | **Cryptographic Parity & Dual Security SLA** | Contract test verification, 48-hour response, 5-day triage commitment | [SECURITY.md](SECURITY.md) |
+
+---
+
+## Zero-Copyleft Isolation Guarantee & RunAsInvoker Certification
+
+1. **Zero-Copyleft Guarantee:** No component of `compare-race` links against, vendors, or invokes any code under GPLv2, GPLv3, AGPLv3, LGPL, SSPL, or CC-BY-SA licenses. All dependencies are strictly permissive (MIT, Apache-2.0, PSFL-2.0).
+2. **Unprivileged Execution (`RunAsInvoker`):** `compare-race` requires no administrative privileges, no daemon services, and no root credentials. It operates entirely in unprivileged user space.
+3. **Zero-Egress Perimeter:** By default, no network traffic is emitted by `compare-race`. When external LLM CLI tools are invoked via detected adapters (such as `coma`), network interaction is governed strictly by the user's authenticated CLI configuration and explicit policies.
 
 ---
 

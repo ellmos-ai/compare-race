@@ -7,7 +7,7 @@ verdict, beside quality, correctness, completeness and cost -- the judge is the
 starting model by default (user decision 2026-08-16).
 """
 
-__version__ = "0.7.1"
+__version__ = "0.7.2"
 
 from .config import JUDGE_STARTER, ModelEntry, RaceSettings, load  # noqa: F401
 from .judge import (  # noqa: F401

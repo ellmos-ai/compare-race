@@ -144,3 +144,37 @@ Version: 0.7.1
 - Verified multi-host sync defense: Added OneDrive & host conflict patterns to .gitignore.
 - Verified PEP 621 metadata: Added Python 3.13 classifier and "LLM Context" link.
 - Verified contract testing: Expanded test_metadata.py with CI timeout, Python 3.13, sync patterns, and llms.txt assertions (45 passed, 100% green).
+
+================================================================================
+9. MARKETING & DISCOVERABILITY PARITY UPGRADE (PFAD B)
+================================================================================
+Date: 2026-09-20
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Version: 0.7.2
+
+[x] 18-Point Bilingual Navigation & Reciprocal Dual HTML Anchors:
+    - Expanded navigation in README.md & README_de.md from 15 to 18 points with reciprocal dual HTML anchor tags (<a id="..."></a>).
+    - Preserved full backward compatibility for all existing section references and fragment links.
+
+[x] Target Personas & High-Intent SEO Queries (Section 4):
+    - Brought [PERSONA-01] to [PERSONA-04] and curated bilingual SEO queries directly into both README documents.
+
+[x] 10-Dimension Comparative Matrix vs. Alternatives (Section 5):
+    - Evaluated compare-race against LMSYS Chatbot Arena, lm-evaluation-harness, and Ad-Hoc Python scripts mapped across INV-LOCAL-01 through INV-SLA-10.
+
+[x] Level 1 SBOM & Invariant Cross-Reference Matrix (THIRD_PARTY_LICENSES.md):
+    - Audited Stand 2026-09-20 with full Invariant Cross-Reference Matrix, RunAsInvoker non-elevation certification, and Zero-Copyleft isolation guarantee.
+
+[x] Root Attribution Notice (NOTICE):
+    - Established formal NOTICE file linking ellmos-ai and open-bricks umbrella governance.
+
+[x] Statutory Notice & Liability Limitation (§ 521 BGB Gefälligkeitsrecht) (Section 18):
+    - Embedded German statutory disclaimer (§ 521 BGB) and English translation across both READMEs.
+
+[x] PEP 621 & GitHub Discoverability:
+    - Bumped package version to 0.7.2.
+    - Updated license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"] in pyproject.toml.
+    - Expanded keywords and synchronized 20 GitHub repository topics via GitHub CLI.
+
+[x] Automated Contract Verification Suite (tests/test_metadata.py):
+    - Extended contract tests for 18-point navigation parity, reciprocal dual anchors, semicolon-free Mermaid diagrams, target personas, comparative matrix, Level 1 SBOM, NOTICE file, and § 521 BGB compliance.

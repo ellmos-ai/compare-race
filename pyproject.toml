@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "compare-race"
-version = "0.7.1"
+version = "0.7.2"
 description = "Same prompt, several models -- stopwatch or true race; the starting model judges (time is only one dimension)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
 authors = [{ name = "Lukas Geiger" }]
 keywords = [
     "benchmark",
@@ -17,6 +18,12 @@ keywords = [
     "model-comparison",
     "multi-agent",
     "race",
+    "starter-judge",
+    "twin-mode",
+    "kantian-reason",
+    "olympiad",
+    "local-first",
+    "zero-egress",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

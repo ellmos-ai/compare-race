@@ -3,9 +3,9 @@
 
 # compare-race
 
-[![Version](https://img.shields.io/badge/version-0.7.1-blue.svg)](pyproject.toml)
+[![Version](https://img.shields.io/badge/version-0.7.2-blue.svg)](pyproject.toml)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-45%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-52%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](pyproject.toml)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -28,25 +28,29 @@
 
 ## Quick Navigation
 
-1. [Core Concept & Identity](#core-concept--identity)
-2. [System Architecture](#system-architecture)
-3. [Race, Twin & Olympiad Modes](#race-twin--olympiad-modes)
-4. [Kantian Reason Olympiad](#kantian-reason-olympiad)
-5. [Evidence-Aware Starter Judge](#evidence-aware-starter-judge)
-6. [Governance & Runtime Invariants](#governance--runtime-invariants)
-7. [Installation & Execution](#installation--execution)
-8. [CLI Command Reference](#cli-command-reference)
-9. [Configuration & Role Prompts](#configuration--role-prompts)
-10. [Sibling Ecosystem Matrix](#sibling-ecosystem-matrix)
-11. [Third-Party Licenses & Transparency](#third-party-licenses--transparency)
-12. [Discovery & LLM Context](#discovery--llm-context)
-13. [Testing & Verification](#testing--verification)
-14. [Security & SLA](#security--sla)
-15. [License](#license)
+1. [Executive Summary & Core Identity](#core-concept--identity)
+2. [Visual Architecture Topology & Decoupled Layers](#system-architecture)
+3. [End-to-End Race Execution & Starter-Judge Lifecycle](#end-to-end-race-lifecycle)
+4. [Target Personas & High-Intent SEO Queries](#target-personas--discoverability-queries)
+5. [Comparative Matrix vs. Alternatives](#comparative-matrix--alternatives)
+6. [Governance & Runtime Invariants Matrix](#governance--runtime-invariants-matrix)
+7. [Race, Twin & Olympiad Modes](#race-twin--olympiad-modes)
+8. [Kantian Reason Olympiad](#kantian-reason-olympiad)
+9. [Evidence-Aware Starter Judge](#evidence-aware-starter-judge)
+10. [Installation & Prerequisites](#installation--execution)
+11. [CLI Command Reference](#cli-command-reference)
+12. [Configuration & Role Prompts](#configuration--role-prompts)
+13. [Sibling Tools & Ecosystem Matrix](#sibling-ecosystem-matrix)
+14. [Third-Party Licenses & Level 1 SBOM](#third-party-licenses--transparency)
+15. [Security Policy & Operational Limits](#security--sla)
+16. [Testing, Verification & CI Matrix](#testing--verification)
+17. [Discovery Keywords & Disambiguation](#discovery--llm-context)
+18. [Statutory Notice, Liability Limitation & License (§ 521 BGB)](#license)
 
 ---
 
-## Core Concept & Identity
+<a id="core-concept--identity"></a><a id="executive-summary--core-identity"></a>
+## 1. Executive Summary & Core Identity
 
 `compare-race` fans one prompt out to several LLMs — **sequentially** (the stopwatch: one lane at a time, clean per-lane timing) or **in parallel** (the true race) — with optional repetitions per model, and collects every answer as an artefact. The verdict is either **model-manual** or an explicit `--judge` call: the starting model reads the sibling outputs and fills a multi-dimensional rubric (quality, correctness, completeness, instruction fidelity, latency, cost). The stopwatch is only one picture.
 
@@ -65,7 +69,8 @@ The run artefact headers speak the canonical `system_auditor.report.parse_front_
 
 ---
 
-## System Architecture
+<a id="system-architecture"></a><a id="visual-architecture-topology"></a>
+## 2. Visual Architecture Topology & Decoupled Layers
 
 The following diagram illustrates the decoupled layers of `compare-race`, from CLI dispatch and six-axis planning to execution adapters, artefact storage, and evidence-aware judging:
 
@@ -123,7 +128,10 @@ flowchart TD
     TALLY --> MEDAL
 ```
 
-### End-to-End Race, Execution & Judging Lifecycle
+---
+
+<a id="end-to-end-race-lifecycle"></a><a id="sequence-flow"></a>
+## 3. End-to-End Race Execution & Starter-Judge Lifecycle
 
 ```mermaid
 sequenceDiagram
@@ -162,44 +170,55 @@ sequenceDiagram
 
 ---
 
-## Race, Twin & Olympiad Modes
+<a id="target-personas--discoverability-queries"></a><a id="target-personas--discoverability"></a>
+## 4. Target Personas & High-Intent SEO Queries
 
-| Mode | What varies | What it answers | Causal Attribution |
-|:---|:---|:---|:---|
-| **Race** (`run`) | `model` | Which model handles this specific task best | Causal over models |
-| **Twin/Clone** (`run --twin`) | `variant` (prompt/skills/env), one model | What a prompt technique or skill is causally worth | Causal over variants |
-| **Olympiad** (`olympiade`) | `model` within discipline, `task` across | A descriptive medal table over an entire test bundle | **Descriptive only** (count, don't conclude) |
+`compare-race` serves four primary developer and researcher archetypes:
 
-An olympiad is a **test bundle**: one task file per discipline, each executed as a standard race, and judged per discipline. The aggregate stays descriptive — **count, don't conclude** (since both task AND model vary across disciplines, no single causal attribution is mathematically valid). Per-discipline deterministic checks reside in `<task>.checks.json` files adjacent to each task.
+- **`[PERSONA-01]` AI Benchmarking Engineers & Evaluation Specialists:**
+  - *Need:* Direct head-to-head model comparison on domain-specific prompts with repeatable, isolated timing, cost tracking, and deterministic check validation.
+  - *Solution:* Local-first sequential stopwatch or parallel race execution, complete output collection in Markdown/front-matter artefacts, deterministic tally checks, and reproducible six-axis attribution.
+- **`[PERSONA-02]` Multi-Model Agent Loop & System Architects:**
+  - *Need:* Automated selection of the optimal LLM for critical production subtasks (coding, translation, mathematical reasoning) based on objective multi-dimensional rubrics.
+  - *Solution:* Evidence-aware starter judge evaluating sibling outputs across quality, correctness, completeness, instruction fidelity, latency, and cost, with strict refusal for unprovenanced or simulated runs.
+- **`[PERSONA-03]` Prompt Engineers & Alignment / Twin-Mode Researchers:**
+  - *Need:* Causal evaluation of prompt variations, system prompt tuning, few-shot framing, and skill activations without confounding effects.
+  - *Solution:* Dedicated Twin/Clone mode (`run --twin`) fixing the model while systematically varying the variant axis across repeated runs.
+- **`[PERSONA-04]` Enterprise Tooling, Safety & Governance Compliance Officers:**
+  - *Need:* 100% offline evaluation, zero telemetry egress, permissive licensing, unprivileged process execution, and guaranteed confidentiality.
+  - *Solution:* 100% Local-First / Zero-Egress (`INV-LOCAL-01`), unprivileged `RunAsInvoker` operation (`INV-SEC-02`), 100% permissive dependencies (MIT / PSFL-2.0 audited in `THIRD_PARTY_LICENSES.md`), dual security response SLAs (48h acknowledgment, 5-day triage).
 
----
+### High-Intent Search Queries (Bilingual EN & DE)
 
-## Kantian Reason Olympiad
-
-[`olympiads/kantische-vernunft/`](olympiads/kantische-vernunft/) turns the seven dimensions of the *Kantian test for LLMs* — plus *distributional rationality* from the extension part — into the first executable test battery of this framework. The discipline design, the methodological caveat (measuring structure-condition *behaviour*, never reason itself) and the count-don't-conclude rule come from the underlying research paper, which this form of olympiad operationalises:
-
-> Geiger, L. (2026). *Der Mensch in der Maschine: Sind LLMs vernünftige Wesen im kantischen Sinne?* (v9.0). Zenodo.
-> [doi:10.5281/zenodo.21899816](https://doi.org/10.5281/zenodo.21899816) (all versions: [doi:10.5281/zenodo.18642673](https://doi.org/10.5281/zenodo.18642673))
-
----
-
-## Evidence-Aware Starter Judge
-
-Every run artefact carries a globally stable `lane_id` and an explicit `evidence_kind`:
-- `live`: Live executed via detected COMA adapters.
-- `manual`: Recorded model-manually via `compare-race record`.
-- `simulated`: Synthetic mock or mock executor output.
-- `blocked`: Execution was skipped or blocked by policy/permissions.
-- `failed`: Process terminated with error or non-zero exit code.
-- `unknown`: Provenance could not be verified.
-
-The automatic starter judge (`compare_race.judge`, invoked via `--judge`) operates on a **fail-closed admission principle**: it admits only real `live` or `manual` evidence. If any lane is simulated, blocked, or of unknown provenance, it records an explicit refusal in `JUDGE.md` instead of scoring invalid data.
-
-The evidence-aware judge was independently implemented from concepts observed in SentinelFleet; no AGPL source was copied (see [`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md)).
+| Intent Scope | English (EN) Search Queries | German (DE) Suchbegriffe |
+|:---|:---|:---|
+| **Benchmarking & Race** | `llm race benchmark python`, `same prompt multi model comparison`, `head to head llm stopwatch` | `LLM Modellvergleich Benchmark Python`, `gleicher Prompt mehrere Modelle`, `Stoppuhr und echtes Rennen fuer Sprachmodelle` |
+| **Judging & Rubrics** | `llm judge evaluation rubric`, `evidence-aware llm judge refusal`, `multi-dimensional llm scoring` | `LLM Schiedsrichter Evaluierung`, `Evidenzbewusste LLM Schiedsrichterpruefung`, `qualitative Beurteilung Sprachmodelle` |
+| **Causal Twin & Olympiad** | `twin prompt comparison causal evaluation`, `kantian reason llm olympiad`, `prompt engineering ablation` | `Twin-Modus Promptvergleich kausal`, `Kantische Vernunft Olympiade`, `systematische Prompt-Variation` |
+| **Privacy & Security** | `local-first model benchmark zero-egress`, `offline llm evaluation tool`, `runasinvoker python benchmark` | `lokales Modell-Benchmarking Zero-Egress`, `offline Sprachmodell Evaluierung`, `unbevollmaechtigter Benchmark-Lauf` |
 
 ---
 
-## Governance & Runtime Invariants
+<a id="comparative-matrix--alternatives"></a><a id="comparative-matrix-vs-alternatives"></a>
+## 5. Comparative Matrix vs. Alternatives
+
+| Technical Dimension | Invariant Mapping | compare-race | LMSYS Chatbot Arena | lm-evaluation-harness | Ad-Hoc Python Scripts |
+|:---|:---|:---|:---|:---|:---|
+| **Execution Privacy** | `INV-LOCAL-01` | **100% Local-First / Zero-Egress** | Cloud API / Public Web | Local API calls | Ad-hoc / Unaudited |
+| **Process Elevation** | `INV-SEC-02` | **Unprivileged RunAsInvoker** | Cloud Hosted | Unprivileged | Often unverified |
+| **Causal Attribution** | `INV-AXIS-03` | **Strict 6-Axis Discipline** | Blended aggregate scores | Fixed metric scores | Confounded axes |
+| **Evidence Validation** | `INV-JUDGE-04` | **Fail-Closed Admission / Refusal** | Opaque prompt logs | N/A | None / Ad-hoc |
+| **Workspace Isolation** | `INV-ISOL-05` | **Dedicated `lane_workdir` sandbox** | Containerised Cloud | In-process execution | Working directory collision |
+| **Lane Transparency** | `INV-FAIL-06` | **Explicit `ok: false` accounting** | Hidden timeouts | Silent failure / retry | Uncaught exceptions |
+| **Test Bundling** | `INV-BUNDLE-07` | **Olympiad (Count, don't conclude)** | N/A | Benchmark tasks suite | Not supported |
+| **Sibling Interoperability** | `INV-INTEROP-08` | **Native `ellmos-ai` adapters** | Proprietary platform | Standalone framework | Fragile glue code |
+| **License Compliance** | `INV-LIC-09` | **100% Permissive (MIT / PSFL-2.0)** | Proprietary / Web platform | Apache-2.0 | Unlicensed |
+| **Security SLA** | `INV-SLA-10` | **48h Acknowledgment / 5d Triage** | Cloud ToS | Community Best-Effort | None |
+
+---
+
+<a id="governance--runtime-invariants-matrix"></a><a id="governance--runtime-invariants"></a>
+## 6. Governance & Runtime Invariants Matrix
 
 `compare-race` complies with ten foundational architecture, privacy, and safety invariants:
 
@@ -218,7 +237,48 @@ The evidence-aware judge was independently implemented from concepts observed in
 
 ---
 
-## Installation & Execution
+<a id="race-twin--olympiad-modes"></a>
+## 7. Race, Twin & Olympiad Modes
+
+| Mode | What varies | What it answers | Causal Attribution |
+|:---|:---|:---|:---|
+| **Race** (`run`) | `model` | Which model handles this specific task best | Causal over models |
+| **Twin/Clone** (`run --twin`) | `variant` (prompt/skills/env), one model | What a prompt technique or skill is causally worth | Causal over variants |
+| **Olympiad** (`olympiade`) | `model` within discipline, `task` across | A descriptive medal table over an entire test bundle | **Descriptive only** (count, don't conclude) |
+
+An olympiad is a **test bundle**: one task file per discipline, each executed as a standard race, and judged per discipline. The aggregate stays descriptive — **count, don't conclude** (since both task AND model vary across disciplines, no single causal attribution is mathematically valid). Per-discipline deterministic checks reside in `<task>.checks.json` files adjacent to each task.
+
+---
+
+<a id="kantian-reason-olympiad"></a>
+## 8. Kantian Reason Olympiad
+
+[`olympiads/kantische-vernunft/`](olympiads/kantische-vernunft/) turns the seven dimensions of the *Kantian test for LLMs* — plus *distributional rationality* from the extension part — into the first executable test battery of this framework. The discipline design, the methodological caveat (measuring structure-condition *behaviour*, never reason itself) and the count-don't-conclude rule come from the underlying research paper, which this form of olympiad operationalises:
+
+> Geiger, L. (2026). *Der Mensch in der Maschine: Sind LLMs vernünftige Wesen im kantischen Sinne?* (v9.0). Zenodo.
+> [doi:10.5281/zenodo.21899816](https://doi.org/10.5281/zenodo.21899816) (all versions: [doi:10.5281/zenodo.18642673](https://doi.org/10.5281/zenodo.18642673))
+
+---
+
+<a id="evidence-aware-starter-judge"></a>
+## 9. Evidence-Aware Starter Judge
+
+Every run artefact carries a globally stable `lane_id` and an explicit `evidence_kind`:
+- `live`: Live executed via detected COMA adapters.
+- `manual`: Recorded model-manually via `compare-race record`.
+- `simulated`: Synthetic mock or mock executor output.
+- `blocked`: Execution was skipped or blocked by policy/permissions.
+- `failed`: Process terminated with error or non-zero exit code.
+- `unknown`: Provenance could not be verified.
+
+The automatic starter judge (`compare_race.judge`, invoked via `--judge`) operates on a **fail-closed admission principle**: it admits only real `live` or `manual` evidence. If any lane is simulated, blocked, or of unknown provenance, it records an explicit refusal in `JUDGE.md` instead of scoring invalid data.
+
+The evidence-aware judge was independently implemented from concepts observed in SentinelFleet; no AGPL source was copied (see [`docs/SENTINELFLEET-CONCEPT-TRANSFER.md`](docs/SENTINELFLEET-CONCEPT-TRANSFER.md)).
+
+---
+
+<a id="installation--execution"></a><a id="installation--prerequisites"></a>
+## 10. Installation & Prerequisites
 
 ### Installation from Source
 
@@ -236,7 +296,8 @@ git clone https://github.com/ellmos-ai/coma && pip install -e coma
 
 ---
 
-## CLI Command Reference
+<a id="cli-command-reference"></a>
+## 11. CLI Command Reference
 
 `compare-race` provides a unified CLI interface:
 
@@ -269,7 +330,8 @@ compare-race report --race-dir races/<race-id>
 
 ---
 
-## Configuration & Role Prompts
+<a id="configuration--role-prompts"></a>
+## 12. Configuration & Role Prompts
 
 Configuration is loaded from `compare-race.config.json` (or falls back to built-in defaults). A complete template is available in [`config/compare-race.config.example.json`](config/compare-race.config.example.json).
 
@@ -279,7 +341,8 @@ Predefined role prompts for autonomous agents:
 
 ---
 
-## Sibling Ecosystem Matrix
+<a id="sibling-ecosystem-matrix"></a><a id="sibling-tools--ecosystem-matrix"></a>
+## 13. Sibling Tools & Ecosystem Matrix
 
 `compare-race` integrates seamlessly with sibling frameworks across the `ellmos-ai` and `open-bricks` ecosystems:
 
@@ -294,22 +357,29 @@ Predefined role prompts for autonomous agents:
 
 ---
 
-## Third-Party Licenses & Transparency
+<a id="third-party-licenses--transparency"></a><a id="third-party-licenses--level-1-sbom"></a>
+## 14. Third-Party Licenses & Level 1 SBOM
 
 `compare-race` guarantees **zero copyleft, GPL, or AGPL dependencies**. All runtime, optional, and development dependencies are distributed under strictly permissive open-source licenses (MIT, PSFL-2.0, Apache-2.0).
 
-For complete audits, dependency lists, and full license texts, see [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md).
+For complete Level 1 SBOM audits, Invariant Cross-Reference Matrix, and full license texts, see [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md) and [`NOTICE`](NOTICE).
 
 ---
 
-## Discovery & LLM Context
+<a id="security--sla"></a><a id="security-policy--operational-limits"></a>
+## 15. Security Policy & Operational Limits
 
-- **LLM Context File:** [`llms.txt`](llms.txt) provides structured, machine-readable specifications, invariant lists, and API entry points for LLM agents.
-- **Marketing & Personas Log:** [`MARKETING-LOG.txt`](MARKETING-LOG.txt) documents target personas, bilingual search keywords, and competitive differentiation matrices.
+`compare-race` is maintained under strict vulnerability disclosure policies:
+- **Zero-Egress & Local Execution:** Evaluates prompts entirely on local machines.
+- **Process Isolation:** Protects working directories via `lane_workdir` sandboxing.
+- **Dual Response SLA:** 48-hour acknowledgment and 5-business-day triage commitment.
+
+For reporting security vulnerabilities and reviewing contact details, see [`SECURITY.md`](SECURITY.md).
 
 ---
 
-## Testing & Verification
+<a id="testing--verification"></a><a id="testing-verification--ci-matrix"></a>
+## 16. Testing, Verification & CI Matrix
 
 The test suite enforces full contract testing, metadata hygiene, and race orchestration invariants:
 
@@ -329,17 +399,35 @@ python -m compileall src tests
 
 ---
 
-## Security & SLA
+<a id="discovery--llm-context"></a><a id="discovery-keywords--disambiguation"></a>
+## 17. Discovery Keywords & Disambiguation
 
-`compare-race` is maintained under strict vulnerability disclosure policies:
-- **Zero-Egress & Local Execution:** Evaluates prompts entirely on local machines.
-- **Process Isolation:** Protects working directories via `lane_workdir` sandboxing.
-- **Dual Response SLA:** 48-hour acknowledgment and 5-business-day triage commitment.
+- **LLM Context File:** [`llms.txt`](llms.txt) provides structured, machine-readable specifications, invariant lists, and API entry points for LLM agents.
+- **Marketing & Personas Log:** [`MARKETING-LOG.txt`](MARKETING-LOG.txt) documents target personas, bilingual search keywords, and competitive differentiation matrices.
 
-For reporting security vulnerabilities and reviewing contact details, see [`SECURITY.md`](SECURITY.md).
+### Disambiguation Notice
+
+`compare-race` is disambiguated by its six-axis identity discipline, qualitative starter judging, and local-first execution. It is distinct from competitive game benchmarks and online leaderboards.
 
 ---
 
-## License
+<a id="license"></a><a id="statutory-notice--liability-limitation"></a>
+## 18. Statutory Notice, Liability Limitation & License (§ 521 BGB)
 
-This project is licensed under the [MIT License](LICENSE).
+### Statutory Disclaimer (§ 521 BGB Gefälligkeitsrecht)
+
+Dieses Open-Source-Softwareprodukt wird als **unentgeltliche Schenkung** im Sinne der §§ 516 ff. BGB bereitgestellt. Gemäß **§ 521 BGB** ist die Haftung des Urhebers und der Beitragenden auf **Vorsatz und grobe Fahrlässigkeit** beschränkt. Ergänzend gelten die nachstehenden Haftungsausschlüsse der MIT-Lizenz.
+
+Nutzung auf eigenes Risiko. Keine Wartungsverpflichtung, keine Verfügbarkeitszusicherung, keine Gewähr für Fehlerfreiheit oder Eignung für einen bestimmten Einsatzzweck.
+
+### English Summary
+
+This project is an unpaid open-source donation. In accordance with § 521 of the German Civil Code (BGB), liability is restricted strictly to cases of intentional misconduct and gross negligence. Supplemental liability disclaimers are set forth in the MIT License below.
+
+Use entirely at your own risk. No maintenance commitments, no availability guarantees, and no warranties regarding fitness for any particular purpose.
+
+### License
+
+Distributed under the terms of the [MIT License](LICENSE).
+Copyright (c) 2026 Lukas Geiger. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for full details.
+Third-party licenses and Level 1 SBOM notices are audited in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).

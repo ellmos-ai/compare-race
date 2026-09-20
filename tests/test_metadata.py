@@ -72,6 +72,7 @@ def test_pyproject_pep621_metadata():
     assert "description" in project
     assert project.get("requires-python") == ">=3.10"
     assert project.get("license") == {"text": "MIT"}
+    assert project.get("license-files") == ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
 
     # Authors
     authors = project.get("authors", [])
@@ -147,7 +148,7 @@ def test_readme_bilingual_parity():
 
 
 def test_readme_navigation_anchor_parity():
-    """Verify 15-point quick navigation and identical anchor links in both READMEs."""
+    """Verify 18-point quick navigation, dual HTML anchors, and clean Mermaid syntax."""
     import re
     en_content = _read_text("README.md")
     de_content = _read_text("README_de.md")
@@ -155,13 +156,34 @@ def test_readme_navigation_anchor_parity():
     en_links = re.findall(r"^\d+\.\s+\[.+?\]\((#.+?)\)", en_content, re.MULTILINE)
     de_links = re.findall(r"^\d+\.\s+\[.+?\]\((#.+?)\)", de_content, re.MULTILINE)
 
-    assert len(en_links) == 15, f"Expected 15 navigation links in README.md, got {len(en_links)}"
-    assert len(de_links) == 15, f"Expected 15 navigation links in README_de.md, got {len(de_links)}"
+    assert len(en_links) == 18, f"Expected 18 navigation links in README.md, got {len(en_links)}"
+    assert len(de_links) == 18, f"Expected 18 navigation links in README_de.md, got {len(de_links)}"
 
-    # Check Mermaid diagrams present in both
+    # Check Mermaid diagrams present in both and semicolon-free
     for content, lang in [(en_content, "EN"), (de_content, "DE")]:
         assert "```mermaid\nflowchart TD" in content, f"Missing flowchart TD in {lang}"
         assert "```mermaid\nsequenceDiagram" in content, f"Missing sequenceDiagram in {lang}"
+        mermaid_blocks = re.findall(r"```mermaid\n(.*?)```", content, re.DOTALL)
+        for block in mermaid_blocks:
+            lines = [line.strip() for line in block.splitlines() if line.strip()]
+            for line in lines:
+                assert not line.endswith(";"), f"Mermaid line ends with semicolon in {lang}: {line}"
+
+    # Check dual HTML anchors presence across both documents
+    anchor_en_1 = (
+        '<a id="core-concept--identity"></a><a id="executive-summary--core-identity"></a>'
+    )
+    anchor_de_1 = (
+        '<a id="kernkonzept--identität"></a><a id="executive-summary--core-identity"></a>'
+    )
+    assert anchor_en_1 in en_content
+    assert anchor_de_1 in de_content
+    assert '<a id="system-architecture"></a><a id="visual-architecture-topology"></a>' in en_content
+    assert '<a id="systemarchitektur"></a><a id="visual-architecture-topology"></a>' in de_content
+    assert '<a id="end-to-end-race-lifecycle"></a><a id="sequence-flow"></a>' in en_content
+    assert '<a id="end-to-end-renn-lebenszyklus"></a><a id="sequence-flow"></a>' in de_content
+    assert '<a id="license"></a><a id="statutory-notice--liability-limitation"></a>' in en_content
+    assert '<a id="lizenz"></a><a id="statutory-notice--liability-limitation"></a>' in de_content
 
 
 def test_governance_invariants_table():
@@ -177,22 +199,18 @@ def test_governance_invariants_table():
         "INV-ISOL-05", "INV-FAIL-06", "INV-BUNDLE-07", "INV-INTEROP-08",
         "INV-LIC-09", "INV-SLA-10",
     ]
-    licenses_invariants = {
-        "INV-LOCAL-01", "INV-SEC-02", "INV-AXIS-03", "INV-JUDGE-04",
-        "INV-ISOL-05", "INV-FAIL-06", "INV-BUNDLE-07",
-    }
     for inv_key in invariants:
         assert inv_key in en_content, f"Missing {inv_key} in README.md"
         assert inv_key in de_content, f"Missing {inv_key} in README_de.md"
         assert inv_key in llms_content, f"Missing {inv_key} in llms.txt"
         assert inv_key in marketing_content, f"Missing {inv_key} in MARKETING-LOG.txt"
-        if inv_key in licenses_invariants:
-            assert inv_key in licenses_content, f"Missing {inv_key} in THIRD_PARTY_LICENSES.md"
+        assert inv_key in licenses_content, f"Missing {inv_key} in THIRD_PARTY_LICENSES.md"
 
 
 def test_third_party_licenses_audit():
     """Verify THIRD_PARTY_LICENSES.md audits dependencies and guarantees permissive licensing."""
     content = _read_text("THIRD_PARTY_LICENSES.md")
+    assert "Level 1 SBOM" in content
     assert "Zero-Egress" in content
     assert "RunAsInvoker" in content
     assert "system-auditor" in content
@@ -201,6 +219,8 @@ def test_third_party_licenses_audit():
     assert "ruff" in content
     assert "PSFL-2.0" in content
     assert "MIT License" in content
+    assert "Zero-Copyleft Guarantee" in content
+    assert "NOTICE" in content
 
 
 def test_marketing_log_contract():
@@ -213,6 +233,47 @@ def test_marketing_log_contract():
     assert "5. GOVERNANCE & RUNTIME INVARIANTS" in content
     assert "Benchmarking Engineers" in content
     assert "Enterprise Tooling" in content
+    assert "9. MARKETING & DISCOVERABILITY PARITY UPGRADE (PFAD B)" in content
+
+
+def test_target_personas_sections():
+    """Verify target personas [PERSONA-01] to [PERSONA-04] in both READMEs."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    personas = ["[PERSONA-01]", "[PERSONA-02]", "[PERSONA-03]", "[PERSONA-04]"]
+    for p in personas:
+        assert p in en_content, f"Missing {p} in README.md"
+        assert p in de_content, f"Missing {p} in README_de.md"
+
+
+def test_comparative_matrix_sections():
+    """Verify 10-dimension comparative matrix vs. alternatives in both READMEs."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    for content, lang in [(en_content, "EN"), (de_content, "DE")]:
+        assert "LMSYS Chatbot Arena" in content, f"Missing LMSYS Chatbot Arena in {lang}"
+        assert "lm-evaluation-harness" in content, f"Missing lm-evaluation-harness in {lang}"
+        assert "INV-LOCAL-01" in content, f"Missing INV-LOCAL-01 in {lang}"
+        assert "INV-SLA-10" in content, f"Missing INV-SLA-10 in {lang}"
+
+
+def test_statutory_disclaimer_521_bgb():
+    """Verify Section 18 statutory notice and liability limitation (§ 521 BGB)."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    for content, lang in [(en_content, "EN"), (de_content, "DE")]:
+        assert "§ 521 BGB" in content, f"Missing § 521 BGB in {lang}"
+        assert "Gefälligkeitsrecht" in content, f"Missing Gefälligkeitsrecht in {lang}"
+        assert "intentional misconduct" in content, f"Missing intentional misconduct in {lang}"
+
+
+def test_notice_file_exists():
+    """Verify NOTICE file exists and contains correct entity attributions."""
+    content = _read_text("NOTICE")
+    assert "compare-race" in content
+    assert "Lukas Geiger" in content
+    assert "ellmos-ai" in content
+    assert "open-bricks" in content
 
 
 def test_front_matter_contract_roundtrip_all_fields():
@@ -263,9 +324,44 @@ def test_changelog_recent_pfad_a_071_entry():
     assert "PEP 621" in content
 
 
+def test_changelog_recent_pfad_b_072_entry():
+    """Contract test: Ensure CHANGELOG.md documents [0.7.2] Pfad B release notes."""
+    content = _read_text("CHANGELOG.md")
+    assert "## [0.7.2] - 2026-09-20" in content
+    assert "18-Punkte-Bilinguale Schnellnavigation" in content
+    assert "Level 1 SBOM" in content
+    assert "§ 521 BGB" in content
+
+
 def test_llms_txt_version_and_recency():
-    """Contract test: Ensure llms.txt reflects v0.7.1 and 2026-09-13 audit stamp."""
+    """Contract test: Ensure llms.txt reflects v0.7.2 and 2026-09-20 audit stamp."""
     content = _read_text("llms.txt")
-    assert "Version: 0.7.1" in content
-    assert "Last-checked: 2026-09-13" in content
-    assert "Tests: 45 passed (100% green)" in content
+    assert "Version: 0.7.2" in content
+    assert "Last-checked: 2026-09-20" in content
+    assert "Tests: 52 passed (100% green)" in content
+
+
+def test_level1_sbom_invariant_cross_reference_matrix_completeness():
+    """Contract test: Ensure Level 1 SBOM has complete invariant cross-reference table."""
+    content = _read_text("THIRD_PARTY_LICENSES.md")
+    assert "Level 1 SBOM" in content
+    assert "Invariant Cross-Reference Matrix" in content
+    assert "Zero-Copyleft Isolation Guarantee & RunAsInvoker Certification" in content
+    assert "100% Offline / Zero-Egress" in content
+    assert "Non-Elevation (`RunAsInvoker`)" in content
+    assert "Six-Axis Attribution Discipline" in content
+    assert "Evidence-Aware Fail-Closed Judge" in content
+
+
+def test_dual_mermaid_diagram_syntax_integrity():
+    """Contract test: Ensure dual mermaid diagrams define required subgraphs and actors."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    for content, lang in [(en_content, "EN"), (de_content, "DE")]:
+        assert "subgraph CLI" in content, f"Missing subgraph CLI in {lang}"
+        assert "subgraph Core" in content, f"Missing subgraph Core in {lang}"
+        assert "subgraph Exec" in content, f"Missing subgraph Exec in {lang}"
+        assert "subgraph Storage" in content, f"Missing subgraph Storage in {lang}"
+        assert "subgraph JudgeLayer" in content, f"Missing subgraph JudgeLayer in {lang}"
+        assert "autonumber" in content, f"Missing autonumber in {lang}"
+        assert "StarterJudge" in content, f"Missing StarterJudge in {lang}"

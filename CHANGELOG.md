@@ -3,6 +3,25 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [0.7.2] - 2026-09-20
+
+Discoverability-, Marketing- und Design-Parität (Pfad B), 18-Punkte-Bilinguale Navigation, Level 1 SBOM mit Invarianten-Matrix, formelle NOTICE-Akkreditierung und § 521 BGB Haftungsbegrenzung.
+
+### Hinzugefügt
+
+- **18-Punkte-Bilinguale Schnellnavigation**: Vollständige Synchronisation zwischen `README.md` und `README_de.md` mit reziproken dualen HTML-Ankern (`<a id="..."></a>`) und rückwärtskompatiblen Sprungmarken.
+- **Zielgruppen & SEO-Suchanfragen (Abschnitt 4)**: Detaillierte Entwickler- und Forscher-Personas (`[PERSONA-01]` bis `[PERSONA-04]`) mit zweisprachigen High-Intent-Suchbegriffen direkt in beiden READMEs verankert.
+- **10-Dimensionen-Vergleichsmatrix (Abschnitt 5)**: Umfassende Gegenüberstellung von `compare-race` vs. LMSYS Chatbot Arena, lm-evaluation-harness und Ad-Hoc Python-Skripten, abgebildet auf die System-Invarianten `INV-LOCAL-01` bis `INV-SLA-10`.
+- **Level 1 SBOM & Invarianten-Kreuzreferenz** (`THIRD_PARTY_LICENSES.md`): Stand 2026-09-20 mit Invariant Cross-Reference Matrix, RunAsInvoker-Zertifizierung und Zero-Copyleft-Isolationsgarantie.
+- **Formelle Urheberrechts- und Projekt-Notice** (`NOTICE`): Eindeutige Kennzeichnung der `ellmos-ai`-Zugehörigkeit und der Dachorganisation `open-bricks`.
+- **Gesetzlicher Haftungsausschluss (§ 521 BGB Gefälligkeitsrecht)**: Klare Absicherung der unentgeltlichen Schenkung mit Haftungsbeschränkung auf Vorsatz und grobe Fahrlässigkeit in Abschnitt 18 beider Dokumentationen.
+- **Erweiterte Vertragstest-Suite** (`tests/test_metadata.py`): Umfassende Überprüfung von 18 Navigationspunkten, dualen HTML-Ankern, semikolonfreier Mermaid-Syntax, Personas, Vergleichsmatrix, Level 1 SBOM, NOTICE und § 521 BGB.
+
+### Geändert
+
+- **PEP 621 Metadaten & Themen**: `pyproject.toml` auf Version 0.7.2 aktualisiert, `license-files` mit `NOTICE` und `THIRD_PARTY_LICENSES.md` verknüpft, Repository-Keywords erweitert und GitHub-Topics synchronisiert.
+- **LLM-Kontextdatei (`llms.txt`)**: Audit-Stempel auf 2026-09-20 und Version 0.7.2 aktualisiert, 18-Punkte-Navigationsreferenz und Level 1 SBOM-Verweise hinterlegt.
+
 ## [0.7.1] - 2026-09-13
 
 Pfad A Technische Hygiene, CI-Härtung (Timeout Guardrail & Python 3.13 Matrix), Multi-Host-Synchronisationsabwehr und Vertragstest-Erweiterung.
