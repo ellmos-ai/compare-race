@@ -20,12 +20,18 @@ env/
 # Testing & linting caches
 .pytest_cache/
 .ruff_cache/
+.mypy_cache/
 .coverage
 .coverage.*
 coverage/
 htmlcov/
 .tox/
 .nox/
+.hypothesis/
+.turbo/
+.nyc_output/
+.pytest_temp/
+.pytest_tmp*/
 
 # Environment, secrets & databases
 .env
@@ -42,24 +48,46 @@ htmlcov/
 *~
 *.bak
 *.tmp
+Thumbs.db
+desktop.ini
 
 # Multi-host sync & OneDrive conflicts
 *conflicted copy*
 *(kopie)*
+* (kopie)*
+* (Kopie)*
+* (copy)*
+* (Copy)*
 *-WORKSTATION-*
+*-WORKSTATION*
+*-WORKSTATION-LG*
 *-ASUS-*
+*-ASUS*
+*-ASUS-GEI*
+*-LAPTOP*
+*-Mac Studio*
+*-MacBook*
 *-conflict-*
 *.sync-conflict-*
 *.conflict
 *-CONFLIT-*
 *.sync-temp-*
 *.sync-journal*
+*.orig
+*.rej
 
 # Multi-agent coordination locks
 LOCK
 LOCK.*
 LOCK*.txt
+LOCK.permissions.json
+LOCK.user.*
+LOCK.until.*
+LOCK.condition.*
+.automation-lock
 *.lock
+uv.lock
+!package-lock.json
 
 # Local project runtime data
 data/

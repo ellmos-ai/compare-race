@@ -55,6 +55,7 @@ Issues = "https://github.com/ellmos-ai/compare-race/issues"
 Changelog = "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
 Documentation = "https://github.com/ellmos-ai/compare-race#readme"
 Security = "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
+Notice = "https://github.com/ellmos-ai/compare-race/blob/master/NOTICE"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.md"
 "Marketing Log" = "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
 "Parent Organization" = "https://github.com/ellmos-ai"
@@ -68,9 +69,11 @@ compare-race = "compare_race.cli:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
+minversion = "7.0"
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = "-ra -v"
+norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv", ".pytest_temp"]
 
 [tool.ruff]
 line-length = 100

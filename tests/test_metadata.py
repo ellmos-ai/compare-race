@@ -334,11 +334,11 @@ def test_changelog_recent_pfad_b_072_entry():
 
 
 def test_llms_txt_version_and_recency():
-    """Contract test: Ensure llms.txt reflects v0.7.2 and 2026-09-20 audit stamp."""
+    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-09-23 audit stamp and green tests."""
     content = _read_text("llms.txt")
     assert "Version: 0.7.2" in content
-    assert "Last-checked: 2026-09-20" in content
-    assert "Tests: 52 passed (100% green)" in content
+    assert "Last-checked: 2026-09-23" in content
+    assert "Tests: 58 passed (100% green)" in content
 
 
 def test_level1_sbom_invariant_cross_reference_matrix_completeness():
@@ -365,3 +365,77 @@ def test_dual_mermaid_diagram_syntax_integrity():
         assert "subgraph JudgeLayer" in content, f"Missing subgraph JudgeLayer in {lang}"
         assert "autonumber" in content, f"Missing autonumber in {lang}"
         assert "StarterJudge" in content, f"Missing StarterJudge in {lang}"
+
+
+def test_lifecycle_workflows_present_and_hardened():
+    """Contract test: Ensure CI lifecycle workflows (stale, welcome) are hardened."""
+    stale_content = _read_text(".github/workflows/stale.yml")
+    assert "timeout-minutes: 10" in stale_content
+    assert "cancel-in-progress: true" in stale_content
+    assert "issues: write" in stale_content
+    assert "pull-requests: write" in stale_content
+
+    welcome_content = _read_text(".github/workflows/welcome.yml")
+    assert "timeout-minutes: 5" in welcome_content
+    assert "cancel-in-progress: true" in welcome_content
+    assert "actions/first-interaction@v3" in welcome_content
+    assert "issues: write" in welcome_content
+    assert "pull-requests: write" in welcome_content
+
+
+def test_gitignore_multihost_and_lock_guards():
+    """Contract test: Ensure .gitignore guards multi-host conflict files and lock leaks."""
+    content = _read_text(".gitignore")
+    lines = {
+        line.strip()
+        for line in content.splitlines()
+        if line.strip() and not line.startswith("#")
+    }
+    required = [
+        "*-WORKSTATION-LG*",
+        "*-ASUS-GEI*",
+        "*-LAPTOP*",
+        "*-Mac Studio*",
+        "LOCK.user.*",
+        "LOCK.until.*",
+        "LOCK.condition.*",
+        "LOCK.permissions.json",
+        "uv.lock",
+        "!package-lock.json",
+        ".pytest_temp/",
+        ".hypothesis/",
+        ".turbo/",
+    ]
+    for pattern in required:
+        assert pattern in lines, f"Missing required .gitignore pattern: {pattern}"
+
+
+def test_pyproject_pep621_hardening_urls_and_pytest():
+    """Contract test: Ensure pyproject.toml includes Notice URL and pytest hardening."""
+    content = _read_text("pyproject.toml")
+    assert 'Notice = "https://github.com/ellmos-ai/compare-race/blob/master/NOTICE"' in content
+    assert 'minversion = "7.0"' in content
+    assert "norecursedirs" in content
+
+
+def test_changelog_unreleased_pfad_a_entry():
+    """Contract test: Ensure CHANGELOG.md contains ## [Unreleased] with Pfad A hygiene items."""
+    content = _read_text("CHANGELOG.md")
+    assert "## [Unreleased]" in content
+    assert "CI-Lifecycle-Workflows" in content
+    assert "Multi-Host-, Cache- & Lock-Schutz" in content
+    assert "PEP 621" in content
+
+
+def test_marketing_log_section_10():
+    """Contract test: Ensure MARKETING-LOG.txt documents section 10 Pfad A audit."""
+    content = _read_text("MARKETING-LOG.txt")
+    assert "10. MAINTENANCE AUDIT & HYGIENE VERIFICATION (PFAD A)" in content
+    assert "Date: 2026-09-23" in content
+    assert "Frozen per T-20260920-167562623" in content
+
+
+def test_third_party_licenses_audit_recency():
+    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-09-23 audit."""
+    content = _read_text("THIRD_PARTY_LICENSES.md")
+    assert "Audited:** 2026-09-23" in content

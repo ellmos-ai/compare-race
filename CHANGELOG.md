@@ -3,6 +3,32 @@
 Format nach [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [Unreleased]
+
+Pfad A Technische Hygiene, CI-Lifecycle-Härtung (Stale- und Welcome-Workflows), Multi-Host- und Lock-Synchronisationsabwehr sowie erweiterte Vertragstest-Suite.
+
+### Hinzugefügt
+
+- **CI-Lifecycle-Workflows** (`.github/workflows/`):
+  - `stale.yml`: Concurrency-Gruppe mit `cancel-in-progress: true` und `timeout-minutes: 10` Guardrail gegen hängende Jobs.
+  - `welcome.yml`: Automatische Erstbegrüßung für Issues und Pull Requests (`actions/first-interaction@v3`) mit Least-Privilege Berechtigungen (`issues: write`, `pull-requests: write`), Concurrency und 5-Minuten-Timeout.
+- **Multi-Host-, Cache- & Lock-Schutz** (`.gitignore`):
+  - Umfassende Ausschlussmuster für Multi-Device-Betrieb (`*-WORKSTATION-LG*`, `*-ASUS-GEI*`, `*-LAPTOP*`, `*-Mac Studio*`, `*-MacBook*`).
+  - Schutz vor verwaisten Lock-Token (`LOCK.user.*`, `LOCK.until.*`, `LOCK.condition.*`, `LOCK.permissions.json`, `uv.lock`, `!package-lock.json`).
+  - Ausschluss flüchtiger Test-Caches (`.pytest_temp/`, `.hypothesis/`, `.turbo/`, `.nyc_output/`).
+- **PEP 621 Metadaten & Pytest-Konfiguration** (`pyproject.toml`):
+  - Offizielle `Notice` URL unter `[project.urls]`.
+  - Pytest-Härtung mit `minversion = "7.0"` und `norecursedirs` Ausschluss von Versionskontroll- und Cache-Verzeichnissen.
+- **Level 1 SBOM Re-Audit** (`THIRD_PARTY_LICENSES.md`):
+  - Aktualisierung des formellen Prüfdatums auf 2026-09-23 mit 100%iger Bestätigung aller permissiven Lizenzen und Zero-Copyleft-Garantien.
+- **Vertragstest-Erweiterung** (`tests/test_metadata.py`):
+  - Neue Tests für CI Lifecycle Workflows, erweiterte Gitignore-Muster, PEP 621 URLs/Pytest-Konfiguration und Changelog-Hygiene.
+
+### Geändert
+
+- **Marketing- & Audit-Register** (`MARKETING-LOG.txt`):
+  - Abschnitt 10 mit Turnus-Hygiene-Prüfung (Pfad A) Stand 2026-09-23 dokumentiert.
+
 ## [0.7.2] - 2026-09-20
 
 Discoverability-, Marketing- und Design-Parität (Pfad B), 18-Punkte-Bilinguale Navigation, Level 1 SBOM mit Invarianten-Matrix, formelle NOTICE-Akkreditierung und § 521 BGB Haftungsbegrenzung.

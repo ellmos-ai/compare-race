@@ -178,3 +178,28 @@ Version: 0.7.2
 
 [x] Automated Contract Verification Suite (tests/test_metadata.py):
     - Extended contract tests for 18-point navigation parity, reciprocal dual anchors, semicolon-free Mermaid diagrams, target personas, comparative matrix, Level 1 SBOM, NOTICE file, and § 521 BGB compliance.
+
+================================================================================
+10. MAINTENANCE AUDIT & HYGIENE VERIFICATION (PFAD A)
+================================================================================
+Date: 2026-09-23
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Version: 0.7.2 (Frozen per T-20260920-167562623)
+
+[x] CI Lifecycle & Contributor Onboarding Hardening (.github/workflows/):
+    - Hardened stale.yml with concurrency cancel-in-progress and 10-minute timeout guardrail.
+    - Added welcome.yml with actions/first-interaction@v3, least privilege permissions (issues: write, pull-requests: write), concurrency, and 5-minute timeout.
+
+[x] Multi-Host Sync, Cache & Lock Defense (.gitignore):
+    - Extended exclusion rules with canonical patterns for WORKSTATION-LG, ASUS-GEI, LAPTOP, Mac Studio/MacBook, lock tokens (LOCK.user.*, LOCK.until.*, LOCK.condition.*, LOCK.permissions.json, uv.lock, !package-lock.json), and testing caches (.pytest_temp/, .hypothesis/, .turbo/, .nyc_output/).
+
+[x] PEP 621 Standard Compliance & Pytest Hardening (pyproject.toml):
+    - Enforced strict version freeze at 0.7.2 per governance policy T-20260920-167562623.
+    - Added formal "Notice" repository URL pointing to NOTICE file.
+    - Hardened pytest.ini_options with minversion = "7.0" and explicit norecursedirs.
+
+[x] Level 1 SBOM & Transparency Audit (THIRD_PARTY_LICENSES.md):
+    - Re-audited dependency inventory on 2026-09-23 with 100% permissive licensing and zero-copyleft guarantees.
+
+[x] Automated Contract Verification Suite (tests/test_metadata.py):
+    - Expanded contract tests covering CI lifecycle workflows (stale.yml, welcome.yml), enhanced .gitignore patterns, pyproject.toml PEP 621 URLs/pytest configs, and changelog hygiene.
