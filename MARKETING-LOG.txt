@@ -203,3 +203,38 @@ Version: 0.7.2 (Frozen per T-20260920-167562623)
 
 [x] Automated Contract Verification Suite (tests/test_metadata.py):
     - Expanded contract tests covering CI lifecycle workflows (stale.yml, welcome.yml), enhanced .gitignore patterns, pyproject.toml PEP 621 URLs/pytest configs, and changelog hygiene.
+
+================================================================================
+11. MARKETING, DISCOVERABILITY & 20-TOPIC SÄTTIGUNG (PFAD B)
+================================================================================
+Date: 2026-09-29
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Target Repo: ellmos-ai/compare-race
+Version: 0.7.2 (Frozen per T-20260920-167562623)
+
+[x] 20-Topic & Keyword Sättigung (PEP 621 Standard):
+    - Synchronized package keywords in pyproject.toml with all 20 live GitHub repository topics:
+      ai-benchmarking, benchmark, cli, ellmos-ai, evaluation, kantian-reason, llm, local-first,
+      model-comparison, model-evaluation, multi-agent, olympiad, open-bricks, prompt-engineering,
+      python, race, starter-judge, stopwatch, twin-mode, zero-egress.
+
+[x] Badges & Attribution Synchronisation (README.md & README_de.md):
+    - Added Attribution NOTICE badge linking to root NOTICE governance.
+    - Synchronized Verified badge to 2026-09-29.
+    - Updated test badge to reflect 61 passed tests (100% green).
+    - Preserved all 18 bilateral quick navigation links with dual reciprocal HTML anchors.
+
+[x] Level 1 SBOM Re-Audit & Invariant Cross-Reference (THIRD_PARTY_LICENSES.md):
+    - Re-audited dependency inventory on 2026-09-29.
+    - Verified all 10 governance invariants (INV-LOCAL-01..INV-SLA-10).
+    - Re-certified RunAsInvoker unprivileged execution and zero-copyleft guarantee.
+
+[x] LLM Context & Discovery Index (llms.txt):
+    - Updated Last-checked date to 2026-09-29.
+    - Synchronized test count (61 passed, 100% green) and metadata references.
+
+[x] Automated Contract Verification Suite (tests/test_metadata.py):
+    - Added contract tests for 20-topic keyword saturation in pyproject.toml.
+    - Added contract tests for Section 11 in MARKETING-LOG.txt.
+    - Added contract tests for Attribution NOTICE and Verified badges in both READMEs.
+    - Updated audit recency tests for THIRD_PARTY_LICENSES.md and llms.txt (2026-09-29).

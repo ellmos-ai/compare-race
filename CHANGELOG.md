@@ -5,10 +5,21 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-Pfad A Technische Hygiene, CI-Lifecycle-Härtung (Stale- und Welcome-Workflows), Multi-Host- und Lock-Synchronisationsabwehr sowie erweiterte Vertragstest-Suite.
+Pfad B Discoverability, Marketing- & Design-Parität, 20-Topic- & Keyword-Sättigung, Level 1 SBOM Re-Audit und Vertragstest-Erweiterung (Stand 2026-09-29); Vorläufer Pfad A Technische Hygiene (2026-09-23).
 
 ### Hinzugefügt
 
+- **20-Topic- & Keyword-Sättigung** (`pyproject.toml`):
+  - Synchronisation aller 20 offiziellen GitHub-Repository-Topics (`ai-benchmarking`, `benchmark`, `cli`, `ellmos-ai`, `evaluation`, `kantian-reason`, `llm`, `local-first`, `model-comparison`, `model-evaluation`, `multi-agent`, `olympiad`, `open-bricks`, `prompt-engineering`, `python`, `race`, `starter-judge`, `stopwatch`, `twin-mode`, `zero-egress`) als kanonische PEP 621 Keywords.
+- **Badges & Attribution-Verankerung** (`README.md`, `README_de.md`):
+  - Formelle `Attribution: NOTICE`- und `Verified: 2026-09-29`-Badges verankert.
+  - Testabdeckungs-Badge auf 61 passed (100% grün) synchronisiert.
+- **Level 1 SBOM Re-Audit** (`THIRD_PARTY_LICENSES.md`):
+  - Formeller Re-Audit Stand 2026-09-29 mit 10-Invarianten-Kreuzreferenzmatrix (`INV-LOCAL-01` bis `INV-SLA-10`), `RunAsInvoker`-Nicht-Eskalationsnachweis und Zero-Copyleft-Garantie.
+- **LLM-Kontext & Discovery-Index** (`llms.txt`):
+  - Aktualisierung des Prüfstands auf 2026-09-29 und 61 Vertragstests.
+- **Erweiterte Vertragstest-Suite** (`tests/test_metadata.py`):
+  - Neue Contract-Tests zur Validierung der 20-Topic-Keywords, Marketing-Log-Abschnitt 11, README Attribution/Verified-Badges und Re-Audit-Aktualität 2026-09-29.
 - **CI-Lifecycle-Workflows** (`.github/workflows/`):
   - `stale.yml`: Concurrency-Gruppe mit `cancel-in-progress: true` und `timeout-minutes: 10` Guardrail gegen hängende Jobs.
   - `welcome.yml`: Automatische Erstbegrüßung für Issues und Pull Requests (`actions/first-interaction@v3`) mit Least-Privilege Berechtigungen (`issues: write`, `pull-requests: write`), Concurrency und 5-Minuten-Timeout.
@@ -19,14 +30,11 @@ Pfad A Technische Hygiene, CI-Lifecycle-Härtung (Stale- und Welcome-Workflows),
 - **PEP 621 Metadaten & Pytest-Konfiguration** (`pyproject.toml`):
   - Offizielle `Notice` URL unter `[project.urls]`.
   - Pytest-Härtung mit `minversion = "7.0"` und `norecursedirs` Ausschluss von Versionskontroll- und Cache-Verzeichnissen.
-- **Level 1 SBOM Re-Audit** (`THIRD_PARTY_LICENSES.md`):
-  - Aktualisierung des formellen Prüfdatums auf 2026-09-23 mit 100%iger Bestätigung aller permissiven Lizenzen und Zero-Copyleft-Garantien.
-- **Vertragstest-Erweiterung** (`tests/test_metadata.py`):
-  - Neue Tests für CI Lifecycle Workflows, erweiterte Gitignore-Muster, PEP 621 URLs/Pytest-Konfiguration und Changelog-Hygiene.
 
 ### Geändert
 
 - **Marketing- & Audit-Register** (`MARKETING-LOG.txt`):
+  - Abschnitt 11 mit Pfad B Discoverability- und Metadaten-Audit Stand 2026-09-29 ergänzt.
   - Abschnitt 10 mit Turnus-Hygiene-Prüfung (Pfad A) Stand 2026-09-23 dokumentiert.
 
 ## [0.7.2] - 2026-09-20

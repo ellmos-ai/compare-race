@@ -12,17 +12,25 @@ license = { text = "MIT" }
 license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
 authors = [{ name = "Lukas Geiger" }]
 keywords = [
+    "ai-benchmarking",
     "benchmark",
+    "cli",
+    "ellmos-ai",
     "evaluation",
+    "kantian-reason",
     "llm",
+    "local-first",
     "model-comparison",
+    "model-evaluation",
     "multi-agent",
+    "olympiad",
+    "open-bricks",
+    "prompt-engineering",
+    "python",
     "race",
     "starter-judge",
+    "stopwatch",
     "twin-mode",
-    "kantian-reason",
-    "olympiad",
-    "local-first",
     "zero-egress",
 ]
 classifiers = [

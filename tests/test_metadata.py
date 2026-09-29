@@ -334,11 +334,11 @@ def test_changelog_recent_pfad_b_072_entry():
 
 
 def test_llms_txt_version_and_recency():
-    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-09-23 audit stamp and green tests."""
+    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-09-29 audit stamp and green tests."""
     content = _read_text("llms.txt")
     assert "Version: 0.7.2" in content
-    assert "Last-checked: 2026-09-23" in content
-    assert "Tests: 58 passed (100% green)" in content
+    assert "Last-checked: 2026-09-29" in content
+    assert "Tests: 61 passed (100% green)" in content
 
 
 def test_level1_sbom_invariant_cross_reference_matrix_completeness():
@@ -436,6 +436,63 @@ def test_marketing_log_section_10():
 
 
 def test_third_party_licenses_audit_recency():
-    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-09-23 audit."""
+    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-09-29 audit."""
     content = _read_text("THIRD_PARTY_LICENSES.md")
-    assert "Audited:** 2026-09-23" in content
+    assert "Audited:** 2026-09-29" in content
+
+
+def test_pyproject_20_topics_keyword_saturation():
+    """Contract test: Ensure pyproject.toml keywords match all 20 GitHub repository topics."""
+    if sys.version_info >= (3, 11):
+        import tomllib
+        with open(REPO_ROOT / "pyproject.toml", "rb") as f:
+            data = tomllib.load(f)
+    else:
+        import tomli as tomllib
+        with open(REPO_ROOT / "pyproject.toml", "rb") as f:
+            data = tomllib.load(f)
+
+    keywords = set(data.get("project", {}).get("keywords", []))
+    expected_topics = {
+        "ai-benchmarking",
+        "benchmark",
+        "cli",
+        "ellmos-ai",
+        "evaluation",
+        "kantian-reason",
+        "llm",
+        "local-first",
+        "model-comparison",
+        "model-evaluation",
+        "multi-agent",
+        "olympiad",
+        "open-bricks",
+        "prompt-engineering",
+        "python",
+        "race",
+        "starter-judge",
+        "stopwatch",
+        "twin-mode",
+        "zero-egress",
+    }
+    assert expected_topics.issubset(keywords), f"Missing keywords: {expected_topics - keywords}"
+    assert len(keywords) == 20, f"Expected 20 keywords in pyproject.toml, found {len(keywords)}"
+
+
+def test_marketing_log_section_11():
+    """Contract test: Ensure MARKETING-LOG.txt documents section 11 Pfad B audit."""
+    content = _read_text("MARKETING-LOG.txt")
+    assert "11. MARKETING, DISCOVERABILITY & 20-TOPIC SÄTTIGUNG (PFAD B)" in content
+    assert "Date: 2026-09-29" in content
+    assert "Frozen per T-20260920-167562623" in content
+
+
+def test_readme_attribution_and_verified_badges():
+    """Contract test: Ensure both READMEs display Attribution NOTICE and Verified badges."""
+    en_content = _read_text("README.md")
+    de_content = _read_text("README_de.md")
+    for content, lang in [(en_content, "EN"), (de_content, "DE")]:
+        msg_notice = f"Missing Attribution NOTICE badge in {lang}"
+        assert "Attribution-NOTICE-blue.svg" in content, msg_notice
+        msg_verified = f"Missing Verified badge in {lang}"
+        assert "verified-2026--09--29-brightgreen.svg" in content, msg_verified
