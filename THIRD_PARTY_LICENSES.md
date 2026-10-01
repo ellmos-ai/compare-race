@@ -1,9 +1,10 @@
 # Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
 > **Project:** `ellmos-ai/compare-race`<br>
-> **Audited:** 2026-09-29<br>
+> **Audited:** 2026-10-01 (Re-Audited; Baseline 2026-09-29)<br>
 > **Repository License:** [MIT License](LICENSE)<br>
 > **Repository Attribution Notice:** [NOTICE](NOTICE)<br>
+> **Plain-Text Companion:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt)<br>
 > **Architecture & Privacy:** 100% Local-First, Zero-Egress by default, Unprivileged User-Mode (`RunAsInvoker`)
 
 ---
@@ -26,7 +27,7 @@ All direct, optional, and development dependencies utilized across `compare-race
 | `INV-FAIL-06` | **Transparent Lane Accounting** | Failed lanes explicitly recorded (`ok: false`) with error details, never dropped | [MIT](LICENSE) |
 | `INV-BUNDLE-07` | **Descriptive Olympiad Separation** | Across bundled disciplines, medal table stays descriptive: count, don't conclude | [MIT](LICENSE) |
 | `INV-INTEROP-08` | **Sibling Ecosystem Interoperability** | Native compatibility with `ellmos-ai` and `open-bricks` ecosystem | [MIT](https://github.com/ellmos-ai) |
-| `INV-LIC-09` | **100% Permissive Audited Stack** | Audited dependency stack, zero copyleft/AGPL contamination | [MIT / PSFL-2.0 / Apache-2.0](THIRD_PARTY_LICENSES.md) |
+| `INV-LIC-09` | **100% Permissive Audited Stack** | Audited dependency stack, zero copyleft/AGPL contamination | [MIT / PSFL-2.0 / Apache-2.0](THIRD_PARTY_LICENSES.txt) |
 | `INV-SLA-10` | **Cryptographic Parity & Dual Security SLA** | Contract test verification, 48-hour response, 5-day triage commitment | [SECURITY.md](SECURITY.md) |
 
 ---

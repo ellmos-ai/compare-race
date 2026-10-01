@@ -238,3 +238,47 @@ Version: 0.7.2 (Frozen per T-20260920-167562623)
     - Added contract tests for Section 11 in MARKETING-LOG.txt.
     - Added contract tests for Attribution NOTICE and Verified badges in both READMEs.
     - Updated audit recency tests for THIRD_PARTY_LICENSES.md and llms.txt (2026-09-29).
+
+================================================================================
+12. MAINTENANCE AUDIT, CI LIFECYCLE & GOVERNANCE VERIFICATION (PFAD A)
+================================================================================
+Date: 2026-10-01
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad A)
+Target Repo: ellmos-ai/compare-race
+Version: 0.7.2 (Frozen per T-20260920-167562623)
+
+[x] CI Lifecycle & Contributor Onboarding Hardening (.github/workflows/ & .github/):
+    - Added auto-assign.yml with actions/github-script@v7, least-privilege permissions (issues: write, pull-requests: write), concurrency, and 5-minute timeout guardrail.
+    - Added label-sync.yml with EndBug/label-sync@v2, least-privilege permissions (issues: write), concurrency, and 5-minute timeout.
+    - Added canonical .github/labels.yml with 11 standard labels per GOVERNANCE.md section 4.2.
+
+[x] Bilingual Contributing Guidelines (CONTRIBUTING.md):
+    - Created bilingual (EN/DE) contribution guide detailing local development workflow, quality gates, unprivileged RunAsInvoker non-elevation guarantee (INV-SEC-02), version freeze discipline (T-20260920-167562623), and all 10 governance invariants (INV-LOCAL-01..INV-SLA-10).
+
+[x] Level 1 SBOM Plain-Text Companion & Re-Audit (THIRD_PARTY_LICENSES.txt & .md):
+    - Created canonical plain-text Level 1 SBOM companion THIRD_PARTY_LICENSES.txt with 10-invariant cross-reference matrix, RunAsInvoker non-elevation certification, zero-copyleft isolation, and full license texts for MIT, PSFL 2.0, and Apache-2.0.
+    - Re-audited THIRD_PARTY_LICENSES.md Stand 2026-10-01 with reciprocal link to plain-text companion.
+    - Updated NOTICE with cross-reference to THIRD_PARTY_LICENSES.txt.
+
+[x] Multi-Host Sync, Cache & Lock Defense (.gitignore):
+    - Hardened against Ideapad sync tokens (*-IDEAPAD*, *-IDEAPAD-GEI*), workstation markers (*-WORKSTATION.*, *-WORKSTATION-LG.*), system artifacts (Desktop.ini, ehthumbs.db), task plans (TASKPLAN_*.md), and multi-agent coordination locks (LOCK.dev.*, LOCK.antigravity.*, LOCK.bugsearch.*).
+
+[x] PEP 621 Standard Compliance & Pytest Hardening (pyproject.toml):
+    - Added THIRD_PARTY_LICENSES.txt to license-files whitelist.
+    - Registered "Contributing", "Third-Party Licenses (Text)", and "Plain-Text License" under [project.urls].
+    - Hardened pytest norecursedirs with .pytest_tmp*, .tox, .hypothesis, .turbo.
+    - Strictly maintained frozen version 0.7.2 per T-20260920-167562623.
+
+[x] Badges, LLM Context & Documentation Recency:
+    - Updated Verified badge to 2026-10-01 in README.md and README_de.md.
+    - Updated llms.txt Last-checked stamp to 2026-10-01 and updated test count baseline.
+    - Maintained all 18 bilateral quick navigation links with dual reciprocal HTML anchors.
+
+[x] Automated Contract Verification Suite (tests/test_metadata.py):
+    - Added contract tests for auto-assign and label-sync workflows.
+    - Added contract tests for canonical labels.yml.
+    - Added contract tests for CONTRIBUTING.md guidelines and invariant parity.
+    - Added contract tests for THIRD_PARTY_LICENSES.txt Level 1 SBOM companion.
+    - Added contract tests for Section 12 in MARKETING-LOG.txt.
+    - Added contract tests for extended .gitignore multi-host guards and PEP 621 URLs.
+    - Synchronized verified badge and audit recency tests to 2026-10-01.

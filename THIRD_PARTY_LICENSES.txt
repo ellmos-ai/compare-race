@@ -1,0 +1,141 @@
+compare-race - Level 1 Software Bill of Materials (SBOM)
+=============================================================================
+Repository: https://github.com/ellmos-ai/compare-race
+Version: 0.7.2 (Frozen per T-20260920-167562623)
+Audit & Verification Date: 2026-10-01 (Re-Audited; Baseline 2026-09-29)
+Author & Maintainer: Lukas Geiger (ellmos-ai / open-bricks)
+Primary License: MIT License (see LICENSE)
+Attribution Notice: NOTICE
+Comprehensive Markdown Audit: THIRD_PARTY_LICENSES.md
+Plain-Text Companion: THIRD_PARTY_LICENSES.txt
+
+
+1. LEVEL 1 SBOM ARCHITECTURAL GUARANTEES & RUNASINVOKER CERTIFICATION
+----------------------------------------------------------------------
+
+- Non-Elevation Security (INV-SEC-02):
+  Benchmarking, token hashing, process timing, artefact recording, and starter-judge
+  evaluations operate strictly in unprivileged user mode (RunAsInvoker). No
+  administrative elevation or UAC prompts are required for core CLI or library execution.
+
+- Zero-Copyleft Isolation Guarantee (INV-LIC-09):
+  0% AGPL, 0% GPL, 0% LGPL. All runtime and build dependencies are 100% permissive
+  (MIT, Apache-2.0, PSFL-2.0). The evidence-aware judge was independently implemented
+  from concepts observed in SentinelFleet; no AGPL source was copied. No copyleft
+  infection or dynamic linking licensing hazards exist across any component.
+
+- Local-First & Zero-Egress Guarantee (INV-LOCAL-01):
+  100% offline, air-gapped execution by default. Zero outbound telemetry, zero usage
+  analytics, and zero background network socket activity. When external CLI adapters
+  are invoked, network communication is strictly governed by user authentication.
+
+
+2. GOVERNANCE & RUNTIME INVARIANTS CROSS-REFERENCE MATRIX
+---------------------------------------------------------
+
+The following 10 invariants define the formal operational contract of compare-race:
+
++---------------+-----------------------------+------------------------------------+--------------+
+| Invariant ID  | Invariant Name              | Architectural Boundary & Primitive | Verification |
++---------------+-----------------------------+------------------------------------+--------------+
+| INV-LOCAL-01  | Local-First & Zero-Egress   | Local subprocess execution, no net | VERIFIED     |
+| INV-SEC-02    | RunAsInvoker User Mode      | Standard Win32 user mode, no UAC   | VERIFIED     |
+| INV-AXIS-03   | Six-Axis Attribution        | Tuple: time, prompt, system, etc.  | VERIFIED     |
+| INV-JUDGE-04  | Evidence-Aware Starter Judge| Live/manual evidence only          | VERIFIED     |
+| INV-ISOL-05   | Process & Workdir Isolation | lane_workdir child cwd sandboxing  | VERIFIED     |
+| INV-FAIL-06   | Transparent Lane Accounting | Failed lanes recorded ok: false    | VERIFIED     |
+| INV-BUNDLE-07 | Descriptive Olympiad Table  | Count, don't conclude medal table  | VERIFIED     |
+| INV-INTEROP-08| Sibling Tool Interoperability| system-auditor, coma, open-bricks | VERIFIED     |
+| INV-LIC-09    | 100% Permissive Stack       | Audited MIT / PSFL / Apache-2.0    | VERIFIED     |
+| INV-SLA-10    | 48h Security Response SLA   | Security policy & maintainer SLA   | VERIFIED     |
++---------------+-----------------------------+------------------------------------+--------------+
+
+
+3. DIRECT RUNTIME DEPENDENCIES
+------------------------------
+
+Package: system-auditor
+  License: MIT License
+  Upstream: https://github.com/ellmos-ai/system-auditor
+  Purpose: Front-matter parser contract and canonical execution identity discipline.
+
+
+4. PYTHON STANDARD LIBRARY
+--------------------------
+
+Standard library modules utilized:
+  json, os, sys, re, time, hashlib, pathlib, subprocess, tempfile, dataclasses
+
+License: Python Software Foundation License (PSFL 2.0)
+Upstream: https://www.python.org/
+Note: Standard library binaries and runtimes are provided by the operating
+      system / Python distribution and are not redistributed in this repository.
+
+
+5. OPTIONAL EXECUTION ADAPTERS (DISCOVERED, NOT MANDATED)
+---------------------------------------------------------
+
+Package: coma (optional)
+  License: MIT License
+  Upstream: https://github.com/dev-bricks/coma
+  Purpose: Multi-provider LLM CLI orchestrator & adapter framework.
+
+
+6. DEVELOPMENT, LINTING & TESTING TOOLCHAIN (OPTIONAL)
+------------------------------------------------------
+
+- pytest (>=7.0): MIT License (https://pytest.org/)
+- ruff (>=0.1.0): MIT / Apache-2.0 License (https://github.com/astral-sh/ruff)
+- setuptools (>=68): MIT License (https://setuptools.pypa.io/)
+
+
+7. FULL LICENSE TEXTS
+---------------------
+
+--- MIT LICENSE (compare-race, system-auditor, coma, pytest, setuptools) ---
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--- PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2 (Python Standard Library) ---
+
+1. This LICENSE AGREEMENT is between the Python Software Foundation ("PSF"), and
+   the Individual or Organization ("Licensee") accessing and otherwise using this
+   software ("Python") in source or binary form and its associated documentation.
+
+2. Subject to the terms and conditions of this License Agreement, PSF hereby
+   grants Licensee a nonexclusive, royalty-free, world-wide license to reproduce,
+   analyze, test, perform and/or display publicly, prepare derivative works,
+   distribute, and otherwise use Python alone or in any derivative version,
+   provided, however, that PSF's License Agreement and PSF's notice of copyright,
+   i.e., "Copyright (c) 2001-2026 Python Software Foundation; All Rights Reserved"
+   are retained in Python alone or in any derivative version prepared by Licensee.
+
+--- APACHE LICENSE VERSION 2.0 (ruff co-license) ---
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

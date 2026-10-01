@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-09-29 | Version: 0.7.2 | Tests: 61 passed (100% green) | Lint: ruff clean
+> Last-checked: 2026-10-01 | Version: 0.7.2 | Tests: 67 passed (100% green) | Lint: ruff clean
 
 ## Core idea
 
@@ -50,6 +50,7 @@ blocked or unknown provenance lanes, writing a separate `JUDGE.md`.
 - src/compare_race/: tokens, config, race, report, costs, judge, cli
 - NOTICE: Formal root project and copyright attribution notice
 - THIRD_PARTY_LICENSES.md: Audited Level 1 SBOM, Invariant Cross-Reference Matrix, and permissive inventory
+- THIRD_PARTY_LICENSES.txt: Canonical Level 1 SBOM plain-text companion with full-text licenses
 - MARKETING-LOG.txt: Personas, competitive matrix, search intents, and runtime invariants
 - README.md / README_de.md: 18-point bilingual documentation with reciprocal dual HTML anchors and § 521 BGB disclaimer
 

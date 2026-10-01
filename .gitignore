@@ -50,6 +50,8 @@ htmlcov/
 *.tmp
 Thumbs.db
 desktop.ini
+Desktop.ini
+ehthumbs.db
 
 # Multi-host sync & OneDrive conflicts
 *conflicted copy*
@@ -61,9 +63,13 @@ desktop.ini
 *-WORKSTATION-*
 *-WORKSTATION*
 *-WORKSTATION-LG*
+*-WORKSTATION.*
+*-WORKSTATION-LG.*
 *-ASUS-*
 *-ASUS*
 *-ASUS-GEI*
+*-IDEAPAD*
+*-IDEAPAD-GEI*
 *-LAPTOP*
 *-Mac Studio*
 *-MacBook*
@@ -84,6 +90,9 @@ LOCK.permissions.json
 LOCK.user.*
 LOCK.until.*
 LOCK.condition.*
+LOCK.dev.*
+LOCK.antigravity.*
+LOCK.bugsearch.*
 .automation-lock
 *.lock
 uv.lock
@@ -96,3 +105,4 @@ compare-race.config.json
 _paper-input.tex
 *.log
 _lane-logs/
+TASKPLAN_*.md

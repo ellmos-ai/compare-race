@@ -4,10 +4,10 @@
 # compare-race
 
 [![Version](https://img.shields.io/badge/version-0.7.2-blue.svg)](pyproject.toml)
-[![Verified: 2026-09-29](https://img.shields.io/badge/verified-2026--09--29-brightgreen.svg)](CHANGELOG.md)
+[![Verified: 2026-10-01](https://img.shields.io/badge/verified-2026--10--01-brightgreen.svg)](CHANGELOG.md)
 [![Attribution: NOTICE](https://img.shields.io/badge/Attribution-NOTICE-blue.svg)](NOTICE)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-61%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-67%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](pyproject.toml)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -364,7 +364,7 @@ Predefined role prompts for autonomous agents:
 
 `compare-race` guarantees **zero copyleft, GPL, or AGPL dependencies**. All runtime, optional, and development dependencies are distributed under strictly permissive open-source licenses (MIT, PSFL-2.0, Apache-2.0).
 
-For complete Level 1 SBOM audits, Invariant Cross-Reference Matrix, and full license texts, see [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md) and [`NOTICE`](NOTICE).
+For complete Level 1 SBOM audits, Invariant Cross-Reference Matrix, and full license texts, see [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md), its plain-text companion [`THIRD_PARTY_LICENSES.txt`](THIRD_PARTY_LICENSES.txt), and [`NOTICE`](NOTICE).
 
 ---
 

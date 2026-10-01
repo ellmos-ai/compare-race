@@ -71,8 +71,12 @@ def test_pyproject_pep621_metadata():
     assert project.get("version") == compare_race.__version__
     assert "description" in project
     assert project.get("requires-python") == ">=3.10"
-    assert project.get("license") == {"text": "MIT"}
-    assert project.get("license-files") == ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
+    assert project.get("license-files") == [
+        "LICENSE",
+        "NOTICE",
+        "THIRD_PARTY_LICENSES.md",
+        "THIRD_PARTY_LICENSES.txt",
+    ]
 
     # Authors
     authors = project.get("authors", [])
@@ -95,9 +99,13 @@ def test_pyproject_pep621_metadata():
     assert urls.get("Repository") == "https://github.com/ellmos-ai/compare-race"
     assert urls.get("Issues") == "https://github.com/ellmos-ai/compare-race/issues"
     assert urls.get("Changelog") == "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
+    assert urls.get("Contributing") == "https://github.com/ellmos-ai/compare-race/blob/master/CONTRIBUTING.md"
     assert urls.get("Documentation") == "https://github.com/ellmos-ai/compare-race#readme"
     assert urls.get("Security") == "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
+    assert urls.get("Notice") == "https://github.com/ellmos-ai/compare-race/blob/master/NOTICE"
     assert urls.get("Third-Party Licenses") == "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.md"
+    assert urls.get("Third-Party Licenses (Text)") == "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.txt"
+    assert urls.get("Plain-Text License") == "https://github.com/ellmos-ai/compare-race/blob/master/LICENSE"
     assert urls.get("Marketing Log") == "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
     assert urls.get("Parent Organization") == "https://github.com/ellmos-ai"
     assert urls.get("Umbrella Ecosystem") == "https://github.com/open-bricks"
@@ -334,11 +342,11 @@ def test_changelog_recent_pfad_b_072_entry():
 
 
 def test_llms_txt_version_and_recency():
-    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-09-29 audit stamp and green tests."""
+    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-10-01 audit stamp and green tests."""
     content = _read_text("llms.txt")
     assert "Version: 0.7.2" in content
-    assert "Last-checked: 2026-09-29" in content
-    assert "Tests: 61 passed (100% green)" in content
+    assert "Last-checked: 2026-10-01" in content
+    assert "Tests: 67 passed (100% green)" in content
 
 
 def test_level1_sbom_invariant_cross_reference_matrix_completeness():
@@ -436,9 +444,9 @@ def test_marketing_log_section_10():
 
 
 def test_third_party_licenses_audit_recency():
-    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-09-29 audit."""
+    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-10-01 audit."""
     content = _read_text("THIRD_PARTY_LICENSES.md")
-    assert "Audited:** 2026-09-29" in content
+    assert "Audited:** 2026-10-01" in content
 
 
 def test_pyproject_20_topics_keyword_saturation():
@@ -495,4 +503,100 @@ def test_readme_attribution_and_verified_badges():
         msg_notice = f"Missing Attribution NOTICE badge in {lang}"
         assert "Attribution-NOTICE-blue.svg" in content, msg_notice
         msg_verified = f"Missing Verified badge in {lang}"
-        assert "verified-2026--09--29-brightgreen.svg" in content, msg_verified
+        assert "verified-2026--10--01-brightgreen.svg" in content, msg_verified
+
+
+def test_auto_assign_and_label_sync_workflows():
+    """Contract test: Ensure auto-assign.yml and label-sync.yml have timeout and concurrency."""
+    auto_assign = _read_text(".github/workflows/auto-assign.yml")
+    assert "timeout-minutes: 5" in auto_assign
+    assert "cancel-in-progress: true" in auto_assign
+    assert "pull-requests: write" in auto_assign
+    assert "issues: write" in auto_assign
+    assert "actions/github-script@v7" in auto_assign
+
+    label_sync = _read_text(".github/workflows/label-sync.yml")
+    assert "timeout-minutes: 5" in label_sync
+    assert "cancel-in-progress: true" in label_sync
+    assert "issues: write" in label_sync
+    assert "EndBug/label-sync@v2" in label_sync
+
+
+def test_canonical_labels_yml():
+    """Contract test: Ensure .github/labels.yml defines canonical GOVERNANCE.md labels."""
+    content = _read_text(".github/labels.yml")
+    required_labels = [
+        "bug",
+        "enhancement",
+        "good first issue",
+        "help wanted",
+        "documentation",
+        "duplicate",
+        "wontfix",
+        "priority: high",
+        "priority: low",
+        "needs-triage",
+        "stale",
+        "security",
+        "dependencies",
+    ]
+    for lbl in required_labels:
+        assert f"name: {lbl}" in content or f"name: '{lbl}'" in content
+
+
+def test_contributing_guidelines_bilingual():
+    """Contract test: Ensure CONTRIBUTING.md exists with bilingual quality gates and invariants."""
+    content = _read_text("CONTRIBUTING.md")
+    assert "Contributing to compare-race" in content
+    assert "Mitwirken an compare-race" in content
+    assert "INV-LOCAL-01" in content
+    assert "INV-SEC-02" in content
+    assert "RunAsInvoker" in content
+    assert "T-20260920-167562623" in content
+    assert "INV-SLA-10" in content
+
+
+def test_third_party_licenses_plain_text_companion():
+    """Contract test: Ensure Level 1 SBOM text companion defines invariants and licenses."""
+    content = _read_text("THIRD_PARTY_LICENSES.txt")
+    assert "Level 1 Software Bill of Materials (SBOM)" in content
+    assert "INV-LOCAL-01" in content
+    assert "INV-SEC-02" in content
+    assert "RunAsInvoker" in content
+    assert "INV-LIC-09" in content
+    assert "INV-SLA-10" in content
+    assert "MIT LICENSE" in content
+    assert "PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2" in content
+    assert "APACHE LICENSE VERSION 2.0" in content
+
+
+def test_marketing_log_section_12():
+    """Contract test: Ensure MARKETING-LOG.txt documents section 12 Pfad A audit."""
+    content = _read_text("MARKETING-LOG.txt")
+    assert "12. MAINTENANCE AUDIT, CI LIFECYCLE & GOVERNANCE VERIFICATION (PFAD A)" in content
+    assert "Date: 2026-10-01" in content
+    assert "Frozen per T-20260920-167562623" in content
+
+
+def test_gitignore_additional_multihost_tokens():
+    """Contract test: Ensure .gitignore includes Ideapad, taskplan, and agent lock tokens."""
+    content = _read_text(".gitignore")
+    lines = {
+        line.strip()
+        for line in content.splitlines()
+        if line.strip() and not line.startswith("#")
+    }
+    required = [
+        "*-IDEAPAD*",
+        "*-IDEAPAD-GEI*",
+        "*-WORKSTATION.*",
+        "*-WORKSTATION-LG.*",
+        "Desktop.ini",
+        "ehthumbs.db",
+        "TASKPLAN_*.md",
+        "LOCK.dev.*",
+        "LOCK.antigravity.*",
+        "LOCK.bugsearch.*",
+    ]
+    for pattern in required:
+        assert pattern in lines, f"Missing required .gitignore pattern: {pattern}"

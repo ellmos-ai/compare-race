@@ -5,9 +5,26 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-Pfad B Discoverability, Marketing- & Design-Parität, 20-Topic- & Keyword-Sättigung, Level 1 SBOM Re-Audit und Vertragstest-Erweiterung (Stand 2026-09-29); Vorläufer Pfad A Technische Hygiene (2026-09-23).
+Pfad A Technische Hygiene, CI-Lifecycle-Workflows, CONTRIBUTING-Richtlinien, Level 1 SBOM Text-Begleitdatei, Multi-Host- & Lock-Schutz, PEP 621 Metadaten und Vertragstest-Erweiterung (Stand 2026-10-01; Version 0.7.2 strikt eingefroren per T-20260920-167562623); Vorläufer Pfad B Discoverability (2026-09-29) und Pfad A (2026-09-23).
 
 ### Hinzugefügt
+
+- **CI-Lifecycle-Workflows & Labels** (`.github/workflows/`, `.github/labels.yml`):
+  - `.github/workflows/auto-assign.yml`: Automatischer Reviewer-/Assignee-Zuweisungsworkflow (`actions/github-script@v7`) für neue Pull Requests mit Least-Privilege Berechtigungen (`pull-requests: write`, `issues: write`), Concurrency `cancel-in-progress: true` und 5-Minuten-Timeout.
+  - `.github/workflows/label-sync.yml`: Automatisierter Workflow zur Synchronisation von Repository-Labels (`EndBug/label-sync@v2`) mit Least-Privilege Berechtigungen (`issues: write`), Concurrency und 5-Minuten-Timeout.
+  - `.github/labels.yml`: Kanonischer Label-Katalog mit 11 Standard-Labels gemäß GOVERNANCE.md §4.2 (`bug`, `enhancement`, `good first issue`, `help wanted`, `documentation`, `duplicate`, `wontfix`, `priority: high`, `priority: low`, `needs-triage`, `stale`, `security`, `dependencies`).
+- **Bilinguale Contributing-Richtlinien** (`CONTRIBUTING.md`):
+  - Umfassende zweisprachige (EN/DE) Richtlinien mit Entwicklungs-Workflow, Quality Gates, unprivilegierter RunAsInvoker Non-Elevation Garantie (`INV-SEC-02`), Version-Freeze-Disziplin (`T-20260920-167562623`) und allen 10 Invarianten `INV-LOCAL-01` bis `INV-SLA-10`.
+- **Level 1 SBOM Plain-Text Companion** (`THIRD_PARTY_LICENSES.txt`):
+  - Kanonische Reintext-Begleitdatei zur softwaretechnischen Lizenztransparenz mit Bestätigung aller 10 Governance- und Laufzeitinvarianten `INV-LOCAL-01` bis `INV-SLA-10`, 0% Copyleft / AGPL / GPL Isolation und Volltextlizenzen (MIT, PSFL 2.0, Apache-2.0).
+- **Multi-Host-, Cache- & Lock-Schutz** (`.gitignore`):
+  - Härtung gegen Ideapad-Sync-Artefakte (`*-IDEAPAD*`, `*-IDEAPAD-GEI*`), Workstation-Dateien (`*-WORKSTATION.*`, `*-WORKSTATION-LG.*`), Systemdateien (`Desktop.ini`, `ehthumbs.db`), Taskplan-Notizen (`TASKPLAN_*.md`) und Multi-Agent-Sperren (`LOCK.dev.*`, `LOCK.antigravity.*`, `LOCK.bugsearch.*`).
+- **PEP 621 Metadaten & Pytest-Härtung** (`pyproject.toml`):
+  - `license-files` Whitelist um `THIRD_PARTY_LICENSES.txt` erweitert.
+  - URLs `Contributing`, `Third-Party Licenses (Text)` und `Plain-Text License` unter `[project.urls]` registriert.
+  - Pytest `norecursedirs` um `.pytest_tmp*`, `.tox`, `.hypothesis`, `.turbo` gehärtet.
+- **Erweiterte Vertragstest-Suite** (`tests/test_metadata.py`):
+  - Neue Contract-Tests zur Validierung der auto-assign/label-sync Workflows, labels.yml, CONTRIBUTING.md, THIRD_PARTY_LICENSES.txt, erweiterten .gitignore Multi-Host-Tokens und PEP 621 URLs/license-files.
 
 - **20-Topic- & Keyword-Sättigung** (`pyproject.toml`):
   - Synchronisation aller 20 offiziellen GitHub-Repository-Topics (`ai-benchmarking`, `benchmark`, `cli`, `ellmos-ai`, `evaluation`, `kantian-reason`, `llm`, `local-first`, `model-comparison`, `model-evaluation`, `multi-agent`, `olympiad`, `open-bricks`, `prompt-engineering`, `python`, `race`, `starter-judge`, `stopwatch`, `twin-mode`, `zero-egress`) als kanonische PEP 621 Keywords.

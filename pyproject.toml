@@ -9,7 +9,7 @@ description = "Same prompt, several models -- stopwatch or true race; the starti
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md"]
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES.md", "THIRD_PARTY_LICENSES.txt"]
 authors = [{ name = "Lukas Geiger" }]
 keywords = [
     "ai-benchmarking",
@@ -61,10 +61,13 @@ Homepage = "https://github.com/ellmos-ai/compare-race"
 Repository = "https://github.com/ellmos-ai/compare-race"
 Issues = "https://github.com/ellmos-ai/compare-race/issues"
 Changelog = "https://github.com/ellmos-ai/compare-race/blob/master/CHANGELOG.md"
+Contributing = "https://github.com/ellmos-ai/compare-race/blob/master/CONTRIBUTING.md"
 Documentation = "https://github.com/ellmos-ai/compare-race#readme"
 Security = "https://github.com/ellmos-ai/compare-race/blob/master/SECURITY.md"
 Notice = "https://github.com/ellmos-ai/compare-race/blob/master/NOTICE"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.md"
+"Third-Party Licenses (Text)" = "https://github.com/ellmos-ai/compare-race/blob/master/THIRD_PARTY_LICENSES.txt"
+"Plain-Text License" = "https://github.com/ellmos-ai/compare-race/blob/master/LICENSE"
 "Marketing Log" = "https://github.com/ellmos-ai/compare-race/blob/master/MARKETING-LOG.txt"
 "Parent Organization" = "https://github.com/ellmos-ai"
 "Umbrella Ecosystem" = "https://github.com/open-bricks"
@@ -81,7 +84,7 @@ minversion = "7.0"
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = "-ra -v"
-norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv", ".pytest_temp"]
+norecursedirs = [".git", ".pytest_cache", "__pycache__", "build", "dist", ".venv", ".pytest_temp", ".pytest_tmp*", ".tox", ".hypothesis", ".turbo"]
 
 [tool.ruff]
 line-length = 100
