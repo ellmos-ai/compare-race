@@ -4,10 +4,10 @@
 # compare-race
 
 [![Version](https://img.shields.io/badge/version-0.7.2-blue.svg)](pyproject.toml)
-[![Verified: 2026-10-01](https://img.shields.io/badge/verified-2026--10--01-brightgreen.svg)](CHANGELOG.md)
+[![Verified: 2026-10-04](https://img.shields.io/badge/verified-2026--10--04-brightgreen.svg)](CHANGELOG.md)
 [![Attribution: NOTICE](https://img.shields.io/badge/Attribution-NOTICE-blue.svg)](NOTICE)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-67%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-69%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](pyproject.toml)
 [![Plattform](https://img.shields.io/badge/plattform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](pyproject.toml)
 [![Code-Stil: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -128,6 +128,52 @@ flowchart TD
     ADMIT -->|Abgelehnt Simuliert / Blockiert| VERDICT
     JUDGE --> VERDICT
     TALLY --> MEDAL
+```
+
+### Architektonische Topologie-Projektion
+
+```text
++========================================================================================+
+|                    COMPARE-RACE ARCHITECTURAL TOPOLOGY PROJECTION                      |
++========================================================================================+
+| [VIEW 1: CLI, USER/AGENT INTERACTION & PLANNING SUBSYSTEM]                            |
+|   - Benutzer- & Agenten-Befehle: compare-race (plan, run, record, report, olympiade)   |
+|   - Konfigurationserfassung: compare-race.config.json & Standardeinstellungen          |
+|   - Aufgaben- / Prompt-Erfassung: Markdown- / Textdateien mit Variantenspezifikation   |
+|   - 6-Achsen-Identitaetsformulierung: time · prompt · system · model · run · variant   |
+|   - Deterministische Pruefvertraege: *.checks.json Pruefvertraege                      |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 2: EXECUTION ADAPTERS, PROCESS SANDBOXING & ISOLATION SUBSYSTEM]                 |
+|   - COMA Multi-Agenten-Bruecke: Orchestriert claude, codex, agy, kimi Adapter          |
+|   - Manuelle Rennaufzeichnung: Offline-Erfassung via compare-race record               |
+|   - Prozess-Sandbox & Arbeitsbereich: lane_workdir isolierte Ausfuehrung               |
+|   - Rohe Prozess- & Fehlerausgabe: _lane-logs/*.log fuer ungepufferte Protokolle       |
+|   - Keine Privilegienerweiterung: RunAsInvoker & 100% Zero-Egress Durchsetzung         |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 3: EVIDENCE ARTEFACTS, FRONT-MATTER CONTRACTS & DETERMINISTIC VALIDATION]        |
+|   - Strukturierte Laufartefakte: Markdown-Ausgabe mit YAML Front-Matter Metadaten      |
+|   - System-Auditor Interoperabilitaet: parse_front_matter Konformitaet (INV-INTEROP-08)|
+|   - Deterministische Auszaehlungs-Engine: Kategorische Treffer & Formatkonformitaet    |
+|   - Transparentes Spur-Hauptbuch: Fehlgeschlagene Spuren (ok: false) nie verworfen     |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 4: EVALUATION, STARTER-JUDGE LIFECYCLE & DESCRIPTIVE OLYMPIAD REPORTING]         |
+|   - Evidenzzulassung: Live/manuell zugelassen; simuliert/blockiert abgewiesen          |
+|   - Startendes Modell als Richter: Qualitatives Schiedsrichterurteil mit Bias-Vertrag  |
+|   - Urteilserstellung: JUDGE.md Bewertung (Qualitaet, Korrektheit, Vollstaendigkeit)   |
+|   - Deskriptive Olympiade: Medaillenspiegel ohne unzulaessige Synthese                 |
++========================================================================================+
+| INVARIANTS: INV-LOCAL-01 | INV-SEC-02 | INV-AXIS-03 | INV-JUDGE-04 | INV-ISOL-05       |
+|             INV-FAIL-06  | INV-BUNDLE-07 | INV-INTEROP-08 | INV-LIC-09 | INV-SLA-10    |
++========================================================================================+
 ```
 
 ---

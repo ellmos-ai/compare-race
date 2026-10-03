@@ -2,7 +2,7 @@ compare-race - Level 1 Software Bill of Materials (SBOM)
 =============================================================================
 Repository: https://github.com/ellmos-ai/compare-race
 Version: 0.7.2 (Frozen per T-20260920-167562623)
-Audit & Verification Date: 2026-10-01 (Re-Audited; Baseline 2026-09-29)
+Audit & Verification Date: 2026-10-04 (Re-Audited; Baseline 2026-09-29)
 Author & Maintainer: Lukas Geiger (ellmos-ai / open-bricks)
 Primary License: MIT License (see LICENSE)
 Attribution Notice: NOTICE

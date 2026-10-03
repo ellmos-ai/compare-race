@@ -1,7 +1,7 @@
 # compare-race
 
 > Same prompt, several models -- stopwatch or true race; the starting model judges.
-> Last-checked: 2026-10-01 | Version: 0.7.2 | Tests: 67 passed (100% green) | Lint: ruff clean
+> Last-checked: 2026-10-04 | Version: 0.7.2 | Tests: 69 passed (100% green) | Lint: ruff clean
 
 ## Core idea
 

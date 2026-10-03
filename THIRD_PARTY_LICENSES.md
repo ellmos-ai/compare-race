@@ -1,7 +1,7 @@
 # Third-Party Licenses & Transparency Notice (Level 1 SBOM)
 
 > **Project:** `ellmos-ai/compare-race`<br>
-> **Audited:** 2026-10-01 (Re-Audited; Baseline 2026-09-29)<br>
+> **Audited:** 2026-10-04 (Re-Audited; Baseline 2026-09-29)<br>
 > **Repository License:** [MIT License](LICENSE)<br>
 > **Repository Attribution Notice:** [NOTICE](NOTICE)<br>
 > **Plain-Text Companion:** [THIRD_PARTY_LICENSES.txt](THIRD_PARTY_LICENSES.txt)<br>

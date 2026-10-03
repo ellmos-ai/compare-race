@@ -5,9 +5,19 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-Pfad A Technische Hygiene, CI-Lifecycle-Workflows, CONTRIBUTING-Richtlinien, Level 1 SBOM Text-Begleitdatei, Multi-Host- & Lock-Schutz, PEP 621 Metadaten und Vertragstest-Erweiterung (Stand 2026-10-01; Version 0.7.2 strikt eingefroren per T-20260920-167562623); Vorläufer Pfad B Discoverability (2026-09-29) und Pfad A (2026-09-23).
+Pfad B Discoverability, 4-View ASCII Architekturtopologie, Level 1 SBOM Re-Audit & Vertragstest-Erweiterung (Stand 2026-10-04; Version 0.7.2 strikt eingefroren per T-20260920-167562623); Vorläufer Pfad A Hygiene (2026-10-01), Pfad B Discoverability (2026-09-29) und Pfad A (2026-09-23).
 
 ### Hinzugefügt
+
+- **4-View ASCII Architekturtopologie & Discoverability (Pfad B 2026-10-04)** (`README.md`, `README_de.md`):
+  - Bilinguale 4-View Architekturprojektion in beiden READMEs mit den Schichten CLI & Planning (View 1), Adapters & Sandboxing (View 2), Evidence & Front-Matter (View 3) und Starter-Judge & Olympiad (View 4).
+  - Direkte Einbettung und Abbildung aller 10 kanonischen Invarianten (`INV-LOCAL-01` bis `INV-SLA-10`) in den Topologie-Block.
+  - Synchronisation von Verified-Badges (`2026-10-04`), Testabdeckungs-Badges (`69 passed | 100% green`), Level 1 SBOM Audit-Aktualität (`2026-10-04` in `THIRD_PARTY_LICENSES.md` und `THIRD_PARTY_LICENSES.txt`) und `llms.txt`.
+- **Erweiterte Vertragstest-Suite** (`tests/test_metadata.py`):
+  - Neuer Contract-Test `test_ascii_topology_projection_present` zur Prüfung der 4-View ASCII Topologie und Invarianten-Abdeckung in beiden READMEs.
+  - Neuer Contract-Test `test_marketing_log_section_13` zur Bestätigung der Pfad-B-Dokumentation in `MARKETING-LOG.txt`.
+  - Aktualisierte Aktualitätsprüfungen für Verified-Badge, Level 1 SBOM Re-Audit und `llms.txt` (2026-10-04).
+
 
 - **CI-Lifecycle-Workflows & Labels** (`.github/workflows/`, `.github/labels.yml`):
   - `.github/workflows/auto-assign.yml`: Automatischer Reviewer-/Assignee-Zuweisungsworkflow (`actions/github-script@v7`) für neue Pull Requests mit Least-Privilege Berechtigungen (`pull-requests: write`, `issues: write`), Concurrency `cancel-in-progress: true` und 5-Minuten-Timeout.

@@ -4,10 +4,10 @@
 # compare-race
 
 [![Version](https://img.shields.io/badge/version-0.7.2-blue.svg)](pyproject.toml)
-[![Verified: 2026-10-01](https://img.shields.io/badge/verified-2026--10--01-brightgreen.svg)](CHANGELOG.md)
+[![Verified: 2026-10-04](https://img.shields.io/badge/verified-2026--10--04-brightgreen.svg)](CHANGELOG.md)
 [![Attribution: NOTICE](https://img.shields.io/badge/Attribution-NOTICE-blue.svg)](NOTICE)
 [![CI](https://img.shields.io/badge/CI-passing-brightgreen.svg)](.github/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-67%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-69%20passed%20%7C%20100%25-brightgreen.svg)](tests/)
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](pyproject.toml)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
@@ -128,6 +128,52 @@ flowchart TD
     ADMIT -->|Refused Simulated / Blocked| VERDICT
     JUDGE --> VERDICT
     TALLY --> MEDAL
+```
+
+### Architectural topology projection
+
+```text
++========================================================================================+
+|                    COMPARE-RACE ARCHITECTURAL TOPOLOGY PROJECTION                      |
++========================================================================================+
+| [VIEW 1: CLI, USER/AGENT INTERACTION & PLANNING SUBSYSTEM]                            |
+|   - User / Agent CLI Commands: compare-race (plan, run, record, report, olympiade)     |
+|   - Configuration Ingestion: compare-race.config.json & default settings               |
+|   - Task / Prompt Ingestion: Markdown / text prompt files with variant specs           |
+|   - Six-Axis Identity Formulation: time · prompt · system · model · run · variant      |
+|   - Deterministic Mechanical Checks Ingestion: *.checks.json test contracts            |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 2: EXECUTION ADAPTERS, PROCESS SANDBOXING & ISOLATION SUBSYSTEM]                 |
+|   - COMA Multi-Agent Bridge: Orchestrates claude, codex, agy, kimi adapters            |
+|   - Manual Run Recording: Offline ingestion via compare-race record                    |
+|   - Process Sandboxing & Directory Scoping: lane_workdir isolated execution            |
+|   - Raw Process & Stderr Capture: _lane-logs/*.log capturing unbuffered runtime data   |
+|   - Non-Elevation & Offline Isolation: RunAsInvoker & 100% Zero-Egress enforcement     |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 3: EVIDENCE ARTEFACTS, FRONT-MATTER CONTRACTS & DETERMINISTIC VALIDATION]        |
+|   - Structured Run Artefacts: Markdown output with YAML front-matter metadata          |
+|   - System-Auditor Interoperability: parse_front_matter compliance (INV-INTEROP-08)   |
+|   - Deterministic Tally Engine: Evaluates categorical matches and format compliance    |
+|   - Transparent Lane Ledger: Failed lanes tracked with ok: false, never dropped        |
++----------------------------------------------------------------------------------------+
+                                            |
+                                            v
++----------------------------------------------------------------------------------------+
+| [VIEW 4: EVALUATION, STARTER-JUDGE LIFECYCLE & DESCRIPTIVE OLYMPIAD REPORTING]         |
+|   - Evidence Admission Gate: Live/manual admitted; simulated/blocked refused           |
+|   - Starting-Model Qualitative Judge: Evaluates sibling outputs with bias contract     |
+|   - Verdict Generation: JUDGE.md ranking quality, correctness, completeness, latency   |
+|   - Descriptive Olympiad Table: Multi-discipline medal aggregation without synthesis   |
++========================================================================================+
+| INVARIANTS: INV-LOCAL-01 | INV-SEC-02 | INV-AXIS-03 | INV-JUDGE-04 | INV-ISOL-05       |
+|             INV-FAIL-06  | INV-BUNDLE-07 | INV-INTEROP-08 | INV-LIC-09 | INV-SLA-10    |
++========================================================================================+
 ```
 
 ---

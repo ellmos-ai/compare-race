@@ -282,3 +282,26 @@ Version: 0.7.2 (Frozen per T-20260920-167562623)
     - Added contract tests for Section 12 in MARKETING-LOG.txt.
     - Added contract tests for extended .gitignore multi-host guards and PEP 621 URLs.
     - Synchronized verified badge and audit recency tests to 2026-10-01.
+
+================================================================================
+13. MARKETING, DISCOVERABILITY & 4-VIEW ARCHITECTURAL TOPOLOGY (PFAD B)
+================================================================================
+Date: 2026-10-04
+Operator: Antigravity / Gemini (via GITHUBBOT Pfad B)
+Target Repo: ellmos-ai/compare-race
+Version: 0.7.2 (Frozen per T-20260920-167562623)
+
+[x] 4-View Architectural Topology Projection (README.md & README_de.md):
+    - Added bilingual Four-View Architectural Projection: View 1 (CLI & Planning), View 2 (Adapters & Sandboxing), View 3 (Evidence & Front-Matter), View 4 (Starter-Judge & Olympiad).
+    - Directly mapped all 10 canonical runtime invariants (INV-LOCAL-01..INV-SLA-10) into the architectural projection block.
+
+[x] Badges & Audit Recency Synchronisation:
+    - Updated Verified badge to 2026-10-04 in README.md and README_de.md.
+    - Synchronized test count badge to reflect expanded contract test suite (69 passed | 100% green).
+    - Updated Level 1 SBOM audit recency in THIRD_PARTY_LICENSES.md and THIRD_PARTY_LICENSES.txt to 2026-10-04.
+    - Updated LLM Context Manifest (llms.txt) to 2026-10-04 with updated test metrics.
+
+[x] Automated Contract Verification Suite (tests/test_metadata.py):
+    - Added test_ascii_topology_projection_present asserting 4-view ASCII topology markers and invariant mapping across both bilingual READMEs.
+    - Added test_marketing_log_section_13 asserting section 13 documentation.
+    - Updated recency assertions for Verified badge (2026-10-04), SBOM audit (2026-10-04), and llms.txt (2026-10-04).

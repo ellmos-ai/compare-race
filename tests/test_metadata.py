@@ -342,11 +342,11 @@ def test_changelog_recent_pfad_b_072_entry():
 
 
 def test_llms_txt_version_and_recency():
-    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-10-01 audit stamp and green tests."""
+    """Contract test: Ensure llms.txt reflects v0.7.2, 2026-10-04 audit stamp and green tests."""
     content = _read_text("llms.txt")
     assert "Version: 0.7.2" in content
-    assert "Last-checked: 2026-10-01" in content
-    assert "Tests: 67 passed (100% green)" in content
+    assert "Last-checked: 2026-10-04" in content
+    assert "Tests: 69 passed (100% green)" in content
 
 
 def test_level1_sbom_invariant_cross_reference_matrix_completeness():
@@ -444,9 +444,9 @@ def test_marketing_log_section_10():
 
 
 def test_third_party_licenses_audit_recency():
-    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-10-01 audit."""
+    """Contract test: Ensure THIRD_PARTY_LICENSES.md reflects 2026-10-04 audit."""
     content = _read_text("THIRD_PARTY_LICENSES.md")
-    assert "Audited:** 2026-10-01" in content
+    assert "Audited:** 2026-10-04" in content
 
 
 def test_pyproject_20_topics_keyword_saturation():
@@ -503,7 +503,7 @@ def test_readme_attribution_and_verified_badges():
         msg_notice = f"Missing Attribution NOTICE badge in {lang}"
         assert "Attribution-NOTICE-blue.svg" in content, msg_notice
         msg_verified = f"Missing Verified badge in {lang}"
-        assert "verified-2026--10--01-brightgreen.svg" in content, msg_verified
+        assert "verified-2026--10--04-brightgreen.svg" in content, msg_verified
 
 
 def test_auto_assign_and_label_sync_workflows():
@@ -600,3 +600,38 @@ def test_gitignore_additional_multihost_tokens():
     ]
     for pattern in required:
         assert pattern in lines, f"Missing required .gitignore pattern: {pattern}"
+
+
+def test_ascii_topology_projection_present():
+    """Verify README.md and README_de.md both present the 4-view ASCII architectural topology."""
+    en_text = _read_text("README.md")
+    de_text = _read_text("README_de.md")
+
+    view_markers = [
+        "COMPARE-RACE ARCHITECTURAL TOPOLOGY PROJECTION",
+        "[VIEW 1: CLI, USER/AGENT INTERACTION & PLANNING SUBSYSTEM]",
+        "[VIEW 2: EXECUTION ADAPTERS, PROCESS SANDBOXING & ISOLATION SUBSYSTEM]",
+        "[VIEW 3: EVIDENCE ARTEFACTS, FRONT-MATTER CONTRACTS & DETERMINISTIC VALIDATION]",
+        "[VIEW 4: EVALUATION, STARTER-JUDGE LIFECYCLE & DESCRIPTIVE OLYMPIAD REPORTING]",
+        "INV-LOCAL-01",
+        "INV-SEC-02",
+        "INV-AXIS-03",
+        "INV-JUDGE-04",
+        "INV-ISOL-05",
+        "INV-FAIL-06",
+        "INV-BUNDLE-07",
+        "INV-INTEROP-08",
+        "INV-LIC-09",
+        "INV-SLA-10",
+    ]
+    for marker in view_markers:
+        assert marker in en_text, f"Missing marker '{marker}' in README.md"
+        assert marker in de_text, f"Missing marker '{marker}' in README_de.md"
+
+
+def test_marketing_log_section_13():
+    """Contract test: Ensure MARKETING-LOG.txt documents section 13 Pfad B audit."""
+    content = _read_text("MARKETING-LOG.txt")
+    assert "13. MARKETING, DISCOVERABILITY & 4-VIEW ARCHITECTURAL TOPOLOGY (PFAD B)" in content
+    assert "Date: 2026-10-04" in content
+    assert "Frozen per T-20260920-167562623" in content
