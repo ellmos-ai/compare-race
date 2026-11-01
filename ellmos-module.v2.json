@@ -40,5 +40,20 @@
     "path": ".",
     "repository": "https://github.com/ellmos-ai/compare-race"
   },
-  "adapters": []
+  "adapters": [],
+  "roles": [
+    {
+      "id": "race-starter",
+      "label": "RACE-STARTER",
+      "prompt": "prompts/RACE-STARTER.en.md",
+      "request": "Start as RACE-STARTER. Initialize, orchestrate, and evaluate multi-candidate comparison races.",
+      "modes": [],
+      "providers": [
+        "claude",
+        "codex",
+        "agy",
+        "kimi"
+      ]
+    }
+  ]
 }
