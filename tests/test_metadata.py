@@ -6,6 +6,7 @@ bilingual documentation parity, security policy, and front-matter parsing contra
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -77,6 +78,11 @@ def test_pyproject_pep621_metadata():
         "THIRD_PARTY_LICENSES.md",
         "THIRD_PARTY_LICENSES.txt",
     ]
+
+    # PEP 639 packaging contract: setuptools >=77 supports SPDX license metadata.
+    assert project.get("license") == "MIT"
+    assert "setuptools>=77" in data["build-system"]["requires"]
+    assert "License :: OSI Approved :: MIT License" not in project.get("classifiers", [])
 
     # Authors
     authors = project.get("authors", [])
@@ -389,6 +395,10 @@ def test_lifecycle_workflows_present_and_hardened():
     assert "actions/first-interaction@v3" in welcome_content
     assert "issues: write" in welcome_content
     assert "pull-requests: write" in welcome_content
+
+    # Input names are the public first-interaction@v3 interface, not v2 aliases.
+    action_inputs = set(re.findall(r"^          ([A-Za-z_-]+):", welcome_content, re.M))
+    assert action_inputs == {"repo_token", "issue_message", "pr_message"}
 
 
 def test_gitignore_multihost_and_lock_guards():

@@ -5,6 +5,17 @@ Versionierung nach [SemVer](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
+### Behoben
+
+- Paketmetadaten aus dem bestehenden Fix #2 übernommen: SPDX-Ausdruck `MIT`,
+  passendes setuptools-Minimum 77 und kein veralteter Lizenzklassifikator.
+- Begrüßungsworkflow auf die tatsächlichen Inputnamen von
+  `actions/first-interaction@v3` korrigiert (`repo_token`, `issue_message`,
+  `pr_message`). Trigger, Berechtigungen und Begrüßungstexte bleiben erhalten.
+- Bestehende Metadaten-Vertragstests prüfen beide externen Schnittstellen.
+  Paketversion 0.7.2 bleibt eingefroren; keine Modellrennen gestartet.
+
+
 Pfad B Discoverability, 4-View ASCII Architekturtopologie, Level 1 SBOM Re-Audit & Vertragstest-Erweiterung (Stand 2026-10-04; Version 0.7.2 strikt eingefroren per T-20260920-167562623); Vorläufer Pfad A Hygiene (2026-10-01), Pfad B Discoverability (2026-09-29) und Pfad A (2026-09-23).
 
 ### Hinzugefügt
